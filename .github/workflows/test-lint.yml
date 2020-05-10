@@ -17,3 +17,8 @@ jobs:
 
       - name: test
         run: npm run test
+
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          file: ./coverage/cobertura-coverage.xml # optional
