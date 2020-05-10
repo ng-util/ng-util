@@ -19,6 +19,7 @@
   "scripts": {
     "lint": "tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts'",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
+    "site:build": "ng b --prod",
     "build": "bash scripts/ci/build.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "npm run build && node scripts/publish/publish.js",
