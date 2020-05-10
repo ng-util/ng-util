@@ -8,7 +8,7 @@ ${thisDir}/build.sh
 
 cd $(dirname $0)/../..
 
-DIST="$(pwd)/dist/@ng-util"
+DIST="$(pwd)/dist"
 
 commitSha=$(git rev-parse --short HEAD)
 commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
@@ -34,7 +34,7 @@ fi
 buildDir=${DIST}/publish
 rm -rf ${buildDir}
 mkdir -p ${buildDir}
-cp -r ${DIST} ${buildDir}/@ng-util
+cp -r ${DIST}/@ng-util ${buildDir}/@ng-util
 
 packageRepo=builds
 buildVersion=$(node -pe "require('./package.json').version")
