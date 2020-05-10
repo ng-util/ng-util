@@ -1,6 +1,6 @@
-name: Site
+name: Deploy
 
-on: Deploy
+on: push
 
 # on:
 #   push:
