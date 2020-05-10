@@ -14,5 +14,5 @@ jobs:
 
       - name: build
         run: npm run build_artifacts
-        with:
+        env:
           NG_UTIL_BUILDS_TOKEN: ${{ secrets.NG_UTIL_BUILDS_TOKEN }}

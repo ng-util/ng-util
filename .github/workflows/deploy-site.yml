@@ -1,6 +1,6 @@
-name: Deploy website
+name: Site
 
-on: push
+on: Deploy
 
 # on:
 #   push:
@@ -8,7 +8,7 @@ on: push
 #       - 'publish-**'
 
 jobs:
-  build-and-deploy:
+  site:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
