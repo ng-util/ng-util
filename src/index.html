@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ng Util - 一组 Angular 常见工具集</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
+</head>
+<body ontouchstart>
+  <app-root>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;font-size:14px;font-family:Helvetica;">loading...</div>
+  </app-root>
+  <div id="_ie" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;text-align:center;padding-top:32px;background:#fff;font-size:22px;z-index:9999;">
+    Your browser is not supported for NG-UTIL document site
+  </div>
+  <script>
+    if (!!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g)) {
+      document.querySelector('#_ie').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

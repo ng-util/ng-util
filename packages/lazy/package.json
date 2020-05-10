@@ -1,0 +1,22 @@
+{
+  "name": "@ng-util/lazy",
+  "version": "0.0.0-PLACEHOLDER",
+  "author": "cipchk<cipchk@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ng-util/ng-util.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ng-util/ng-util/issues"
+  },
+  "homepage": "https://github.com/ng-util/ng-util",
+  "keywords": [
+    "angular",
+    "util",
+    "Angular utilities",
+    "lazy",
+    "load"
+  ],
+  "sideEffects": false
+}
