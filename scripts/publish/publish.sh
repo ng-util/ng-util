@@ -32,6 +32,8 @@ syncTaobao() {
   (cd ${DIST}/@ng-util; for p in `ls .`; do curl -X PUT https://npm.taobao.org/sync/@ng-util/$p?sync_upstream=true; done)
 }
 
+./scripts/ci/build.sh
+
 if [[ ${NEXT} == true ]]; then
   publishToNext
 else
