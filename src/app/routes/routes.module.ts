@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './404/404.component';
-import { DemoComponent } from './dev/demo.component';
+import { DemoComponent } from './demo.component';
 import { HomeComponent } from './home/home.component';
 
 const COMPONENTS = [HomeComponent, NotFoundComponent, DemoComponent];

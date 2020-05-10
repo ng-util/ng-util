@@ -1,0 +1,24 @@
+name: Test And Lint
+
+on: push
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: install
+        run: npm install
+
+      - name: lint
+        run: npm run lint
+
+      - name: test
+        run: npm run test
+
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          file: ./coverage/cobertura-coverage.xml # optional
