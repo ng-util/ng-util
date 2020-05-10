@@ -16,7 +16,7 @@ NG-UTIL
 
 | Package | Version | Links  |
 | --- | --- | -- |
- [`@ng-util/lazy`](https://npmjs.com/package/@ng-util/lazy) | [![latest](https://img.shields.io/npm/v/@ng-util/lazy/latest.svg)](https://npmjs.com/package/@ng-util/lazy) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/lazy/README.md)
+ [`@ng-util/lazy`](https://npmjs.com/package/@ng-util/lazy) | [![latest](https://img.shields.io/npm/v/@ng-util/lazy/latest.svg)](https://npmjs.com/package/@ng-util/lazy) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/lazy/README.md) [![snapshot](https://img.shields.io/badge/snapshot--blue.svg)](https://github.com/ng-util/builds/tree/master/%40ng-util/lazy)
 
 ### License
 
