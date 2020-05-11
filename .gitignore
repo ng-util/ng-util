@@ -22,3 +22,5 @@ src/assets/color.less
 /scaffold
 /_scaffold
 /integration
+
+monaco.d.ts

@@ -6,7 +6,8 @@ set -u -e -o pipefail
 cd $(dirname $0)/../..
 
 DEBUG=false
-PACKAGES=(lazy)
+PACKAGES=(lazy
+  monaco-editor)
 NODE_PACKAGES=(cli)
 
 for ARG in "$@"; do
@@ -46,6 +47,11 @@ addBanners() {
   done
 }
 
+copy() {
+  # monaco-editor
+  cp node_modules/monaco-editor/monaco.d.ts packages/monaco-editor
+}
+
 VERSION=$(node -p "require('./package.json').version")
 echo "=====BUILDING: Version ${VERSION}"
 
@@ -82,6 +88,7 @@ build() {
   done
 }
 
+copy
 build
 
 echo 'FINISHED!'

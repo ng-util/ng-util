@@ -15,6 +15,7 @@
     "revert"
   ],
   "scopes": [
-    "lazy"
+    "lazy",
+    "monaco-editor"
   ]
 }
