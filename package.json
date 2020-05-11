@@ -17,6 +17,7 @@
     "url": "git+https://github.com/ng-util/ng-util.git"
   },
   "scripts": {
+    "postinstall": "scripts/ci/install.sh",
     "lint": "tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts'",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
     "site:build": "ng b --prod",

@@ -1,6 +1,6 @@
 # @ng-util/monaco-editor
 
-Monaco Code Editor for Angular.
+Monaco Code Editor for Angular, Inspired by [ngx-monaco-editor](https://github.com/atularen/ngx-monaco-editor).
 
 [![NPM version](https://img.shields.io/npm/v/@ng-util/monaco-editor.svg?style=flat-square)](https://www.npmjs.com/package/@ng-util/monaco-editor)
 [![Build Status](https://github.com/ng-util/ng-util/workflows/Build/badge.svg?branch=master)](https://github.com/ng-util/ng-util/actions)
