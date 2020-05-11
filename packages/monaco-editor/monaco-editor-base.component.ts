@@ -43,15 +43,14 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
     @Inject(DOCUMENT) protected doc: any,
     protected ngZone: NgZone,
   ) {
-    // https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js
     this._config = { baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min', ...config };
     this.options = this._config.defaultOptions!;
   }
 
   protected abstract initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions): void;
 
-  protected notifyEvent(type: NuMonacoEditorEventType): void {
-    this.event.emit({ type, editor: this._editor! });
+  protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
+    this.event.emit({ type, editor: this._editor!, ...other });
   }
 
   protected setDisabled(): this {

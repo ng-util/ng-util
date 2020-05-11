@@ -50,7 +50,8 @@ export class DemoComponent {
   themes = ['vs', 'vs-dark', 'hc-black'];
 
   updateValue(): void {
-    this.value = `1`;
+    this.value = `.body {}`;
+    this.model = { language: 'css' };
   }
 
   setTheme(theme: string): void {

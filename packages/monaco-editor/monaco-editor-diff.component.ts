@@ -28,6 +28,8 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
       modified: monaco.editor.createModel(this.new.code, this.new.language || options.language),
     });
 
+    editor.onDidUpdateDiff(() => this.notifyEvent('update-diff', { diffValue: editor.getModifiedEditor().getValue() }));
+
     this.registerResize().notifyEvent('init');
   }
 }

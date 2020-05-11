@@ -11,10 +11,12 @@ export interface NuMonacoEditorDiffModel {
   language?: string;
 }
 
-export type NuMonacoEditorEventType = 'load-error' | 'init' | 'resize';
+export type NuMonacoEditorEventType = 'load-error' | 'init' | 'resize' | 'update-diff';
 
 export interface NuMonacoEditorEvent {
-  type: NuMonacoEditorEventType;
+  type?: NuMonacoEditorEventType;
   editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
   error?: string;
+  /** Just only `nu-monaco-editor-diff` component */
+  diffValue?: string;
 }
