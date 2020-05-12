@@ -1,18 +1,53 @@
 import { Component } from '@angular/core';
-import { NuMonacoEditorEvent, NuMonacoEditorModel } from '@ng-util/monaco-editor';
+import { NuMonacoEditorDiffModel, NuMonacoEditorEvent, NuMonacoEditorModel } from '@ng-util/monaco-editor';
 
 @Component({
   selector: 'app-demo',
-  template: ` <nu-monaco-editor #a [(ngModel)]="value" [model]="model" (event)="showEvent($event)"></nu-monaco-editor>
-    <button (click)="a.editor.getAction('editor.action.formatDocument').run()">Format document</button>`,
+  template: `
+    <button (click)="disabled = !disabled">Set {{ disabled ? 'enabled' : 'disabled' }}</button>
+    <button *ngFor="let t of themes" (click)="setTheme(t)">{{ t }} theme</button>
+    <h1>Base</h1>
+    <nu-monaco-editor #a [model]="model" [options]="options" [disabled]="disabled"></nu-monaco-editor>
+    <h1>Diff</h1>
+    <nu-monaco-diff-editor #b [old]="oldModel" [new]="newModel" [options]="options" [disabled]="disabled"></nu-monaco-diff-editor>
+    <h1>Custom json</h1>
+    <nu-monaco-editor
+      #c
+      [(ngModel)]="value"
+      [model]="jsonModel"
+      [options]="options"
+      (event)="jsonEvent($event)"
+      [disabled]="disabled"
+    ></nu-monaco-editor>
+    <button (click)="c.editor.getAction('editor.action.formatDocument').run()">Format document</button>
+  `,
 })
 export class DemoComponent {
+  disabled = false;
+  themes = ['vs', 'vs-dark', 'hc-black'];
   value = '{"p1":"a"}';
-  model: NuMonacoEditorModel;
+  options = { theme: 'vs' };
+  model: NuMonacoEditorModel = {
+    value: '<h1>Title</h1>',
+    language: 'html',
+  };
+  oldModel: NuMonacoEditorDiffModel = {
+    code: 'const a = 1;',
+    language: 'typescript',
+  };
+  newModel: NuMonacoEditorDiffModel = {
+    code: 'const a = 2;',
+    language: 'typescript',
+  };
+  jsonModel: NuMonacoEditorModel;
 
-  showEvent(e: NuMonacoEditorEvent) {
+  setTheme(theme: string): void {
+    this.options = { theme };
+  }
+
+  jsonEvent(e: NuMonacoEditorEvent) {
     if (e.type === 'init') {
-      this.model = {
+      this.jsonModel = {
         language: 'json',
         uri: monaco.Uri.parse('a://b/foo.json'),
       };

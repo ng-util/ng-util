@@ -1,5 +1,17 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ElementRef, EventEmitter, Inject, Input, NgZone, OnChanges, OnDestroy, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.config';
@@ -133,8 +145,9 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
     this.ngZone.runOutsideAngular(() => this.init());
   }
 
-  ngOnChanges(): void {
-    console.log('ngOnChanges');
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    const allKeys = Object.keys(changes);
+    if (allKeys.length === 1 && allKeys[0] === 'disabled') return;
     this.updateOptions();
   }
 
