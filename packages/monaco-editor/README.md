@@ -46,7 +46,7 @@ And configure `baseUrl` via `NuMonacoEditorModule.forRoot`.
 
 ```ts
 NuMonacoEditorModule.forRoot({
-  baseUrl: `./assets/lib`,
+  baseUrl: `lib`,
 }),
 ```
 

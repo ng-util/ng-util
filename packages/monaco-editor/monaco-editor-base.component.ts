@@ -94,9 +94,9 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
         const loaderScript = this.doc.createElement('script') as HTMLScriptElement;
         loaderScript.type = 'text/javascript';
         loaderScript.src = `${baseUrl}/vs/loader.js`;
-        loaderScript.addEventListener('load', amdLoader);
-        loaderScript.addEventListener('error', () => reject(`Unable to load ${loaderScript.src}, please check your network environment.`));
-        this.doc.body.appendChild(loaderScript);
+        loaderScript.onload = amdLoader;
+        loaderScript.onerror = () => reject(`Unable to load ${loaderScript.src}, please check your network environment.`);
+        this.doc.getElementsByTagName('head')[0].appendChild(loaderScript);
       } else {
         amdLoader();
       }
