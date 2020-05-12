@@ -57,7 +57,6 @@ export class CodeService {
 
   openOnStackBlitz(appComponentCode: string) {
     const res = this.parseCode(appComponentCode);
-    console.log(this.dependencies);
     sdk.openProject(
       {
         title: 'NG-UTIL',

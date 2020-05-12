@@ -41,11 +41,10 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
         options.model = model;
         options.model.setValue(this._value);
       } else {
-        const { language, uri } = this.model!;
-        options.model = monaco.editor.createModel(this._value, language, uri);
+        const { value, language, uri } = this.model!;
+        options.model = monaco.editor.createModel(value || this._value, language, uri);
       }
     }
-    console.log(options.model);
 
     const editor = (this._editor = monaco.editor.create(this.el.nativeElement, options));
 
@@ -68,6 +67,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
       .getAction('editor.action.formatDocument')
       .run()
       .then(() => {
+        // this.setDisabled();
         this.notifyEvent(initEvent ? 'init' : 're-init');
       });
   }
