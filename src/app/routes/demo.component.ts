@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import { NuLazyService } from '@ng-util/lazy';
+import { NuMonacoEditorEvent, NuMonacoEditorModel } from '@ng-util/monaco-editor';
 
 @Component({
   selector: 'app-demo',
-  template: ` <button *ngIf="loaded" type="button" class="btn btn-primary">Primary</button>`,
+  template: ` <nu-monaco-editor #a [(ngModel)]="value" [model]="model" (event)="showEvent($event)"></nu-monaco-editor>
+    <button (click)="a.editor.getAction('editor.action.formatDocument').run()">Format document</button>`,
 })
 export class DemoComponent {
-  loaded = false;
+  value = '{"p1":"a"}';
+  model: NuMonacoEditorModel;
 
-  constructor(private srv: NuLazyService) {
-    this.load();
-  }
-
-  async load() {
-    await this.srv.load([
-      `https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css`,
-      `https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js`,
-    ]);
-    this.loaded = true;
+  showEvent(e: NuMonacoEditorEvent) {
+    if (e.type === 'init') {
+      this.model = {
+        language: 'json',
+        uri: monaco.Uri.parse('a://b/foo.json'),
+      };
+    }
   }
 }

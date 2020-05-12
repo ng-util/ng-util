@@ -6,7 +6,8 @@ set -u -e -o pipefail
 cd $(dirname $0)/../..
 
 DEBUG=false
-PACKAGES=(lazy)
+PACKAGES=(lazy
+  monaco-editor)
 NODE_PACKAGES=(cli)
 
 for ARG in "$@"; do
@@ -82,17 +83,22 @@ build() {
   done
 }
 
+fix() {
+  # 修复 ng-packagr 对三斜线指令的处理
+  perl -p -i -e "s/types=\"monaco\"/path=\"monaco.d.ts\"/g" ${DIST}/monaco-editor/monaco-editor.types.d.ts < /dev/null 2> /dev/null
+}
+
 build
+fix
 
 echo 'FINISHED!'
 
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build.sh -debug
-# clear | bash ./scripts/ci/build.sh -n lazy -debug
 if [[ ${DEBUG} == true ]]; then
   cd ../../
-  DEBUG_FROM=${PWD}/work/delon/dist/@delon/*
-  DEBUG_TO=${PWD}/work/ng-alain-themes/node_modules/@delon/
+  DEBUG_FROM=${PWD}/work/ng-util/dist/@ng-util/*
+  DEBUG_TO=${PWD}/work/ng9/node_modules/@ng-util/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

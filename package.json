@@ -17,6 +17,7 @@
     "url": "git+https://github.com/ng-util/ng-util.git"
   },
   "scripts": {
+    "postinstall": "scripts/ci/install.sh",
     "lint": "tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts'",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
     "site:build": "ng b --prod",
@@ -41,7 +42,8 @@
     "zone.js": "~0.10.2",
     "ng-zorro-antd": "^9.0.0",
     "@stackblitz/sdk": "^1.3.0",
-    "codesandbox": "^2.1.14"
+    "codesandbox": "^2.1.14",
+    "monaco-editor": "^0.20.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.4",

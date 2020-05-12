@@ -50,3 +50,7 @@ export class DemoComponent {
 | `load(paths: string ｜ string[])` | `Promise<NuLazyResult[]>` | Load the specified resources, includes `.js`, `.css` |
 | `loadScript(path: string, options?: { innerContent?: string })` | `Promise<NuLazyResult>` | Load a script resources |
 | `loadStyle(path: string, options?: { ref?: string, innerContent?: string })` | `Promise<NuLazyResult>` | Load a style resources |
+
+### License
+
+The MIT License (see the [LICENSE](https://github.com/ng-util/ng-util/blob/master/LICENSE) file for the full text)

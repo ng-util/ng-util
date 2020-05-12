@@ -1,6 +1,6 @@
-# Contributing to delon
+# Contributing to ng-util
 
-We would love for you to contribute to delon and help make it even better than it is
+We would love for you to contribute to ng-util and help make it even better than it is
 today! As a contributor, here are the guidelines we would like you to follow:
 
  - [Issues and Bugs](#issue)
@@ -33,7 +33,7 @@ Before you submit an issue, please search the issue tracker, maybe an issue for 
 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs we will systematically ask you to provide a minimal reproduction scenario using http://plnkr.co. Having a live, reproducible scenario gives us wealth of important information without going back & forth to you with additional questions like:
 
-- version of delon used
+- version of ng-util used
 - 3rd-party libraries and their versions
 - and most importantly - a use-case that fails
 
@@ -59,7 +59,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 
 * Create your patch, **including appropriate test cases**.
 * Follow our [Coding Rules](#rules).
-* Run the full delon test suite <!-- , as described in the [developer documentation][dev-doc] -->, and ensure that all tests pass.
+* Run the full ng-util test suite <!-- , as described in the [developer documentation][dev-doc] -->, and ensure that all tests pass.
 * Commit your changes using a descriptive commit message that follows our
   [commit message conventions](#commit). Adherence to these conventions
   is necessary because release notes are automatically generated from these messages.
@@ -75,10 +75,10 @@ Before you submit your Pull Request (PR) consider the following guidelines:
     git push origin my-fix-branch
     ```
 
-* In GitHub, send a pull request to `delon:master`.
+* In GitHub, send a pull request to `ng-util:master`.
 * If we suggest changes then:
   * Make the required updates.
-  * Re-run the delon test suites to ensure tests are still passing.
+  * Re-run the ng-util test suites to ensure tests are still passing.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
@@ -127,7 +127,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 
 We have very precise rules over how our git commit messages can be formatted.  This leads to **more
 readable messages** that are easy to follow when looking through the **project history**.  But also,
-we use the git commit messages to **generate the delon change log**.
+we use the git commit messages to **generate the ng-util change log**.
 
 ### Commit Message Format
 Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
