@@ -6,10 +6,5 @@
     "paths": {
       "@ng-util/*": ["../../dist/@ng-util/*"]
     }
-  },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": true
   }
 }

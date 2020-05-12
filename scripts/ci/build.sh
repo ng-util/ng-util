@@ -83,17 +83,22 @@ build() {
   done
 }
 
+fix() {
+  # 修复 ng-packagr 对三斜线指令的处理
+  sed -i "" "s/types=\"monaco\"/path=\"monaco.d.ts\"/g" ${DIST}/monaco-editor/monaco-editor.types.d.ts
+}
+
 build
+fix
 
 echo 'FINISHED!'
 
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build.sh -debug
-# clear | bash ./scripts/ci/build.sh -n lazy -debug
 if [[ ${DEBUG} == true ]]; then
   cd ../../
-  DEBUG_FROM=${PWD}/work/delon/dist/@delon/*
-  DEBUG_TO=${PWD}/work/ng-alain-themes/node_modules/@delon/
+  DEBUG_FROM=${PWD}/work/ng-util/dist/@ng-util/*
+  DEBUG_TO=${PWD}/work/ng9/node_modules/@ng-util/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

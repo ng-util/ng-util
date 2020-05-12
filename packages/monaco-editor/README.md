@@ -77,7 +77,7 @@ import { Component } from '@angular/core';
 })
 export class DemoComponent {
   value: string = 'const a = 1;';
-  editorOptions = { theme: 'vs-dark', language: 'javascript' };
+  editorOptions = { theme: 'vs-dark', language: 'typescript' };
 }
 ```
 
@@ -230,4 +230,8 @@ export class DemoComponent {
 | `[old]` | Old model of monaco editor | `NuMonacoEditorDiffModel` | - |
 | `[new]` | New model of monaco editor | `NuMonacoEditorDiffModel` | - |
 | `(event)` | Event callback | `EventEmitter<NuMonacoEditorEvent>` | - |
+
+### License
+
+The MIT License (see the [LICENSE](https://github.com/ng-util/ng-util/blob/master/LICENSE) file for the full text)
 

@@ -9,7 +9,7 @@
       "node"
     ],
     "paths": {
-      "@delon/*": ["./*"]
+      "@ng-util/*": ["./*"]
     },
     "esModuleInterop": true,
     "noImplicitThis": false

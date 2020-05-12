@@ -16,7 +16,9 @@ jobs:
         run: npm run lint
 
       - name: test
-        run: npm run test
+        run: |
+          npm run test
+          cat ./coverage/lcov.info | ./node_modules/.bin/codecov
 
       - uses: codecov/codecov-action@v1
         with:
