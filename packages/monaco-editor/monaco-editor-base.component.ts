@@ -1,17 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  ElementRef,
-  EventEmitter,
-  Inject,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  Output,
-  SimpleChange,
-  SimpleChanges,
-} from '@angular/core';
+import { AfterViewInit, ElementRef, EventEmitter, Inject, Input, NgZone, OnChanges, OnDestroy, Output } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.config';
@@ -25,9 +13,14 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
   protected _options: monaco.editor.IStandaloneEditorConstructionOptions;
   protected _resize$: Subscription;
   protected _config: NuMonacoEditorConfig;
+  protected _disabled = false;
 
-  @Input() height = 200;
-  @Input() disabled = false;
+  @Input() height = `200px`;
+  @Input()
+  set disabled(val: boolean | string) {
+    this._disabled = typeof val === 'string' ? true : val;
+    this.setDisabled();
+  }
   @Input()
   set options(val: monaco.editor.IStandaloneEditorConstructionOptions) {
     this._options = { ...this._config.defaultOptions, ...val };
@@ -47,22 +40,22 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
     this.options = this._config.defaultOptions!;
   }
 
-  protected abstract initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions): void;
+  protected abstract initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void;
 
   protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
-    this.event.emit({ type, editor: this._editor!, ...other });
+    this.ngZone.run(() => this.event.emit({ type, editor: this._editor!, ...other }));
   }
 
   protected setDisabled(): this {
     if (this._editor) {
-      this._editor.updateOptions({ readOnly: this.disabled });
+      this._editor.updateOptions({ readOnly: this._disabled });
     }
     return this;
   }
 
   private init(): void {
     if (loadedMonaco) {
-      loadPromise.then(() => this.initMonaco(this.options));
+      loadPromise.then(() => this.initMonaco(this.options, true));
       return;
     }
 
@@ -88,7 +81,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
             if (typeof this._config.monacoLoad === 'function') {
               this._config.monacoLoad(win.monaco);
             }
-            this.initMonaco(this.options);
+            this.initMonaco(this.options, true);
             resolve();
           },
           () => {
@@ -107,7 +100,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
       } else {
         amdLoader();
       }
-    }).catch(error => this.event.emit({ type: 'load-error', error }));
+    }).catch(error => this.notifyEvent('load-error', { error }));
   }
 
   protected cleanResize(): this {
@@ -128,19 +121,21 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
     return this;
   }
 
+  protected updateOptions(): void {
+    if (!this._editor) return;
+    this.ngZone.runOutsideAngular(() => {
+      this._editor!.dispose();
+      this.initMonaco(this._options, false);
+    });
+  }
+
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(() => this.init());
   }
 
-  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-    if (this._editor) {
-      if (Object.keys(changes).length === 1 && changes.disabled) {
-        this.setDisabled();
-        return;
-      }
-      this._editor.dispose();
-      this.initMonaco(this._options);
-    }
+  ngOnChanges(): void {
+    console.log('ngOnChanges');
+    this.updateOptions();
   }
 
   ngOnDestroy(): void {

@@ -3,11 +3,12 @@ import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorDiffModel } from './monaco-editor.types';
 
 @Component({
-  selector: 'nu-monaco-editor-diff',
+  selector: 'nu-monaco-diff-editor',
   template: ``,
+  exportAs: 'nuMonacoDiffEditor',
   host: {
     '[style.display]': `'block'`,
-    '[style.height.px]': 'height',
+    '[style.height]': 'height',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -15,9 +16,13 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
   @Input() old: NuMonacoEditorDiffModel;
   @Input() new: NuMonacoEditorDiffModel;
 
-  initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions): void {
+  get editor(): monaco.editor.IStandaloneDiffEditor {
+    return this._editor as monaco.editor.IStandaloneDiffEditor;
+  }
+
+  initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     if (!this.old || !this.new) {
-      throw new Error('old or new not found for nu-monaco-editor-diff');
+      throw new Error('old or new not found for nu-monaco-diff-editor');
     }
 
     const theme = options.theme;
@@ -30,6 +35,7 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
 
     editor.onDidUpdateDiff(() => this.notifyEvent('update-diff', { diffValue: editor.getModifiedEditor().getValue() }));
 
-    this.registerResize().notifyEvent('init');
+    this.registerResize();
+    if (initEvent) this.notifyEvent('init');
   }
 }

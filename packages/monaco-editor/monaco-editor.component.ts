@@ -6,9 +6,10 @@ import { NuMonacoEditorModel } from './monaco-editor.types';
 @Component({
   selector: 'nu-monaco-editor',
   template: ``,
+  exportAs: 'nuMonacoEditor',
   host: {
     '[style.display]': `'block'`,
-    '[style.height.px]': 'height',
+    '[style.height]': 'height',
   },
   providers: [
     {
@@ -24,10 +25,14 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
   @Input() model: NuMonacoEditorModel;
 
+  get editor(): monaco.editor.IStandaloneCodeEditor {
+    return this._editor as monaco.editor.IStandaloneCodeEditor;
+  }
+
   private onChange = (_: string) => {};
   private onTouched = () => {};
 
-  initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions): void {
+  initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     const hasModel = !!this.model;
 
     if (hasModel) {
@@ -40,6 +45,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
         options.model = monaco.editor.createModel(this._value, language, uri);
       }
     }
+    console.log(options.model);
 
     const editor = (this._editor = monaco.editor.create(this.el.nativeElement, options));
 
@@ -57,7 +63,13 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     });
     editor.onDidBlurEditorWidget(() => this.onTouched());
 
-    this.registerResize().notifyEvent('init');
+    this.registerResize();
+    editor
+      .getAction('editor.action.formatDocument')
+      .run()
+      .then(() => {
+        this.notifyEvent(initEvent ? 'init' : 're-init');
+      });
   }
 
   writeValue(value: string): void {
