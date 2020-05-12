@@ -85,7 +85,7 @@ build() {
 
 fix() {
   # 修复 ng-packagr 对三斜线指令的处理
-  sed -i "" "s/types=\"monaco\"/path=\"monaco.d.ts\"/g" ${DIST}/monaco-editor/monaco-editor.types.d.ts
+  perl -p -i -e "s/types=\"monaco\"/path=\"monaco.d.ts\"/g" ${DIST}/monaco-editor/monaco-editor.types.d.ts < /dev/null 2> /dev/null
 }
 
 build

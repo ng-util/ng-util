@@ -48,7 +48,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
 
   protected setDisabled(): this {
     if (this._editor) {
-      this._editor.updateOptions({ readOnly: this._disabled });
+      (this._editor as monaco.editor.IStandaloneCodeEditor).updateOptions({ readOnly: this._disabled });
     }
     return this;
   }
