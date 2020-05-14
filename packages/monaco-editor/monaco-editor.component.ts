@@ -66,10 +66,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     editor
       .getAction('editor.action.formatDocument')
       .run()
-      .then(() => {
-        // this.setDisabled();
-        this.notifyEvent(initEvent ? 'init' : 're-init');
-      });
+      .then(() => this.notifyEvent(initEvent ? 'init' : 're-init'));
   }
 
   writeValue(value: string): void {
