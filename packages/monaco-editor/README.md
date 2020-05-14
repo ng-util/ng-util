@@ -218,6 +218,7 @@ export class DemoComponent {
 | `[disabled]` | Disabled of monaco editor | `boolean` | `false` |
 | `[options]` | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | - |
 | `[model]` | Model of monaco editor | `NuMonacoEditorModel` | - |
+| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
 | `(event)` | Event callback | `EventEmitter<NuMonacoEditorEvent>` | - |
 
 ### nu-monaco-diff-editor
@@ -229,6 +230,7 @@ export class DemoComponent {
 | `[options]` | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | - |
 | `[old]` | Old model of monaco editor | `NuMonacoEditorDiffModel` | - |
 | `[new]` | New model of monaco editor | `NuMonacoEditorDiffModel` | - |
+| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
 | `(event)` | Event callback | `EventEmitter<NuMonacoEditorEvent>` | - |
 
 ### License
