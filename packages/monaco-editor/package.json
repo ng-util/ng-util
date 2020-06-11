@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/ng-util/ng-util/issues"
   },
-  "homepage": "https://github.com/ng-util/ng-util",
+  "homepage": "https://github.com/ng-util/ng-util/tree/master/packages/monaco-editor",
   "keywords": [
     "angular",
     "util",

@@ -28,6 +28,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
   protected _disabled = false;
 
   @Input() height = `200px`;
+  @Input() delay = 0;
   @Input()
   set disabled(val: boolean | string) {
     this._disabled = typeof val === 'string' ? true : val;
@@ -142,7 +143,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
   }
 
   ngAfterViewInit(): void {
-    this.ngZone.runOutsideAngular(() => this.init());
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.init(), +this.delay));
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
