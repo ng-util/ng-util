@@ -13,6 +13,7 @@ A set of Angular utilities
 | Package | Version | Links  |
 | --- | --- | -- |
  [`@ng-util/lazy`](https://npmjs.com/package/@ng-util/lazy) | [![latest](https://img.shields.io/npm/v/@ng-util/lazy/latest.svg)](https://npmjs.com/package/@ng-util/lazy) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/lazy/README.md) [![snapshot](https://img.shields.io/badge/snapshot--blue.svg)](https://github.com/ng-util/builds/tree/master/%40ng-util/lazy)
+ [`@ng-util/util`](https://npmjs.com/package/@ng-util/util) | [![latest](https://img.shields.io/npm/v/@ng-util/util/latest.svg)](https://npmjs.com/package/@ng-util/util) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/util/README.md) [![snapshot](https://img.shields.io/badge/snapshot--blue.svg)](https://github.com/ng-util/builds/tree/master/%40ng-util/util)
  [`@ng-util/monaco-editor`](https://npmjs.com/package/@ng-util/monaco-editor) | [![latest](https://img.shields.io/npm/v/@ng-util/monaco-editor/latest.svg)](https://npmjs.com/package/@ng-util/monaco-editor) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/monaco-editor/README.md) [![snapshot](https://img.shields.io/badge/snapshot--blue.svg)](https://github.com/ng-util/builds/tree/master/%40ng-util/monaco-editor)
 
 ### License
