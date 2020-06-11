@@ -6,7 +6,8 @@ set -u -e -o pipefail
 cd $(dirname $0)/../..
 
 DEBUG=false
-PACKAGES=(lazy
+PACKAGES=(util
+  lazy
   monaco-editor)
 NODE_PACKAGES=(cli)
 
