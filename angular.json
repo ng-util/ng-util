@@ -16,14 +16,9 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "assets": [
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.less"
-            ],
-            "scripts": [
-            ]
+            "assets": ["src/assets"],
+            "styles": ["src/styles.less"],
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -36,16 +31,12 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }]
-            },
-            "hmr": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.hmr.ts"
-              }]
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             }
           }
         },
@@ -57,10 +48,6 @@
           "configurations": {
             "production": {
               "browserTarget": "site:build:production"
-            },
-            "hmr": {
-              "browserTarget": "site:build:hmr",
-              "hmr": true
             }
           }
         },
@@ -85,8 +72,7 @@
             "karmaConfig": "packages/karma.conf.js",
             "polyfills": "packages/polyfills.ts",
             "tsConfig": "packages/tsconfig.spec.json",
-            "scripts": [
-            ],
+            "scripts": [],
             "assets": [
               {
                 "glob": "**/*",

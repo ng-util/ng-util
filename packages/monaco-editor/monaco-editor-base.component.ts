@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
+  Component,
   ElementRef,
   EventEmitter,
   Inject,
@@ -20,6 +21,11 @@ import { NuMonacoEditorEvent, NuMonacoEditorEventType } from './monaco-editor.ty
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
 
+@Component({
+  selector: 'nu-monaco-base',
+  template: ``,
+})
+// tslint:disable-next-line: component-class-suffix
 export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
   protected _editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
   protected _options: monaco.editor.IStandaloneEditorConstructionOptions;
