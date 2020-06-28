@@ -1,13 +1,8 @@
-import { LayoutModule } from '@angular/cdk/layout';
+// import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// angular i18n
-import { registerLocaleData } from '@angular/common';
-import localeZh from '@angular/common/locales/zh';
-registerLocaleData(localeZh);
 
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
@@ -24,7 +19,7 @@ import { GlobalConfigModule } from './global-config.module';
     BrowserAnimationsModule,
     HttpClientModule,
     GlobalConfigModule.forRoot(),
-    LayoutModule,
+    // LayoutModule,
     SharedModule,
     RoutesModule,
   ],
