@@ -1,3 +1,7 @@
+# [10.0.0](https://github.com/ng-util/ng-util/compare/9.2.0...10.0.0) (2020-06-28)
+
+* Just flash a version number
+
 # 9.2.0 (2020-06-11)
 
 
