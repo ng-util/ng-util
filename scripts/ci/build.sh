@@ -8,7 +8,8 @@ cd $(dirname $0)/../..
 DEBUG=false
 PACKAGES=(util
   lazy
-  monaco-editor)
+  monaco-editor
+  markdown)
 NODE_PACKAGES=(cli)
 
 for ARG in "$@"; do

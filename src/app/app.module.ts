@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NuMarkdownModule } from '@ng-util/markdown';
+
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,6 +21,7 @@ import { GlobalConfigModule } from './global-config.module';
     BrowserAnimationsModule,
     HttpClientModule,
     GlobalConfigModule.forRoot(),
+    NuMarkdownModule.forRoot(),
     // LayoutModule,
     SharedModule,
     RoutesModule,
