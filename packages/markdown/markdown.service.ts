@@ -37,7 +37,10 @@ export class NuMarkdownService {
           return ls.length === libs.length && ls.some(v => v.status === 'ok' && libs.includes(v.path));
         }),
       )
-      .subscribe(() => this.notify$.next());
+      .subscribe(() => {
+        this.loaded = true;
+        this.notify$.next();
+      });
     this.lazySrv.load(libs);
     return this;
   }
