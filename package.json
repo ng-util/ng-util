@@ -1,6 +1,6 @@
 {
   "name": "ng-util",
-  "version": "10.0.0",
+  "version": "10.1.0-rc.2",
   "description": "Angular utilities",
   "keywords": [
     "angular",
@@ -42,7 +42,8 @@
     "zone.js": "~0.10.3",
     "@stackblitz/sdk": "^1.3.0",
     "codesandbox": "^2.1.14",
-    "monaco-editor": "^0.20.0"
+    "monaco-editor": "^0.20.0",
+    "vditor": "^3.3.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.0",

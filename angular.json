@@ -16,7 +16,14 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets"],
+            "assets": [
+              "src/assets",
+              {
+                "glob": "*.(js|css)",
+                "input": "node_modules/vditor/dist",
+                "output": "/assets/vditor/"
+              }
+            ],
             "styles": ["src/styles.less"],
             "scripts": []
           },

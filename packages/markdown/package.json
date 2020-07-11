@@ -1,0 +1,25 @@
+{
+  "name": "@ng-util/markdown",
+  "version": "0.0.0-PLACEHOLDER",
+  "author": "cipchk<cipchk@qq.com>",
+  "description": "Vditor for Angular",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ng-util/ng-util.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ng-util/ng-util/issues"
+  },
+  "homepage": "https://github.com/ng-util/ng-util/tree/master/packages/markdown",
+  "keywords": [
+    "angular",
+    "util",
+    "Angular utilities",
+    "markdown",
+    "Vditor"
+  ],
+  "peerDependencies": {
+    "@ng-util/util": "^10.0.0"
+  }
+}

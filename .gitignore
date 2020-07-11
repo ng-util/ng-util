@@ -24,3 +24,4 @@ src/assets/color.less
 /integration
 
 monaco.d.ts
+packages/markdown/vditor/

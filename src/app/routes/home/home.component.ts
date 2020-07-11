@@ -5,4 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {}
+export class HomeComponent {
+  value = ``;
+}

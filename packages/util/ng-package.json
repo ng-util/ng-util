@@ -3,6 +3,7 @@
   "dest": "../../dist/@ng-util/util",
   "deleteDestPath": true,
   "lib": {
-    "entryFile": "./util.ts"
+    "flatModuleFile": "util",
+    "entryFile": "./public-api.ts"
   }
 }
