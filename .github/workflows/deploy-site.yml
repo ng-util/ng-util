@@ -24,8 +24,9 @@ jobs:
         run: cp ./dist/site/index.html ./dist/site/404.html
 
       - name: deploy-to-surge
-        uses: yohix/deploy-surge@v1.0.0
+        uses: dswistowski/surge-sh-action@v1
         with:
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-          DOMAIN_NAME: https://ng-util.surge.sh
-          BUILD_DIRECTORY: ./dist/site
+          login: ${{ secrets.SURGE_LOGIN }}
+          token: ${{ secrets.SURGE_TOKEN }}
+          domain: https://ng-util.surge.sh
+          project: ./dist/site
