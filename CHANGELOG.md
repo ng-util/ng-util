@@ -1,3 +1,13 @@
+# [10.1.0](https://github.com/ng-util/ng-util/compare/10.0.0...10.1.0) (2020-07-11)
+
+
+### Features
+
+* add markdown lib ([#13](https://github.com/ng-util/ng-util/issues/13)) ([c901fb7](https://github.com/ng-util/ng-util/commit/c901fb721c78d8cdcfe5cb2cc67057ba3d5254ca))
+* **@ng-util/util** support second import ([#13](https://github.com/ng-util/ng-util/issues/13)) ([c901fb7](https://github.com/ng-util/ng-util/commit/c901fb721c78d8cdcfe5cb2cc67057ba3d5254ca))
+
+
+
 # [10.0.0](https://github.com/ng-util/ng-util/compare/9.2.0...10.0.0) (2020-06-28)
 
 * Just flash a version number
