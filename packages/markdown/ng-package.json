@@ -8,5 +8,6 @@
       "@ng-util/util/convert": "@ng-util/util/convert",
       "@ng-util/lazy": "@ng-util/lazy"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": ["tslib", "@ng-util/util", "@ng-util/lazy"]
 }
