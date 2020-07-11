@@ -1,3 +1,11 @@
+## [10.1.1](https://github.com/ng-util/ng-util/compare/10.0.0...10.1.1) (2020-07-11)
+
+
+### Bug Fixes
+
+* **module:markdown:** fix missing dependencies ([#15](https://github.com/ng-util/ng-util/issues/15)) ([a0b3bf0](https://github.com/ng-util/ng-util/commit/a0b3bf00c1588cf5186b8988ded49b14392232e0))
+
+
 # [10.1.0](https://github.com/ng-util/ng-util/compare/10.0.0...10.1.0) (2020-07-11)
 
 
