@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "@ng-util/util/*": ["../../dist/@ng-util/util/*"],
       "@ng-util/*": ["../../dist/@ng-util/*"]
     }
   }
