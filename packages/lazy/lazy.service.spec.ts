@@ -50,7 +50,7 @@ describe('ng-util: lazy', () => {
   describe('#IE', () => {
     it('should be load a js resource', done => {
       isIE = true;
-      srv.change.subscribe(res => {
+      srv.monitor().subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();
       });
@@ -69,7 +69,7 @@ describe('ng-util: lazy', () => {
         return mockObj;
       };
       spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName as any);
-      srv.change.subscribe(res => {
+      srv.monitor().subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();
       });
@@ -79,7 +79,7 @@ describe('ng-util: lazy', () => {
 
   describe('Scripts', () => {
     it('should be load a js resource', done => {
-      srv.change.subscribe(res => {
+      srv.monitor().subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();
       });
@@ -96,7 +96,7 @@ describe('ng-util: lazy', () => {
 
   describe('Styles', () => {
     it('should be load a css resource', done => {
-      srv.change.subscribe(res => {
+      srv.monitor().subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();
       });
@@ -145,10 +145,21 @@ describe('ng-util: lazy', () => {
 
   it('should be bad resource', done => {
     testStatus = 'bad';
-    srv.change.subscribe(res => {
+    srv.monitor().subscribe(res => {
       expect(res[0].status).toBe('error');
       done();
     });
     srv.load('/3.js');
+  });
+
+  it('should be monitor to some resources', done => {
+    const libs = ['/1.js', '/2.js'];
+    srv.monitor(libs).subscribe(res => {
+      expect(res.length).toBe(libs.length);
+      expect(res[0].status).toBe('ok');
+      expect(res[1].status).toBe('ok');
+      done();
+    });
+    srv.load(libs);
   });
 });

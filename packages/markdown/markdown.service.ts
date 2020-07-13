@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { NuLazyService } from '@ng-util/lazy';
 import { Observable, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
 
 @Injectable({ providedIn: 'root' })
@@ -30,18 +29,14 @@ export class NuMarkdownService {
       return this;
     }
     this.loading = true;
+
     const libs = this.libs!;
-    this.lazySrv.change
-      .pipe(
-        filter(ls => {
-          return ls.length === libs.length && ls.some(v => v.status === 'ok' && libs.includes(v.path));
-        }),
-      )
-      .subscribe(() => {
-        this.loaded = true;
-        this.notify$.next();
-      });
+    this.lazySrv
+      .monitor(libs)
+      .subscribe(() => this.notify$.next())
+      .add(() => (this.loaded = true));
     this.lazySrv.load(libs);
+
     return this;
   }
 }
