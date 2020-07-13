@@ -45,7 +45,7 @@ export class DemoComponent {
 
 | name | type | description |
 | ---- | -- | ----------- |
-| `events` | `Observable<NuLazyResult[]>` | Events change callback |
+| `monitor(paths: string ｜ string[])` | `Observable<NuLazyResult[]>` | Monitor for the finished of `paths` |
 | `clear()` | `void` | Clean all cached items |
 | `load(paths: string ｜ string[])` | `Promise<NuLazyResult[]>` | Load the specified resources, includes `.js`, `.css` |
 | `loadScript(path: string, options?: { innerContent?: string })` | `Promise<NuLazyResult>` | Load a script resources |
