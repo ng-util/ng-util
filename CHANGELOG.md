@@ -1,3 +1,17 @@
+# [10.2.0](https://github.com/ng-util/ng-util/compare/10.0.0...10.2.0) (2020-07-13)
+
+
+### Bug Fixes
+
+* **module:markdown:** fix unable to load again ([#18](https://github.com/ng-util/ng-util/issues/18)) ([e898683](https://github.com/ng-util/ng-util/commit/e898683092a6bc5d316200ca39ab495cb998b0df))
+
+
+### Features
+
+* **module:lazy:** use `monitor` instead `change` ([#19](https://github.com/ng-util/ng-util/issues/19)) ([bbf1135](https://github.com/ng-util/ng-util/commit/bbf1135669a72f5a7c8c53905763898c655e440d))
+
+
+
 ## [10.1.1](https://github.com/ng-util/ng-util/compare/10.0.0...10.1.1) (2020-07-11)
 
 
