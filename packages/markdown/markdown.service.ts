@@ -33,8 +33,10 @@ export class NuMarkdownService {
     const libs = this.libs!;
     this.lazySrv
       .monitor(libs)
-      .subscribe(() => this.notify$.next())
-      .add(() => (this.loaded = true));
+      .subscribe(() => {
+        this.notify$.next();
+        this.loaded = true;
+      });
     this.lazySrv.load(libs);
 
     return this;
