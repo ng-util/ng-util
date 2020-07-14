@@ -31,10 +31,10 @@ export class NuMarkdownService {
     this.loading = true;
 
     const libs = this.libs!;
-    this.lazySrv
-      .monitor(libs)
-      .subscribe(() => this.notify$.next())
-      .add(() => (this.loaded = true));
+    this.lazySrv.monitor(libs).subscribe(() => {
+      this.loaded = true;
+      this.notify$.next();
+    });
     this.lazySrv.load(libs);
 
     return this;
