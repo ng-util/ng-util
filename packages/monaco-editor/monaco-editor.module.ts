@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorDiffComponent } from './monaco-editor-diff.component';
 import { NuMonacoEditorComponent } from './monaco-editor.component';
 import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.config';
@@ -8,7 +9,7 @@ const COMPONENTS = [NuMonacoEditorComponent, NuMonacoEditorDiffComponent];
 
 @NgModule({
   imports: [CommonModule],
-  declarations: COMPONENTS,
+  declarations: [NuMonacoEditorBase, ...COMPONENTS],
   exports: COMPONENTS,
 })
 export class NuMonacoEditorModule {

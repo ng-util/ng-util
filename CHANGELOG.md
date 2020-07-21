@@ -1,3 +1,7 @@
+## [10.2.2](https://github.com/ng-util/ng-util/compare/10.2.0...10.2.2) (2020-07-21)
+
+
+
 # [10.2.0](https://github.com/ng-util/ng-util/compare/10.0.0...10.2.0) (2020-07-13)
 
 
