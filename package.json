@@ -1,6 +1,6 @@
 {
   "name": "ng-util",
-  "version": "10.2.1",
+  "version": "10.2.2",
   "description": "Angular utilities",
   "keywords": [
     "angular",
@@ -24,7 +24,7 @@
     "build": "bash scripts/ci/build.sh",
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
-    "pre-publish": "npm run build && node scripts/publish/publish.js",
+    "pre-publish": "node scripts/publish/publish.js",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh"
   },
