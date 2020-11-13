@@ -1,21 +1,6 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  forwardRef,
-  Inject,
-  Input,
-  NgZone,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputNumber } from '@ng-util/util/convert';
-import { Subscription } from 'rxjs';
-import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
-import { NuMarkdownService } from './markdown.service';
+import { NuMarkdownBaseComponent } from './markdown-base.component';
 
 declare var Vditor: any;
 
@@ -32,34 +17,14 @@ declare var Vditor: any;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NuMarkdownComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
-  get instance(): any {
-    return this._instance;
-  }
-
-  constructor(
-    protected el: ElementRef<HTMLElement>,
-    @Inject(NU_MARKDOWN_CONFIG) private config: NuMarkdownConfig,
-    private srv: NuMarkdownService,
-    protected ngZone: NgZone,
-  ) {
-    this.notify$ = this.srv.notify.subscribe(() => this.initDelay());
-  }
-
-  private notify$: Subscription;
-  private _instance: any;
+export class NuMarkdownComponent extends NuMarkdownBaseComponent implements ControlValueAccessor {
   private _value: string;
   @Input() options: any;
   @Input() disabled: boolean;
-  @Input() @InputNumber() delay: number;
   @Output() ready = new EventEmitter<any>();
   private onChange = (_: string) => {};
 
-  private initDelay(): void {
-    setTimeout(() => this.init(), this.delay);
-  }
-
-  private init(): void {
+  protected init(): void {
     this.ngZone.runOutsideAngular(() => {
       const options = {
         value: this._value,
@@ -78,7 +43,7 @@ export class NuMarkdownComponent implements ControlValueAccessor, AfterViewInit,
         ...this.options,
       };
       this._instance = new Vditor(this.el.nativeElement, options);
-      this.ready.emit(this._instance);
+      this.ngZone.run(() => this.ready.emit(this._instance));
     });
   }
 
@@ -109,17 +74,5 @@ export class NuMarkdownComponent implements ControlValueAccessor, AfterViewInit,
   setDisabledState(_isDisabled: boolean): void {
     this.disabled = _isDisabled;
     this.setDisabled();
-  }
-
-  ngAfterViewInit(): void {
-    if ((window as any).QRious) {
-      this.initDelay();
-      return;
-    }
-    this.srv.load();
-  }
-
-  ngOnDestroy(): void {
-    this.notify$.unsubscribe();
   }
 }

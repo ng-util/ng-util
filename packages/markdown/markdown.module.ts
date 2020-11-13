@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NuMarkdownPreviewComponent } from './markdown-preview.component';
 import { NuMarkdownComponent } from './markdown.component';
 import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
 
-const COMPONENTS = [NuMarkdownComponent];
+const COMPONENTS = [NuMarkdownComponent, NuMarkdownPreviewComponent];
 
 @NgModule({
   imports: [CommonModule],

@@ -54,16 +54,32 @@ export class DemoComponent {
 }
 ```
 
+**Preview**
+
+You can use `nu-markdown-preview` component to render a Markdown preview effect (no editing).
+
+```html
+<nu-markdown-preview value="# Title"></nu-markdown-preview>
+```
+
 ## API
 
 ### nu-markdown
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[options]` | Equar [IOptions](https://github.com/Vanessa219/vditor/blob/master/types/index.d.ts#L432) | `any` | - |
+| `[options]` | Equar [IOptions](https://ld246.com/article/1549638745630#options) | `any` | - |
 | `[disabled]` | Disabled of markdown editor | `boolean` | `false` |
 | `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
 | `(ready)` | Ready event | `EventEmitter<any>` | - |
+
+### nu-markdown-preview
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[options]` | Equar [IOptions](https://ld246.com/article/1549638745630#options-preview) | `any` | - |
+| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
+| `(ready)` | Ready event | `EventEmitter<string>` | - |
 
 ### License
 
