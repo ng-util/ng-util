@@ -1,3 +1,12 @@
+# [11.1.0](https://github.com/ng-util/ng-util/compare/11.0.0...11.1.0) (2020-11-13)
+
+
+### Features
+
+* **module:markdown:** add `nu-markdown-preview` component ([#26](https://github.com/ng-util/ng-util/issues/26)) ([6affc7a](https://github.com/ng-util/ng-util/commit/6affc7a681d3ac665b4d96fc9c963236cb61c66c))
+
+
+
 # [11.0.0](https://github.com/ng-util/ng-util/compare/10.2.0...11.0.0) (2020-11-13)
 
 Just bump angular version from `10` to `11`.
