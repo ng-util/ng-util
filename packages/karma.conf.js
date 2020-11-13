@@ -11,34 +11,30 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-spec-reporter'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
-      require('karma-junit-reporter'),
+      require('karma-coverage'), // -istanbul-reporter
       require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-viewport')
+      require('karma-viewport'),
     ],
     client: {
       jasmine: {
-        random: false
+        random: false,
       },
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
-      ...tags && { args: [tags] }
+      ...(tags && { args: [tags] }),
     },
-    coverageIstanbulReporter: {
+    coverageReporter: {
       dir: require('path').join(__dirname, '../coverage'),
       reports: ['html', 'lcovonly', 'text-summary', 'cobertura'],
-      fixWebpackSourcePaths: true
+      fixWebpackSourcePaths: true,
     },
-    reporters: ['progress', 'kjhtml', 'spec', 'junit'],
-    junitReporter: {
-      outputDir: '../junit'
-    },
+    reporters: ['progress', 'kjhtml', 'spec'],
     specReporter: {
       maxLogLines: 5,
       suppressErrorSummary: true,
       suppressFailed: false,
       suppressPassed: false,
       suppressSkipped: true,
-      showSpecTiming: false
+      showSpecTiming: false,
     },
     port: 9876,
     colors: true,
@@ -48,8 +44,8 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
-      }
+        flags: ['--no-sandbox'],
+      },
     },
     singleRun: false,
     restartOnFileChange: true,

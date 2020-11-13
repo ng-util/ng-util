@@ -3,7 +3,6 @@
 # **/*.html
 **/test.ts
 
-.stylelintrc
 .prettierrc
 
 _nginx/
