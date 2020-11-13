@@ -1,3 +1,8 @@
+# [11.0.0](https://github.com/ng-util/ng-util/compare/10.2.0...11.0.0) (2020-11-13)
+
+Just bump angular version from `10` to `11`.
+
+
 ## [10.2.2](https://github.com/ng-util/ng-util/compare/10.2.0...10.2.2) (2020-07-21)
 
 
