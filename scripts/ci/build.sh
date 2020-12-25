@@ -92,7 +92,7 @@ fix() {
   perl -p -i -e "s/types=\"monaco\"/path=\"monaco.d.ts\"/g" ${DIST}/monaco-editor/monaco-editor.types.d.ts < /dev/null 2> /dev/null
 }
 
-# build
+build
 fix
 
 echo 'FINISHED!'
