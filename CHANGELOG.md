@@ -1,3 +1,12 @@
+## [11.1.1](https://github.com/ng-util/ng-util/compare/11.1.0...11.1.1) (2020-12-25)
+
+
+### Bug Fixes
+
+* fix losing `monaco.d.ts` ([#29](https://github.com/ng-util/ng-util/issues/29)) ([c49807b](https://github.com/ng-util/ng-util/commit/c49807bbd5adafa00ea405b9049a3c5d6980cd07))
+
+
+
 # [11.1.0](https://github.com/ng-util/ng-util/compare/11.0.0...11.1.0) (2020-11-13)
 
 
