@@ -17,16 +17,6 @@ export class NuLazyService {
 
   constructor(@Inject(DOCUMENT) private doc: any) {}
 
-  /**
-   * @deprecated Use `monitor()` method instead, removed it in `11.0.0`
-   */
-  get change(): Observable<NuLazyResult[]> {
-    return this._notify.asObservable().pipe(
-      share(),
-      filter(ls => ls.length !== 0),
-    );
-  }
-
   private fixPaths(paths?: string | string[]): string[] {
     if (typeof paths === 'string') {
       paths = [paths];
