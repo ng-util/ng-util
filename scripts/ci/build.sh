@@ -86,6 +86,8 @@ build() {
 }
 
 fix() {
+  # monaco-editor
+  cp node_modules/monaco-editor/monaco.d.ts ${DIST}/monaco-editor
   # 修复 ng-packagr 对三斜线指令的处理
   perl -p -i -e "s/types=\"monaco\"/path=\"monaco.d.ts\"/g" ${DIST}/monaco-editor/monaco-editor.types.d.ts < /dev/null 2> /dev/null
 }
