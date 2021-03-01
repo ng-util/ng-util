@@ -1,3 +1,17 @@
+# [11.2.0](https://github.com/ng-util/ng-util/compare/11.1.0...11.2.0) (2021-03-01)
+
+
+### Bug Fixes
+
+* fix losing `monaco.d.ts` ([#29](https://github.com/ng-util/ng-util/issues/29)) ([c49807b](https://github.com/ng-util/ng-util/commit/c49807bbd5adafa00ea405b9049a3c5d6980cd07))
+
+
+### Features
+
+* **module:lazy:** allow to specify resource type ([#32](https://github.com/ng-util/ng-util/issues/32)) ([86c6cb5](https://github.com/ng-util/ng-util/commit/86c6cb535a5a8264f230f911d7adad7004fa6d31))
+
+
+
 ## [11.1.1](https://github.com/ng-util/ng-util/compare/11.1.0...11.1.1) (2020-12-25)
 
 
