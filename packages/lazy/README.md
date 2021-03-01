@@ -45,9 +45,9 @@ export class DemoComponent {
 
 | name | type | description |
 | ---- | -- | ----------- |
-| `monitor(paths: string ｜ string[])` | `Observable<NuLazyResult[]>` | Monitor for the finished of `paths` |
+| `monitor(paths: string ｜ Array<string ｜ NuLazyResources>)` | `Observable<NuLazyResult[]>` | Monitor for the finished of `paths` |
 | `clear()` | `void` | Clean all cached items |
-| `load(paths: string ｜ string[])` | `Promise<NuLazyResult[]>` | Load the specified resources, includes `.js`, `.css` |
+| `load(paths: string ｜ Array<string ｜ NuLazyResources>)` | `Promise<NuLazyResult[]>` | Load the specified resources, includes `.js`, `.css` |
 | `loadScript(path: string, options?: { innerContent?: string })` | `Promise<NuLazyResult>` | Load a script resources |
 | `loadStyle(path: string, options?: { ref?: string, innerContent?: string })` | `Promise<NuLazyResult>` | Load a style resources |
 

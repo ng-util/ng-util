@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
-import { NuLazyService } from './lazy.service';
+import { NuLazyResources, NuLazyService } from './lazy.service';
 
 let isIE = false;
 let testStatus = 'ok';
@@ -92,6 +92,14 @@ describe('ng-util: lazy', () => {
       srv.loadScript('/1.js', { innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
+    it('should be callback', done => {
+      srv.monitor().subscribe(res => {
+        expect(res[0].status).toBe('ok');
+        done();
+      });
+      srv.load([{ path: '/1.js', type: 'script', callback: 'A' }] as NuLazyResources[]);
+      (window as any).A();
+    });
   });
 
   describe('Styles', () => {
@@ -161,5 +169,15 @@ describe('ng-util: lazy', () => {
       done();
     });
     srv.load(libs);
+  });
+
+  it('should be NuLazyResources type', done => {
+    const data = ['/1.js', { path: '/2.js', type: 'style' }] as any;
+    srv.monitor(data).subscribe(res => {
+      expect(res[0].status).toBe('ok');
+      expect(res[1].type).toBe('style');
+      done();
+    });
+    srv.load(data);
   });
 });
