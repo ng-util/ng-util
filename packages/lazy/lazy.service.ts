@@ -3,9 +3,21 @@ import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { filter, share } from 'rxjs/operators';
 
+export type NuLazyResourcesType = 'script' | 'style';
+
+export interface NuLazyResources {
+  path: string;
+  type: NuLazyResourcesType;
+  /**
+   * 回调名称
+   */
+  callback?: string;
+}
+
 export interface NuLazyResult {
   path: string;
   status: 'ok' | 'error' | 'loading';
+  type?: NuLazyResourcesType;
   error?: {};
 }
 
@@ -17,11 +29,18 @@ export class NuLazyService {
 
   constructor(@Inject(DOCUMENT) private doc: any) {}
 
-  private fixPaths(paths?: string | string[]): string[] {
-    if (typeof paths === 'string') {
+  private fixPaths(paths?: string | Array<string | NuLazyResources>): NuLazyResources[] {
+    paths = paths || [];
+    if (!Array.isArray(paths)) {
       paths = [paths];
     }
-    return paths! || [];
+    return paths.map((p: string | NuLazyResources) => {
+      const res = (typeof p === 'string' ? { path: p } : p) as NuLazyResources;
+      if (!res.type) {
+        res.type = res.path.endsWith('.js') || res.callback ? 'script' : 'style';
+      }
+      return res;
+    });
   }
 
   /**
@@ -29,13 +48,17 @@ export class NuLazyService {
    *
    * - It's recommended to pass the value in accordance with the `load()` method
    */
-  monitor(paths?: string | string[]): Observable<NuLazyResult[]> {
+  monitor(paths?: string | Array<string | NuLazyResources>): Observable<NuLazyResult[]> {
     const libs = this.fixPaths(paths);
 
     const pipes = [share(), filter((ls: NuLazyResult[]) => ls.length !== 0)];
 
     if (libs.length > 0) {
-      pipes.push(filter((ls: NuLazyResult[]) => ls.length === libs.length && ls.some(v => v.status === 'ok' && libs.includes(v.path))));
+      pipes.push(
+        filter(
+          (ls: NuLazyResult[]) => ls.length === libs.length && ls.every(v => v.status === 'ok' && libs.find(lw => lw.path === v.path)),
+        ),
+      );
     }
 
     return this._notify.asObservable().pipe(pipe.apply(this, pipes));
@@ -52,16 +75,20 @@ export class NuLazyService {
    * - The returned Promise does not mean that it was successfully loaded
    * - You can monitor load is success via `monitor()`
    */
-  async load(paths: string | string[]): Promise<NuLazyResult[]> {
+  async load(paths: string | Array<string | NuLazyResources>): Promise<NuLazyResult[]> {
     paths = this.fixPaths(paths);
 
-    return Promise.all(paths.map(path => (path.endsWith('.js') ? this.loadScript(path) : this.loadStyle(path)))).then(res => {
+    return Promise.all(
+      (paths as NuLazyResources[]).map(p =>
+        p.type === 'script' ? this.loadScript(p.path, { callback: p.callback }) : this.loadStyle(p.path),
+      ),
+    ).then(res => {
       this._notify.next(res);
       return Promise.resolve(res);
     });
   }
 
-  loadScript(path: string, options?: { innerContent?: string }): Promise<NuLazyResult> {
+  loadScript(path: string, options?: { innerContent?: string; callback?: string }): Promise<NuLazyResult> {
     const { innerContent } = { ...options };
     return new Promise(resolve => {
       if (this.list[path] === true) {
@@ -71,6 +98,16 @@ export class NuLazyService {
 
       this.list[path] = true;
       const onSuccess = (item: NuLazyResult) => {
+        if (item.status === 'ok' && options?.callback) {
+          (window as any)[options?.callback] = () => {
+            onSuccessTruth(item);
+          };
+        } else {
+          onSuccessTruth(item);
+        }
+      };
+      const onSuccessTruth = (item: NuLazyResult) => {
+        item.type = 'script';
         this.cached[path] = item;
         resolve(item);
         this._notify.next([item]);
@@ -132,6 +169,7 @@ export class NuLazyService {
       const item: NuLazyResult = {
         path,
         status: 'ok',
+        type: 'style',
       };
       this.cached[path] = item;
       resolve(item);
