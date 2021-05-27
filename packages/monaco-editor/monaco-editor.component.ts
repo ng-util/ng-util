@@ -46,6 +46,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
       }
     }
 
+    options.readOnly = this._disabled;
     const editor = (this._editor = monaco.editor.create(this.el.nativeElement, options));
 
     if (!hasModel) {
