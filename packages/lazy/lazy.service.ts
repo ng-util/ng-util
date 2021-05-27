@@ -61,7 +61,7 @@ export class NuLazyService {
       );
     }
 
-    return this._notify.asObservable().pipe(pipe.apply(this, pipes));
+    return this._notify.asObservable().pipe(pipe.apply(this, pipes as any) as any);
   }
 
   clear(): void {

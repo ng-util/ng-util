@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Inject, Input, NgZone, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Output } from '@angular/core';
 import { InputNumber } from '@ng-util/util/convert';
 import { Subscription } from 'rxjs';
 import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
@@ -9,7 +9,19 @@ export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestro
   private notify$: Subscription;
   protected _instance: any;
 
-  @Input() @InputNumber() delay: number;
+  @Input() @InputNumber() delay = 0;
+  @Input() disabled = false;
+  @Input() options: any;
+  @Output() ready = new EventEmitter<string>();
+
+  protected _value!: string;
+  @Input()
+  set value(v: string) {
+    this._value = v;
+    if (this.loaded) {
+      this.init();
+    }
+  }
 
   get instance(): any {
     return this._instance;

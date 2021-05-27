@@ -25,11 +25,11 @@ let loadPromise: Promise<void>;
   selector: 'nu-monaco-base',
   template: ``,
 })
-// tslint:disable-next-line: component-class-suffix
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
   protected _editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
-  protected _options: monaco.editor.IStandaloneEditorConstructionOptions;
-  protected _resize$: Subscription;
+  protected _options!: monaco.editor.IStandaloneEditorConstructionOptions;
+  protected _resize$: Subscription | null = null;
   protected _config: NuMonacoEditorConfig;
   protected _disabled = false;
 

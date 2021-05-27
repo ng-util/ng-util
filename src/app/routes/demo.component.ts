@@ -39,7 +39,7 @@ export class DemoComponent {
     code: 'const a = 2;',
     language: 'typescript',
   };
-  jsonModel: NuMonacoEditorModel;
+  jsonModel: NuMonacoEditorModel | null = null;
 
   setTheme(theme: string): void {
     this.options = { theme };
