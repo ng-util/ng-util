@@ -13,8 +13,8 @@ import { NuMonacoEditorDiffModel } from './monaco-editor.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
-  @Input() old: NuMonacoEditorDiffModel;
-  @Input() new: NuMonacoEditorDiffModel;
+  @Input() old!: NuMonacoEditorDiffModel;
+  @Input() new!: NuMonacoEditorDiffModel;
 
   get editor(): monaco.editor.IStandaloneDiffEditor {
     return this._editor as monaco.editor.IStandaloneDiffEditor;

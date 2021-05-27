@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NuMarkdownBaseComponent } from './markdown-base.component';
 
@@ -18,10 +18,6 @@ declare var Vditor: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NuMarkdownComponent extends NuMarkdownBaseComponent implements ControlValueAccessor {
-  private _value: string;
-  @Input() options: any;
-  @Input() disabled: boolean;
-  @Output() ready = new EventEmitter<any>();
   private onChange = (_: string) => {};
 
   protected init(): void {
