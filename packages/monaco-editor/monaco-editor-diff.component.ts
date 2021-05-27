@@ -26,6 +26,7 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
     }
 
     const theme = options.theme;
+    options.readOnly = this._disabled;
     const editor = (this._editor = monaco.editor.createDiffEditor(this.el.nativeElement, options));
     options.theme = theme;
     editor.setModel({
