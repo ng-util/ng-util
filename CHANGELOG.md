@@ -1,3 +1,19 @@
+# [12.1.0](https://github.com/ng-util/ng-util/compare/11.1.0...12.1.0) (2021-08-02)
+
+
+### Bug Fixes
+
+* fix invalid disabled in init ([#37](https://github.com/ng-util/ng-util/issues/37)) ([633e28a](https://github.com/ng-util/ng-util/commit/633e28a202b3dcba99919f3016818fc97b2dd11f))
+* fix losing `monaco.d.ts` ([#29](https://github.com/ng-util/ng-util/issues/29)) ([c49807b](https://github.com/ng-util/ng-util/commit/c49807bbd5adafa00ea405b9049a3c5d6980cd07))
+
+
+### Features
+
+* **module:lazy:** allow to specify resource type ([#32](https://github.com/ng-util/ng-util/issues/32)) ([86c6cb5](https://github.com/ng-util/ng-util/commit/86c6cb535a5a8264f230f911d7adad7004fa6d31))
+* **module:monaco:** add monacoPreLoad Config ([#40](https://github.com/ng-util/ng-util/issues/40)) ([ab2396b](https://github.com/ng-util/ng-util/commit/ab2396b9b2ccfffd9c90a45bd1f18db28eab5df3))
+
+
+
 # [12.0.0](https://github.com/ng-util/ng-util/compare/11.1.0...12.0.0) (2021-05-27)
 
 
