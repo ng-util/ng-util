@@ -1,3 +1,12 @@
+## [12.1.1](https://github.com/ng-util/ng-util/compare/12.1.0...12.1.1) (2021-08-02)
+
+
+### Bug Fixes
+
+* should be close  ivy of npm package ([#43](https://github.com/ng-util/ng-util/issues/43)) ([9d15111](https://github.com/ng-util/ng-util/commit/9d151116c782a88059adbf25056d80e76e4d0fa6))
+
+
+
 # [12.1.0](https://github.com/ng-util/ng-util/compare/11.1.0...12.1.0) (2021-08-02)
 
 
