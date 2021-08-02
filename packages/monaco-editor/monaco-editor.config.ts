@@ -17,4 +17,8 @@ export interface NuMonacoEditorConfig {
    * - @param `_monaco` equar to `window.monaco`
    */
   monacoLoad?: (_monaco: any) => void;
+  /**
+   * The event before the first preload of the monaco editor library is completed, use this function to set nls availableLanguages.
+   */
+  monacoPreLoad?: () => void;
 }

@@ -59,7 +59,7 @@ export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
     this.options = this._config.defaultOptions!;
   }
 
-  protected initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void {}
+  protected initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void { }
 
   protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
     this.ngZone.run(() => this.event.emit({ type, editor: this._editor!, ...other }));
@@ -94,6 +94,9 @@ export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
       const baseUrl = this._config.baseUrl;
       const amdLoader = () => {
         win.require.config({ paths: { vs: `${baseUrl}/vs` } });
+        if (typeof this._config.monacoPreLoad === 'function') {
+          this._config.monacoPreLoad();
+        }
         win.require(
           ['vs/editor/editor.main'],
           () => {
