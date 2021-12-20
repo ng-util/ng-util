@@ -29,7 +29,7 @@ publishToNext() {
 }
 
 syncTaobao() {
-  (cd ${DIST}/@ng-util; for p in `ls .`; do curl -X PUT https://npm.taobao.org/sync/@ng-util/$p?sync_upstream=true; done)
+  (cd ${DIST}/@ng-util; for p in `ls .`; do curl -X PUT https://npmmirror.com/sync/@ng-util/$p?sync_upstream=true; done)
 }
 
 ./scripts/ci/build.sh
