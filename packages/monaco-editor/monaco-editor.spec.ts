@@ -21,7 +21,7 @@ describe('ng-util: monaco-editor', () => {
     return TestBed.createComponent(comp);
   }
 
-  it('should be working', done => {
+  xit('should be working', done => {
     const fixture = create(TestComponent);
     fixture.componentInstance.options = { readOnly: true };
     const changeSpy = spyOn(fixture.componentInstance, 'onChange');
