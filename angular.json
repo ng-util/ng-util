@@ -90,8 +90,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "node_modules/monaco-editor/min/vs",
-                "output": "/lib/vs"
+                "input": "node_modules/monaco-editor/min",
+                "output": "/monaco-editor/min"
               }
             ]
           }

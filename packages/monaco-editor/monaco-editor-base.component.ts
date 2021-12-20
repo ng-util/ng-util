@@ -31,7 +31,7 @@ export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
   protected _options!: monaco.editor.IStandaloneEditorConstructionOptions;
   protected _resize$: Subscription | null = null;
   protected _config: NuMonacoEditorConfig;
-  protected _disabled = false;
+  protected _disabled?: boolean;
 
   @Input() height = `200px`;
   @Input() delay = 0;
@@ -55,11 +55,11 @@ export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(DOCUMENT) protected doc: any,
     protected ngZone: NgZone,
   ) {
-    this._config = { baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min', ...config };
+    this._config = { baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor/min', ...config };
     this.options = this._config.defaultOptions!;
   }
 
-  protected initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void { }
+  protected initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void {}
 
   protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
     this.ngZone.run(() => this.event.emit({ type, editor: this._editor!, ...other }));
