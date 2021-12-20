@@ -1,3 +1,12 @@
+## [12.1.2](https://github.com/ng-util/ng-util/compare/12.1.1...12.1.2) (2021-12-20)
+
+
+### Bug Fixes
+
+* fix invalid `option.readOnly` ([#48](https://github.com/ng-util/ng-util/issues/48)) ([6840ad2](https://github.com/ng-util/ng-util/commit/6840ad22866eab275b1d66785be1b703623ebe05))
+
+
+
 ## [12.1.1](https://github.com/ng-util/ng-util/compare/12.1.0...12.1.1) (2021-08-02)
 
 
