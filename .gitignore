@@ -23,5 +23,4 @@ src/assets/color.less
 /_scaffold
 /integration
 
-monaco.d.ts
 packages/markdown/vditor/

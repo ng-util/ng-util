@@ -24,8 +24,18 @@
     ],
     "paths": {
       "@ng-util/*": ["./packages/*"]
-    }
+    },
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true
   },
+  "exclude": ["node_modules", "tmp"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
