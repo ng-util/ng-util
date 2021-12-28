@@ -1,3 +1,7 @@
+# [13.0.0](https://github.com/ng-util/ng-util/compare/12.1.2...13.0.0) (2021-12-28)
+
+
+
 ## [12.1.2](https://github.com/ng-util/ng-util/compare/12.1.1...12.1.2) (2021-12-20)
 
 
