@@ -9,7 +9,7 @@ const COMPONENTS = [NuMonacoEditorComponent, NuMonacoEditorDiffComponent];
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [NuMonacoEditorBase, ...COMPONENTS],
+  declarations: COMPONENTS,
   exports: COMPONENTS,
 })
 export class NuMonacoEditorModule {

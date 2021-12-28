@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@ng-util/util/convert",
+  "deleteDestPath": true,
+  "lib": {
+    "flatModuleFile": "utilConvert",
+    "entryFile": "./public-api.ts"
+  }
+}

@@ -5,6 +5,7 @@ yarn.lock
 yarn-error.log
 /coverage
 /coverage-report
+/.angular/cache
 
 .tmp
 .lib
