@@ -5,6 +5,24 @@ import { NuLazyResources, NuLazyService } from './lazy.service';
 let isIE = false;
 let testStatus = 'ok';
 class MockDocument {
+  querySelectorAll = () => {
+    return [
+      {
+        appendChild: (node: any) => {
+          if (node.testStatus === 'ok') {
+            if (node.readyState) {
+              node.readyState = 'complete';
+              node.onreadystatechange();
+            } else {
+              node.onload();
+            }
+            return;
+          }
+          node.onerror();
+        },
+      },
+    ];
+  };
   getElementsByTagName = () => {
     return [
       {

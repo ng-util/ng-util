@@ -26,7 +26,7 @@ let loadPromise: Promise<void>;
   template: ``,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
+export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
   protected _editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
   protected _options!: monaco.editor.IStandaloneEditorConstructionOptions;
   protected _resize$: Subscription | null = null;
@@ -59,7 +59,7 @@ export class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
     this.options = this._config.defaultOptions!;
   }
 
-  protected initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void {}
+  protected abstract initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void;
 
   protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
     this.ngZone.run(() => this.event.emit({ type, editor: this._editor!, ...other }));

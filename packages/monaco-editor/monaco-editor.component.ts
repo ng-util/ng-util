@@ -23,7 +23,7 @@ import { NuMonacoEditorModel } from './monaco-editor.types';
 export class NuMonacoEditorComponent extends NuMonacoEditorBase implements ControlValueAccessor {
   private _value = '';
 
-  @Input() model?: NuMonacoEditorModel;
+  @Input() model?: NuMonacoEditorModel | null;
 
   get editor(): monaco.editor.IStandaloneCodeEditor {
     return this._editor as monaco.editor.IStandaloneCodeEditor;

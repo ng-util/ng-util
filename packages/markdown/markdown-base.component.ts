@@ -6,7 +6,7 @@ import { NuMarkdownService } from './markdown.service';
 
 @Directive()
 export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestroy {
-  private notify$: Subscription;
+  private notify$!: Subscription;
   protected _instance: any;
 
   @Input() @InputNumber() delay = 0;

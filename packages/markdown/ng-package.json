@@ -3,11 +3,7 @@
   "dest": "../../dist/@ng-util/markdown",
   "deleteDestPath": true,
   "lib": {
-    "entryFile": "./public-api.ts",
-    "umdModuleIds": {
-      "@ng-util/util/convert": "@ng-util/util/convert",
-      "@ng-util/lazy": "@ng-util/lazy"
-    }
+    "entryFile": "./public-api.ts"
   },
-  "whitelistedNonPeerDependencies": ["tslib", "@ng-util/util", "@ng-util/lazy"]
+  "allowedNonPeerDependencies": ["@ng-util/util", "@ng-util/lazy"]
 }

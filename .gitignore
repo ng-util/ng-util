@@ -5,6 +5,7 @@ yarn.lock
 yarn-error.log
 /coverage
 /coverage-report
+/.angular/cache
 
 .tmp
 .lib
@@ -22,5 +23,4 @@ src/assets/color.less
 /_scaffold
 /integration
 
-monaco.d.ts
 packages/markdown/vditor/
