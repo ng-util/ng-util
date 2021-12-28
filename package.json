@@ -17,7 +17,7 @@
     "url": "git+https://github.com/ng-util/ng-util.git"
   },
   "scripts": {
-    "postinstall": "bash scripts/ci/install.sh",
+    "copy-monaco": "bash scripts/ci/install.sh",
     "lint": "ng l",
     "test": "ng t --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
     "site:build": "ng b",
