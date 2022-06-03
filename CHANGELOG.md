@@ -1,3 +1,12 @@
+# [13.1.0](https://github.com/ng-util/ng-util/compare/13.0.0...13.1.0) (2022-06-03)
+
+
+### Features
+
+* **monaco-editor:** add `autoFormat` property ([#53](https://github.com/ng-util/ng-util/issues/53)) ([3876252](https://github.com/ng-util/ng-util/commit/38762522b5407e28fa6e5a6e59ddfad5da3f31c3))
+
+
+
 # [13.0.0](https://github.com/ng-util/ng-util/compare/12.1.2...13.0.0) (2021-12-28)
 
 
