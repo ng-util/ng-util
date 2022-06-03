@@ -216,6 +216,7 @@ export class DemoComponent {
 |----------|-------------|------|---------|
 | `[height]` | Height of monaco editor | `string` | `200px` |
 | `[disabled]` | Disabled of monaco editor | `boolean` | `false` |
+| `[autoFormat]` | Whether to automatically format the document | `boolean` | `true` |
 | `[options]` | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | - |
 | `[model]` | Model of monaco editor | `NuMonacoEditorModel` | - |
 | `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |

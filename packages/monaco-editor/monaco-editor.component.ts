@@ -24,6 +24,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   private _value = '';
 
   @Input() model?: NuMonacoEditorModel | null;
+  @Input() autoFormat = true;
 
   get editor(): monaco.editor.IStandaloneCodeEditor {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
@@ -64,10 +65,15 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     editor.onDidBlurEditorWidget(() => this.onTouched());
 
     this.registerResize();
-    editor
-      .getAction('editor.action.formatDocument')
-      .run()
-      .then(() => this.notifyEvent(initEvent ? 'init' : 're-init'));
+
+    if (this.autoFormat) {
+      editor
+        .getAction('editor.action.formatDocument')
+        .run()
+        .then(() => this.notifyEvent(initEvent ? 'init' : 're-init'));
+      return;
+    }
+    this.notifyEvent(initEvent ? 'init' : 're-init');
   }
 
   writeValue(value: string): void {
