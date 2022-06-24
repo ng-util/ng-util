@@ -16,7 +16,8 @@
     "util",
     "Angular utilities",
     "lazy",
-    "load"
+    "load",
+    "angular standalone library"
   ],
   "sideEffects": false
 }

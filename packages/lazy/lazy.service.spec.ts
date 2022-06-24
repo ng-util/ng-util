@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { take } from 'rxjs';
 import { NuLazyResources, NuLazyService } from './lazy.service';
 
 let isIE = false;
@@ -68,10 +69,13 @@ describe('ng-util: lazy', () => {
   describe('#IE', () => {
     it('should be load a js resource', done => {
       isIE = true;
-      srv.monitor().subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+      srv
+        .monitor()
+        .pipe(take(1))
+        .subscribe(res => {
+          expect(res[0].status).toBe('ok');
+          done();
+        });
       srv.load(['/1.js']);
     });
     it('should be load a js resource unit stauts is complete', (done: () => void) => {
@@ -87,20 +91,26 @@ describe('ng-util: lazy', () => {
         return mockObj;
       };
       spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName as any);
-      srv.monitor().subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+      srv
+        .monitor()
+        .pipe(take(1))
+        .subscribe(res => {
+          expect(res[0].status).toBe('ok');
+          done();
+        });
       srv.load(['/1.js']);
     });
   });
 
   describe('Scripts', () => {
     it('should be load a js resource', done => {
-      srv.monitor().subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+      srv
+        .monitor()
+        .pipe(take(1))
+        .subscribe(res => {
+          expect(res[0].status).toBe('ok');
+          done();
+        });
       srv.load('/1.js');
     });
     it('should be custom content', () => {
@@ -111,10 +121,13 @@ describe('ng-util: lazy', () => {
       expect(res.innerHTML).toBe(content);
     });
     it('should be callback', done => {
-      srv.monitor().subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+      srv
+        .monitor()
+        .pipe(take(1))
+        .subscribe(res => {
+          expect(res[0].status).toBe('ok');
+          done();
+        });
       srv.load([{ path: '/1.js', type: 'script', callback: 'A' }] as NuLazyResources[]);
       (window as any).A();
     });
@@ -122,10 +135,13 @@ describe('ng-util: lazy', () => {
 
   describe('Styles', () => {
     it('should be load a css resource', done => {
-      srv.monitor().subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+      srv
+        .monitor()
+        .pipe(take(1))
+        .subscribe(res => {
+          expect(res[0].status).toBe('ok');
+          done();
+        });
       srv.load('/1.css');
     });
     it('should be load a less resource', done => {
@@ -171,10 +187,13 @@ describe('ng-util: lazy', () => {
 
   it('should be bad resource', done => {
     testStatus = 'bad';
-    srv.monitor().subscribe(res => {
-      expect(res[0].status).toBe('error');
-      done();
-    });
+    srv
+      .monitor()
+      .pipe(take(1))
+      .subscribe(res => {
+        expect(res[0].status).toBe('error');
+        done();
+      });
     srv.load('/3.js');
   });
 

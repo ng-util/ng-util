@@ -7,8 +7,7 @@ import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.c
 const COMPONENTS = [NuMonacoEditorComponent, NuMonacoEditorDiffComponent];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS,
 })
 export class NuMonacoEditorModule {
