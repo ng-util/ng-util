@@ -11,6 +11,7 @@ import { NuMonacoEditorDiffModel } from './monaco-editor.types';
     '[style.height]': 'height',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
   @Input() old!: NuMonacoEditorDiffModel | null;

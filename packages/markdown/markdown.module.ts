@@ -7,8 +7,7 @@ import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
 const COMPONENTS = [NuMarkdownComponent, NuMarkdownPreviewComponent];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS,
 })
 export class NuMarkdownModule {

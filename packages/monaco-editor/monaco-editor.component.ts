@@ -19,6 +19,7 @@ import { NuMonacoEditorModel } from './monaco-editor.types';
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class NuMonacoEditorComponent extends NuMonacoEditorBase implements ControlValueAccessor {
   private _value = '';

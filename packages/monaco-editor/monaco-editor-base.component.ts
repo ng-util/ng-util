@@ -24,6 +24,7 @@ let loadPromise: Promise<void>;
 @Component({
   selector: 'nu-monaco-base',
   template: ``,
+  standalone: true,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {

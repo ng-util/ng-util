@@ -14,7 +14,8 @@
   "keywords": [
     "angular",
     "util",
-    "Angular utilities"
+    "Angular utilities",
+    "angular standalone library"
   ],
   "sideEffects": false
 }

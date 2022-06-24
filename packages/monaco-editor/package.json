@@ -17,7 +17,8 @@
     "util",
     "Angular utilities",
     "monaco-editor",
-    "monaco"
+    "monaco",
+    "angular standalone library"
   ],
   "sideEffects": false
 }
