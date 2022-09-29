@@ -13,7 +13,7 @@ declare var Vditor: any;
 export class NuMarkdownPreviewComponent extends NuMarkdownBaseComponent {
   protected init(): void {
     this.ngZone.runOutsideAngular(async () => {
-      await Vditor.preview(this.el.nativeElement, this._value);
+      await Vditor.preview(this.el.nativeElement, this._value, this.options);
       this.ngZone.run(() => this.ready.emit(this.el.nativeElement.innerHTML));
     });
   }
