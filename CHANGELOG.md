@@ -1,3 +1,12 @@
+## [14.0.1](https://github.com/ng-util/ng-util/compare/14.0.0...14.0.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* **markdown:** add options to preview ([#60](https://github.com/ng-util/ng-util/issues/60)) ([e7c569b](https://github.com/ng-util/ng-util/commit/e7c569b7de6e4817785fd368ed2e88de2bcc4123))
+
+
+
 # [14.0.0](https://github.com/ng-util/ng-util/compare/13.1.0...14.0.0) (2022-06-24)
 
 
