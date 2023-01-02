@@ -14,8 +14,7 @@
     "noImplicitThis": false
   },
   "files": [
-    "test.ts",
-    "polyfills.ts"
+    "test.ts"
   ],
   "include": [
     "**/*.spec.ts",
