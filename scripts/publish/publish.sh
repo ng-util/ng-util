@@ -21,11 +21,11 @@ VERSION=$(node -p "require('./package.json').version")
 echo "Version ${VERSION}"
 
 publishToMaster() {
-  (cd ${DIST}/@ng-util; for p in `ls .`; do npm publish --access public $p; done)
+  (cd ${DIST}/@ng-util; for p in `ls .`; do cd $p; npm publish; ..; done)
 }
 
 publishToNext() {
-  (cd ${DIST}/@ng-util; for p in `ls .`; do npm publish $p --access public --tag next; done)
+  (cd ${DIST}/@ng-util; for p in `ls .`; do cd $p; npm publish --tag next; ..; done)
 }
 
 syncTaobao() {
