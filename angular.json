@@ -15,7 +15,9 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "assets": [
               "src/assets",
               {
@@ -84,7 +86,10 @@
           "options": {
             "main": "packages/test.ts",
             "karmaConfig": "packages/karma.conf.js",
-            "polyfills": "packages/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "packages/tsconfig.spec.json",
             "scripts": [],
             "assets": [
@@ -93,6 +98,10 @@
                 "input": "node_modules/monaco-editor/min",
                 "output": "/monaco-editor/min"
               }
+            ],
+            "include": [
+              "../packages/test.ts",
+              "../packages/**/*.spec.ts"
             ]
           }
         },
