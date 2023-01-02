@@ -1,3 +1,7 @@
+# [15.0.0](https://github.com/ng-util/ng-util/compare/14.0.1...15.0.0) (2023-01-02)
+
+* **build:** bump angular to `15`
+
 ## [14.0.1](https://github.com/ng-util/ng-util/compare/14.0.0...14.0.1) (2022-09-29)
 
 
