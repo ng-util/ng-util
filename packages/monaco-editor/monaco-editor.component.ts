@@ -69,18 +69,21 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
     this.registerResize();
 
+    const eventName = initEvent ? 'init' : 're-init';
     if (this.autoFormat) {
       timer(100)
         .pipe(takeUntilDestroyed(this.destroy$), take(1))
         .subscribe(() => {
-          editor
-            .getAction('editor.action.formatDocument')
-            .run()
-            .then(() => this.notifyEvent(initEvent ? 'init' : 're-init'));
+          const action = editor.getAction('editor.action.formatDocument');
+          if (action == null) {
+            this.notifyEvent(eventName);
+            return;
+          }
+          action.run().then(() => this.notifyEvent(eventName));
         });
       return;
     }
-    this.notifyEvent(initEvent ? 'init' : 're-init');
+    this.notifyEvent(eventName);
   }
 
   writeValue(value: string): void {
