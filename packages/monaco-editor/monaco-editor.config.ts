@@ -21,4 +21,8 @@ export interface NuMonacoEditorConfig {
    * The event before the first preload of the monaco editor library is completed, use this function to set nls availableLanguages.
    */
   monacoPreLoad?: () => void;
+  /**
+   * Trigger automatic format delay time, default: `100`
+   */
+  autoFormatTime?: number;
 }

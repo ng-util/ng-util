@@ -71,7 +71,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
     const eventName = initEvent ? 'init' : 're-init';
     if (this.autoFormat) {
-      timer(100)
+      timer(this._config.autoFormatTime!)
         .pipe(takeUntilDestroyed(this.destroy$), take(1))
         .subscribe(() => {
           const action = editor.getAction('editor.action.formatDocument');
