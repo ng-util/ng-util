@@ -1,3 +1,12 @@
+## 16.0.1 (2023-10-21)
+
+
+### Bug Fixes
+
+* **monaco-editor:** correct automatic formatting ([#68](https://github.com/ng-util/ng-util/issues/68)) ([0e0b29f](https://github.com/ng-util/ng-util/commit/0e0b29f02fb77cbcd8315b93453a2032cf8a6aac))
+
+
+
 # [16.0.0](https://github.com/ng-util/ng-util/compare/15.0.0...16.0.0) (2023-06-04)
 
 * **build:** bump angular to `16`
