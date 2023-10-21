@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorModel } from './monaco-editor.types';
+import { take, timer } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'nu-monaco-editor',
@@ -68,10 +70,14 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     this.registerResize();
 
     if (this.autoFormat) {
-      editor
-        .getAction('editor.action.formatDocument')
-        .run()
-        .then(() => this.notifyEvent(initEvent ? 'init' : 're-init'));
+      timer(100)
+        .pipe(takeUntilDestroyed(this.destroy$), take(1))
+        .subscribe(() => {
+          editor
+            .getAction('editor.action.formatDocument')
+            .run()
+            .then(() => this.notifyEvent(initEvent ? 'init' : 're-init'));
+        });
       return;
     }
     this.notifyEvent(initEvent ? 'init' : 're-init');
