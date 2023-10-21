@@ -28,8 +28,8 @@ publishToNext() {
   (cd ${DIST}/@ng-util; for p in `ls .`; do cd $p; npm publish --tag next; cd ..; done)
 }
 
-syncTaobao() {
-  (cd ${DIST}/@ng-util; for p in `ls .`; do curl -X PUT https://npmmirror.com/sync/@ng-util/$p?sync_upstream=true; done)
+syncNpmMirror() {
+  (cd ${DIST}/@ng-util; for p in `ls .`; do curl -X PUT https://registry-direct.npmmirror.com/-/package/@ng-util/$p/syncs; done)
 }
 
 ./scripts/ci/build.sh
@@ -39,4 +39,4 @@ if [[ ${NEXT} == true ]]; then
 else
   publishToMaster
 fi
-syncTaobao
+syncNpmMirror
