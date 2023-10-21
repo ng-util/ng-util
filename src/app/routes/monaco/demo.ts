@@ -38,7 +38,7 @@ export class MonacoDemoComponent {
   value = '{"p1":"a"}';
   options = { theme: 'vs' };
   model: NuMonacoEditorModel = {
-    value: '<h1>Title</h1>',
+    value: '<h1>Title</h1><p>asdf</p>',
     language: 'html',
   };
   oldModel: NuMonacoEditorDiffModel = {

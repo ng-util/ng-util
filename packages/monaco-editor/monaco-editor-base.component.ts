@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Inject,
@@ -55,8 +56,9 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
     @Inject(NU_MONACO_EDITOR_CONFIG) config: NuMonacoEditorConfig,
     @Inject(DOCUMENT) protected doc: any,
     protected ngZone: NgZone,
+    protected destroy$: DestroyRef,
   ) {
-    this._config = { baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor/min', ...config };
+    this._config = { baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor/min', autoFormatTime: 100, ...config };
     this.options = this._config.defaultOptions!;
   }
 
@@ -127,9 +129,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
   }
 
   protected cleanResize(): this {
-    if (this._resize$) {
-      this._resize$.unsubscribe();
-    }
+    this._resize$?.unsubscribe();
     return this;
   }
 
