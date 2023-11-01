@@ -10,6 +10,7 @@ import {
   NgZone,
   OnChanges,
   OnDestroy,
+  Optional,
   Output,
   SimpleChange,
   SimpleChanges,
@@ -53,7 +54,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
 
   constructor(
     protected el: ElementRef<HTMLElement>,
-    @Inject(NU_MONACO_EDITOR_CONFIG) config: NuMonacoEditorConfig,
+    @Optional() @Inject(NU_MONACO_EDITOR_CONFIG) config: NuMonacoEditorConfig,
     @Inject(DOCUMENT) protected doc: any,
     protected ngZone: NgZone,
     protected destroy$: DestroyRef,
@@ -125,7 +126,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
       } else {
         amdLoader();
       }
-    }).catch(error => this.notifyEvent('load-error', { error }));
+    }).catch((error) => this.notifyEvent('load-error', { error }));
   }
 
   protected cleanResize(): this {

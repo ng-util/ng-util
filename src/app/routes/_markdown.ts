@@ -8,6 +8,6 @@ import { NuMarkdownComponent } from '@ng-util/markdown';
   standalone: true,
   imports: [FormsModule, NuMarkdownComponent],
 })
-export class MarkdownDemoComponent {
+export class MarkdownDemo {
   value = '# Title';
 }

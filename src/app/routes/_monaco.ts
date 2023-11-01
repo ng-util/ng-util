@@ -32,7 +32,7 @@ import {
   standalone: true,
   imports: [CommonModule, FormsModule, NuMonacoEditorComponent, NuMonacoEditorDiffComponent],
 })
-export class MonacoDemoComponent {
+export class MonacoDemo {
   disabled = false;
   themes = ['vs', 'vs-dark', 'hc-black'];
   value = '{"p1":"a"}';

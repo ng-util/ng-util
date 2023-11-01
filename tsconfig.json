@@ -10,6 +10,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -27,7 +28,6 @@
       "@ng-util/*": ["./packages/*"]
     },
     "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
@@ -36,7 +36,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true
   },
-  "exclude": ["node_modules", "tmp"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
