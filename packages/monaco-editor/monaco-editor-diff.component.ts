@@ -17,13 +17,14 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
   @Input() old!: NuMonacoEditorDiffModel | null;
   @Input() new!: NuMonacoEditorDiffModel | null;
 
-  get editor(): monaco.editor.IStandaloneDiffEditor {
+  get editor(): monaco.editor.IStandaloneDiffEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneDiffEditor;
   }
 
   initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     if (!this.old || !this.new) {
-      throw new Error('old or new not found for nu-monaco-diff-editor');
+      this.notifyEvent('error', { error: 'old or new not found for nu-monaco-diff-editor' });
+      return;
     }
 
     const theme = options.theme;

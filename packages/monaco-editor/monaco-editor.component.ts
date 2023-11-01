@@ -29,7 +29,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   @Input() model?: NuMonacoEditorModel | null;
   @Input() autoFormat = true;
 
-  get editor(): monaco.editor.IStandaloneCodeEditor {
+  get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
   }
 
