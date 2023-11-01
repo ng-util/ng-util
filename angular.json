@@ -90,6 +90,7 @@
               }
             ],
             "include": [
+              // "**/monaco-editor.spec.ts"
               "**/*.spec.ts"
             ]
           }

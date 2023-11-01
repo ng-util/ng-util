@@ -8,12 +8,9 @@ import {
   Inject,
   Input,
   NgZone,
-  OnChanges,
   OnDestroy,
   Optional,
   Output,
-  SimpleChange,
-  SimpleChanges,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -29,7 +26,7 @@ let loadPromise: Promise<void>;
   standalone: true,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, OnDestroy {
+export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   protected _editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
   protected _options!: monaco.editor.IStandaloneEditorConstructionOptions;
   protected _resize$: Subscription | null = null;
@@ -46,6 +43,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
   @Input()
   set options(val: monaco.editor.IStandaloneEditorConstructionOptions) {
     this._options = { ...this._config.defaultOptions, ...val };
+    this.updateOptions();
   }
   get options() {
     return this._options;
@@ -70,9 +68,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
   }
 
   protected setDisabled(): this {
-    if (this._editor) {
-      (this._editor as monaco.editor.IStandaloneCodeEditor).updateOptions({ readOnly: this._disabled });
-    }
+    (this._editor as monaco.editor.IStandaloneCodeEditor)?.updateOptions({ readOnly: this._disabled });
     return this;
   }
 
@@ -157,17 +153,8 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnChanges, On
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.init(), +this.delay));
   }
 
-  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-    const allKeys = Object.keys(changes);
-    if (allKeys.length === 1 && allKeys[0] === 'disabled') return;
-    this.updateOptions();
-  }
-
   ngOnDestroy(): void {
     this.cleanResize();
-    if (this._editor) {
-      this._editor.dispose();
-      this._editor = undefined;
-    }
+    this._editor?.dispose();
   }
 }
