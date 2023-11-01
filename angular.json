@@ -80,6 +80,7 @@
               "zone.js/testing"
             ],
             "tsConfig": "packages/tsconfig.spec.json",
+            "karmaConfig": "packages/karma.conf.js",
             "scripts": [],
             "assets": [
               {
