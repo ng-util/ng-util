@@ -27,7 +27,7 @@ import {
       (event)="jsonEvent($event)"
       [disabled]="disabled"
     ></nu-monaco-editor>
-    <button (click)="c.editor.getAction('editor.action.formatDocument').run()">Format document</button>
+    <button (click)="c.editor?.getAction('editor.action.formatDocument')?.run()">Format document</button>
   `,
   standalone: true,
   imports: [CommonModule, FormsModule, NuMonacoEditorComponent, NuMonacoEditorDiffComponent],
