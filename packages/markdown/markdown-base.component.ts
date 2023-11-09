@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output } from '@angular/core';
 import { InputNumber } from '@ng-util/util/convert';
 import { Subscription } from 'rxjs';
 import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
@@ -6,7 +6,7 @@ import { NuMarkdownService } from './markdown.service';
 
 @Directive()
 export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestroy {
-  private notify$!: Subscription;
+  private notify$?: Subscription;
   protected _instance: any;
 
   @Input() @InputNumber() delay = 0;
@@ -29,12 +29,10 @@ export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestro
 
   constructor(
     protected el: ElementRef<HTMLElement>,
-    @Inject(NU_MARKDOWN_CONFIG) protected config: NuMarkdownConfig,
+    @Optional() @Inject(NU_MARKDOWN_CONFIG) protected config: NuMarkdownConfig,
     protected srv: NuMarkdownService,
     protected ngZone: NgZone,
-  ) {
-    this.notify$ = this.srv.notify.subscribe(() => this.initDelay());
-  }
+  ) {}
 
   private initDelay(): void {
     setTimeout(() => this.init(), this.delay);
@@ -47,6 +45,7 @@ export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestro
   }
 
   ngAfterViewInit(): void {
+    this.notify$ = this.srv.notify.subscribe(() => this.initDelay());
     if (this.loaded) {
       this.initDelay();
       return;
@@ -55,6 +54,6 @@ export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.notify$.unsubscribe();
+    this.notify$?.unsubscribe();
   }
 }

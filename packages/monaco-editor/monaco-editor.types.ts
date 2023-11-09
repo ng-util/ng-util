@@ -12,7 +12,7 @@ export interface NuMonacoEditorDiffModel {
   language?: string;
 }
 
-export type NuMonacoEditorEventType = 'load-error' | 'init' | 're-init' | 'resize' | 'update-diff';
+export type NuMonacoEditorEventType = 'load-error' | 'init' | 're-init' | 'resize' | 'update-diff' | 'error';
 
 export interface NuMonacoEditorEvent {
   type?: NuMonacoEditorEventType;

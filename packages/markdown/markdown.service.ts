@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { NuLazyService } from '@ng-util/lazy';
 import { Observable, Subject } from 'rxjs';
 import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
@@ -14,7 +14,10 @@ export class NuMarkdownService {
     return this.notify$.asObservable();
   }
 
-  constructor(@Inject(NU_MARKDOWN_CONFIG) config: NuMarkdownConfig, private lazySrv: NuLazyService) {
+  constructor(
+    @Optional() @Inject(NU_MARKDOWN_CONFIG) config: NuMarkdownConfig,
+    private lazySrv: NuLazyService,
+  ) {
     this.libs = config?.libs || [
       `https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js`,
       `https://cdn.jsdelivr.net/npm/vditor/dist/index.css`,

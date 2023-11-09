@@ -29,7 +29,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   @Input() model?: NuMonacoEditorModel | null;
   @Input() autoFormat = true;
 
-  get editor(): monaco.editor.IStandaloneCodeEditor {
+  get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
   }
 
@@ -88,9 +88,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
   writeValue(value: string): void {
     this._value = value || '';
-    if (this._editor) {
-      (this._editor as monaco.editor.IStandaloneCodeEditor).setValue(this._value);
-    }
+    (this._editor as monaco.editor.IStandaloneCodeEditor)?.setValue(this._value);
   }
 
   registerOnChange(fn: (_: string) => void): void {

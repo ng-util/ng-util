@@ -4,13 +4,17 @@ import { NuMonacoEditorDiffComponent } from './monaco-editor-diff.component';
 import { NuMonacoEditorComponent } from './monaco-editor.component';
 import { NuMonacoEditorModule } from './monaco-editor.module';
 import { NuMonacoEditorDiffModel, NuMonacoEditorEvent, NuMonacoEditorModel } from './monaco-editor.types';
+import { FormsModule } from '@angular/forms';
 
-const FIX_LOAD_LIB_TIME = 1000 * 3;
+const FIX_LOAD_LIB_TIME = 1000 * 1;
+
+const delay = (ms?: number) => new Promise((res) => setTimeout(res, ms ?? FIX_LOAD_LIB_TIME));
 
 describe('ng-util: monaco-editor', () => {
   function create<T>(comp: Type<T>, option: { html?: string } = {}): ComponentFixture<T> {
     TestBed.configureTestingModule({
       imports: [
+        FormsModule,
         NuMonacoEditorModule.forRoot({
           baseUrl: `monaco-editor/min`,
         }),
@@ -21,21 +25,64 @@ describe('ng-util: monaco-editor', () => {
     return TestBed.createComponent(comp);
   }
 
-  xit('should be working', done => {
-    const fixture = create(TestComponent);
-    fixture.componentInstance.options = { readOnly: true };
-    const changeSpy = spyOn(fixture.componentInstance, 'onChange');
-    fixture.detectChanges();
-    setTimeout(() => {
+  describe('editor', () => {
+    it('should be working', async () => {
+      const fixture = create(TestComponent);
+      fixture.componentInstance.options = { readOnly: true };
+      const changeSpy = spyOn(fixture.componentInstance, 'onChange');
+      fixture.detectChanges();
+      await delay();
       expect(changeSpy).toHaveBeenCalled();
       expect(changeSpy.calls.first().args[0].type).toBe(`init`);
-      done();
-    }, FIX_LOAD_LIB_TIME);
+    });
+    it('#disabled', async () => {
+      const fixture = create(TestComponent);
+      fixture.detectChanges();
+      await delay();
+      const editorSpy = spyOn(fixture.componentInstance.comp.editor!, 'updateOptions');
+      fixture.componentInstance.disabled = true;
+      fixture.detectChanges();
+      expect(editorSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('diff', () => {
+    it('should be working', async () => {
+      const fixture = create(TestDiffComponent);
+      fixture.componentInstance.options = { readOnly: true };
+      const changeSpy = spyOn(fixture.componentInstance, 'onChange');
+      fixture.detectChanges();
+      await delay();
+      expect(changeSpy).toHaveBeenCalled();
+      expect(changeSpy.calls.first().args[0].type).toBe(`init`);
+    });
+    it('should be throw error when new is null', async () => {
+      const fixture = create(TestDiffComponent);
+      fixture.componentInstance.newModel = null;
+      const changeSpy = spyOn(fixture.componentInstance, 'onChange');
+      fixture.detectChanges();
+      await delay();
+      expect(changeSpy).toHaveBeenCalled();
+      expect(changeSpy.calls.first().args[0].type).toBe(`error`);
+      expect(fixture.componentInstance.comp.editor == null).toBe(true);
+    });
   });
 });
 
 @Component({
-  template: ` <nu-monaco-editor #comp [model]="model" [options]="options" (event)="onChange($event)"></nu-monaco-editor> `,
+  template: `
+    <nu-monaco-editor
+      #comp
+      [(ngModel)]="value"
+      [model]="model"
+      [options]="options"
+      [height]="height"
+      [delay]="delay"
+      [disabled]="disabled"
+      [autoFormat]="autoFormat"
+      (event)="onChange($event)"
+    />
+  `,
 })
 class TestComponent {
   @ViewChild('comp') comp!: NuMonacoEditorComponent;
@@ -44,12 +91,26 @@ class TestComponent {
     value: '<h1>Title</h1>',
     language: 'html',
   };
+  height = '100px';
+  delay = 0;
+  disabled = false;
+  autoFormat = true;
+  value?: string | null = null;
   onChange(_: NuMonacoEditorEvent): void {}
 }
 
 @Component({
   template: `
-    <nu-monaco-diff-editor #comp [old]="oldModel" [new]="newModel" [options]="options" (event)="onChange($event)"></nu-monaco-diff-editor>
+    <nu-monaco-diff-editor
+      #comp
+      [old]="oldModel"
+      [new]="newModel"
+      [options]="options"
+      [height]="height"
+      [delay]="delay"
+      [disabled]="disabled"
+      (event)="onChange($event)"
+    />
   `,
 })
 class TestDiffComponent {
@@ -59,9 +120,12 @@ class TestDiffComponent {
     code: 'const a = 1;',
     language: 'typescript',
   };
-  newModel: NuMonacoEditorDiffModel = {
+  newModel?: NuMonacoEditorDiffModel | null = {
     code: 'const a = 2;',
     language: 'typescript',
   };
+  height = '100px';
+  delay = 0;
+  disabled = false;
   onChange(_: NuMonacoEditorEvent): void {}
 }
