@@ -34,7 +34,7 @@ import { NuMarkdownModule } from '@ng-util/markdown';
 
 @NgModule({
   imports: [
-    NuMarkdownModule.forRoot() // use forRoot() in main app module only.
+    NuMarkdownModule // And use `provideNuMarkdownConfig` to modify the global configuration
   ],
 })
 export class AppModule { }

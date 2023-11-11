@@ -60,7 +60,7 @@ import { NuMonacoEditorModule } from '@ng-util/monaco-editor';
 
 @NgModule({
   imports: [
-    NuMonacoEditorModule.forRoot() // use forRoot() in main app module only.
+    NuMonacoEditorModule  // And use `provideNuMonacoEditorConfig` to modify the global configuration
   ],
 })
 export class AppModule { }

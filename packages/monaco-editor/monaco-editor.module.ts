@@ -12,7 +12,7 @@ const COMPONENTS = [NuMonacoEditorComponent, NuMonacoEditorDiffComponent];
 })
 export class NuMonacoEditorModule {
   /**
-   * @deprecated Use `provideNuMonacoEditorConfig` instead.
+   * Or use `provideNuMonacoEditorConfig` instead.
    */
   static forRoot(config?: NuMonacoEditorConfig): ModuleWithProviders<NuMonacoEditorModule> {
     return {

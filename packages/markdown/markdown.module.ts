@@ -12,7 +12,7 @@ const COMPONENTS = [NuMarkdownComponent, NuMarkdownPreviewComponent];
 })
 export class NuMarkdownModule {
   /**
-   * @deprecated Use `provideNuMarkdownConfig` instead.
+   * Or use `provideNuMarkdownConfig` instead.
    */
   static forRoot(config?: NuMarkdownConfig): ModuleWithProviders<NuMarkdownModule> {
     return {
