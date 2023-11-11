@@ -1,6 +1,10 @@
-import { InjectionToken } from '@angular/core';
+import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
 
-export const NU_MARKDOWN_CONFIG = new InjectionToken('NU_MARKDOWN_CONFIG');
+export const NU_MARKDOWN_CONFIG = new InjectionToken<NuMarkdownConfig>('NU_MARKDOWN_CONFIG');
+
+export function provideNuMarkdownConfig(config?: NuMarkdownConfig): EnvironmentProviders {
+  return makeEnvironmentProviders([{ provide: NU_MARKDOWN_CONFIG, useValue: config }]);
+}
 
 export interface NuMarkdownConfig {
   /**

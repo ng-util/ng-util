@@ -11,6 +11,9 @@ const COMPONENTS = [NuMarkdownComponent, NuMarkdownPreviewComponent];
   exports: COMPONENTS,
 })
 export class NuMarkdownModule {
+  /**
+   * @deprecated Use `provideNuMarkdownConfig` instead.
+   */
   static forRoot(config?: NuMarkdownConfig): ModuleWithProviders<NuMarkdownModule> {
     return {
       ngModule: NuMarkdownModule,
