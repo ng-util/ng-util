@@ -1,6 +1,10 @@
-import { InjectionToken } from '@angular/core';
+import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
 
 export const NU_MONACO_EDITOR_CONFIG = new InjectionToken('NU_MONACO_EDITOR_CONFIG');
+
+export function provideNuMonacoEditorConfig(config?: NuMonacoEditorConfig): EnvironmentProviders {
+  return makeEnvironmentProviders([{ provide: NU_MONACO_EDITOR_CONFIG, useValue: config }]);
+}
 
 export interface NuMonacoEditorConfig {
   /**

@@ -11,6 +11,9 @@ const COMPONENTS = [NuMonacoEditorComponent, NuMonacoEditorDiffComponent];
   exports: COMPONENTS,
 })
 export class NuMonacoEditorModule {
+  /**
+   * Or use `provideNuMonacoEditorConfig` instead.
+   */
   static forRoot(config?: NuMonacoEditorConfig): ModuleWithProviders<NuMonacoEditorModule> {
     return {
       ngModule: NuMonacoEditorModule,
