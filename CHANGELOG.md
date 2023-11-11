@@ -1,3 +1,9 @@
+## 17.0.1 (2023-11-11)
+
+* use `provide` instead of `forRoot` ([#72](https://github.com/ng-util/ng-util/issues/72)) ([f8fefc1](https://github.com/ng-util/ng-util/commit/f8fefc12e29319f3ef51d26cb75e97dd1b8d29dc))
+
+
+
 # 17.0.0 (2023-11-09)
 
 
