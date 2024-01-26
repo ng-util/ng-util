@@ -24,7 +24,26 @@ Install from npm repository:
 npm install @ng-util/markdown --save
 ```
 
-### Sample
+### Simple
+
+**Standalone**
+
+```ts
+import { Component } from '@angular/core';
+import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
+
+@Component({
+  selector: 'demo',
+  template: `
+    <nu-monaco-editor />
+  `,
+  standalone: true,
+  imports: [NuMonacoEditorComponent],
+})
+export class MonacoDemo { }
+```
+
+**Module**
 
 Include `NuMarkdownModule` in Main Module and Feature Modules where you want to use the editor component.(eg: app.module.ts):
 
@@ -60,6 +79,44 @@ You can use `nu-markdown-preview` component to render a Markdown preview effect 
 
 ```html
 <nu-markdown-preview value="# Title"></nu-markdown-preview>
+```
+
+### How to change cdn?
+
+- If using standalone use `provideNuMarkdownConfig({ libs: [] })` to adjust.
+- If using module, use `NuMarkdownModule.forRoot({ libs: [] })` to adjust.
+
+The libs parameter should contain `index.min.js` and `index.css`, like this:
+
+```ts
+provideNuMarkdownConfig({ 
+  libs: [
+    'https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js',
+    'https://cdn.jsdelivr.net/npm/vditor/dist/index.css'
+  ]
+})
+```
+
+In addition, You can also use local path:
+
+```json
+// angular.json
+{
+  "glob": "*.(js|css)",
+  "input": "node_modules/vditor/dist",
+  "output": "/assets/vditor/"
+}
+```
+
+Then modify the libs path:
+
+```ts
+provideNuMarkdownConfig({ 
+  libs: [
+    './assets/vditor/index.min.js',
+    './assets/vditor/index.css'
+  ]
+})
 ```
 
 ## API
