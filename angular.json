@@ -19,7 +19,10 @@
               "zone.js"
             ],
             "assets": [
-              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
               {
                 "glob": "*.(js|css)",
                 "input": "node_modules/vditor/dist",
@@ -34,13 +37,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
                 }
               ],
               "outputHashing": "all"
