@@ -214,6 +214,7 @@ export class DemoComponent {
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[placeholder]` | Placeholder of monaco editor, Can change the style via defining the `.monaco-editor-placeholder` CSS. | `string` | - |
 | `[height]` | Height of monaco editor | `string` | `200px` |
 | `[disabled]` | Disabled of monaco editor | `boolean` | `false` |
 | `[autoFormat]` | Whether to automatically format the document | `boolean` | `true` |

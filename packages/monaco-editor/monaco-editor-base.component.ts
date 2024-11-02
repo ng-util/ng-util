@@ -8,6 +8,7 @@ import {
   Inject,
   Input,
   NgZone,
+  numberAttribute,
   OnDestroy,
   Optional,
   Output,
@@ -34,7 +35,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   protected _disabled?: boolean;
 
   @Input() height = `200px`;
-  @Input() delay = 0;
+  @Input({ transform: numberAttribute }) delay = 0;
   @Input()
   set disabled(val: boolean | string) {
     this._disabled = typeof val === 'string' ? true : val;
@@ -48,7 +49,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   get options() {
     return this._options;
   }
-  @Output() event = new EventEmitter<NuMonacoEditorEvent>();
+  @Output() readonly event = new EventEmitter<NuMonacoEditorEvent>();
 
   constructor(
     protected el: ElementRef<HTMLElement>,

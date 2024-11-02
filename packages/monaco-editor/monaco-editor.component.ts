@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorModel } from './monaco-editor.types';
 import { take, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PlaceholderWidget } from './placholder';
 
 @Component({
   selector: 'nu-monaco-editor',
@@ -25,12 +26,34 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class NuMonacoEditorComponent extends NuMonacoEditorBase implements ControlValueAccessor {
   private _value = '';
+  private _placeholderWidget?: PlaceholderWidget;
+  private _placeholder?: string | null;
 
+  @Input()
+  set placeholder(v: string | null | undefined) {
+    this._placeholder = v;
+    this._placeholderWidget?.update(v);
+  }
   @Input() model?: NuMonacoEditorModel | null;
-  @Input() autoFormat = true;
+  @Input({ transform: booleanAttribute }) autoFormat = true;
 
   get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
+  }
+
+  private togglePlaceholder() {
+    const text = this._placeholder;
+    if (text == null || text.length <= 0 || this.editor == null) return;
+
+    if (this._placeholderWidget == null) {
+      this._placeholderWidget = new PlaceholderWidget(this.editor, text);
+    }
+
+    if (this._value.length > 0) {
+      this.editor.removeContentWidget(this._placeholderWidget);
+    } else {
+      this.editor.addContentWidget(this._placeholderWidget);
+    }
   }
 
   private onChange = (_: string) => {};
@@ -64,9 +87,12 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
         this._value = value;
         this.onChange(value);
       });
+
+      this.togglePlaceholder();
     });
     editor.onDidBlurEditorWidget(() => this.onTouched());
 
+    this.togglePlaceholder();
     this.registerResize();
 
     const eventName = initEvent ? 'init' : 're-init';
