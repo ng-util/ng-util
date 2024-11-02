@@ -4,7 +4,7 @@ import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorModel } from './monaco-editor.types';
 import { take, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PlaceholderWidget } from './placholder.widget';
+import { PlaceholderWidget } from './placholder';
 
 @Component({
   selector: 'nu-monaco-editor',
