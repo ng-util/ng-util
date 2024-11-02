@@ -77,5 +77,6 @@
     "pretty-quick": "^4.0.0",
     "readline-sync": "^1.4.10",
     "typescript": "~5.4.2"
-  }
+  },
+  "packageManager": "yarn@4.5.1"
 }

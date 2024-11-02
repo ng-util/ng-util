@@ -14,19 +14,13 @@ import {
   template: `
     <button (click)="disabled = !disabled">Set {{ disabled ? 'enabled' : 'disabled' }}</button>
     <button *ngFor="let t of themes" (click)="setTheme(t)">{{ t }} theme</button>
+    <button (click)="placeholder = 'new placeholder'">Update placeholder</button>
     <h1>Base</h1>
-    <nu-monaco-editor #a [model]="model" [options]="options" [disabled]="disabled"></nu-monaco-editor>
+    <nu-monaco-editor #a [placeholder]="placeholder" [model]="model" [options]="options" [disabled]="disabled"></nu-monaco-editor>
     <h1>Diff</h1>
     <nu-monaco-diff-editor #b [old]="oldModel" [new]="newModel" [options]="options" [disabled]="disabled"></nu-monaco-diff-editor>
     <h1>Custom json</h1>
-    <nu-monaco-editor
-      #c
-      [(ngModel)]="value"
-      [model]="jsonModel"
-      [options]="options"
-      (event)="jsonEvent($event)"
-      [disabled]="disabled"
-    ></nu-monaco-editor>
+    <nu-monaco-editor #c [(ngModel)]="value" [model]="jsonModel" [options]="options" (event)="jsonEvent($event)" [disabled]="disabled" />
     <button (click)="c.editor?.getAction('editor.action.formatDocument')?.run()">Format document</button>
   `,
   standalone: true,
@@ -36,9 +30,11 @@ export class MonacoDemo {
   disabled = false;
   themes = ['vs', 'vs-dark', 'hc-black'];
   value = '{"p1":"a"}';
+  placeholder =
+    'Type something...<a href="https://www.google.com/maps/dir/45.81444,15.97792/@45.81444,15.97792,20z?hl=zh" target="blank" style="color:#f50">Link</a>';
   options = { theme: 'vs' };
   model: NuMonacoEditorModel = {
-    value: '<h1>Title</h1><p>asdf</p>',
+    // value: '<h1>Title</h1><p>asdf</p>',
     language: 'html',
   };
   oldModel: NuMonacoEditorDiffModel = {
