@@ -37,7 +37,6 @@ import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
   template: `
     <nu-monaco-editor />
   `,
-  standalone: true,
   imports: [NuMonacoEditorComponent],
 })
 export class MonacoDemo { }

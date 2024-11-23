@@ -5,12 +5,11 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Inject,
+  inject,
   Input,
   NgZone,
   numberAttribute,
   OnDestroy,
-  Optional,
   Output,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
@@ -24,10 +23,15 @@ let loadPromise: Promise<void>;
 @Component({
   selector: 'nu-monaco-base',
   template: ``,
-  standalone: true,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
+  protected el = inject<ElementRef<HTMLElement>>(ElementRef);
+  protected config = inject(NU_MONACO_EDITOR_CONFIG, { optional: true });
+  protected doc = inject(DOCUMENT);
+  protected ngZone = inject(NgZone);
+  protected destroy$ = inject(DestroyRef);
+
   protected _editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
   protected _options!: monaco.editor.IStandaloneEditorConstructionOptions;
   protected _resize$: Subscription | null = null;
@@ -51,14 +55,8 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   }
   @Output() readonly event = new EventEmitter<NuMonacoEditorEvent>();
 
-  constructor(
-    protected el: ElementRef<HTMLElement>,
-    @Optional() @Inject(NU_MONACO_EDITOR_CONFIG) config: NuMonacoEditorConfig,
-    @Inject(DOCUMENT) protected doc: any,
-    protected ngZone: NgZone,
-    protected destroy$: DestroyRef,
-  ) {
-    this._config = { baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor/min', autoFormatTime: 100, ...config };
+  constructor() {
+    this._config = { baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor/min', autoFormatTime: 100, ...this.config };
     this.options = this._config.defaultOptions!;
   }
 

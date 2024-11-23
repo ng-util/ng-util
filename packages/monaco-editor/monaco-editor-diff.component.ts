@@ -11,11 +11,10 @@ import { NuMonacoEditorDiffModel } from './monaco-editor.types';
     '[style.height]': 'height',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
-  @Input() old!: NuMonacoEditorDiffModel | null;
-  @Input() new!: NuMonacoEditorDiffModel | null;
+  @Input() old?: NuMonacoEditorDiffModel | null;
+  @Input() new?: NuMonacoEditorDiffModel | null;
 
   get editor(): monaco.editor.IStandaloneDiffEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneDiffEditor;

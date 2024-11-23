@@ -1,18 +1,34 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output } from '@angular/core';
-import { InputNumber } from '@ng-util/util/convert';
+import {
+  AfterViewInit,
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  NgZone,
+  numberAttribute,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NuMarkdownConfig, NU_MARKDOWN_CONFIG } from './markdown.config';
+import { NU_MARKDOWN_CONFIG } from './markdown.config';
 import { NuMarkdownService } from './markdown.service';
 
 @Directive()
 export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestroy {
+  protected el = inject<ElementRef<HTMLElement>>(ElementRef);
+  protected config = inject(NU_MARKDOWN_CONFIG, { optional: true });
+  protected srv = inject(NuMarkdownService);
+  protected ngZone = inject(NgZone);
+
   private notify$?: Subscription;
   protected _instance: any;
 
-  @Input() @InputNumber() delay = 0;
-  @Input() disabled = false;
+  @Input({ transform: numberAttribute }) delay = 0;
+  @Input({ transform: booleanAttribute }) disabled = false;
   @Input() options: any;
-  @Output() ready = new EventEmitter<string>();
+  @Output() readonly ready = new EventEmitter<string>();
 
   protected _value!: string;
   @Input()
@@ -26,13 +42,6 @@ export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestro
   get instance(): any {
     return this._instance;
   }
-
-  constructor(
-    protected el: ElementRef<HTMLElement>,
-    @Optional() @Inject(NU_MARKDOWN_CONFIG) protected config: NuMarkdownConfig,
-    protected srv: NuMarkdownService,
-    protected ngZone: NgZone,
-  ) {}
 
   private initDelay(): void {
     setTimeout(() => this.init(), this.delay);

@@ -13,7 +13,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   host: {
     '[style.display]': `'block'`,
   },
-  standalone: true,
   imports: [RouterOutlet, RouterLink],
 })
 export class App {}

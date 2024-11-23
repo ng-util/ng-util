@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { filter, share } from 'rxjs/operators';
 
@@ -23,11 +23,10 @@ export interface NuLazyResult {
 
 @Injectable({ providedIn: 'root' })
 export class NuLazyService {
+  private readonly doc = inject(DOCUMENT);
   private list: { [key: string]: boolean } = {};
   private cached: { [key: string]: NuLazyResult } = {};
   private _notify: BehaviorSubject<NuLazyResult[]> = new BehaviorSubject<NuLazyResult[]>([]);
-
-  constructor(@Inject(DOCUMENT) private doc: any) {}
 
   private fixPaths(paths?: string | Array<string | NuLazyResources>): NuLazyResources[] {
     paths = paths || [];
@@ -56,7 +55,7 @@ export class NuLazyService {
     if (libs.length > 0) {
       pipes.push(
         filter(
-          (ls: NuLazyResult[]) => ls.length === libs.length && ls.every(v => v.status === 'ok' && libs.find(lw => lw.path === v.path)),
+          (ls: NuLazyResult[]) => ls.length === libs.length && ls.every((v) => v.status === 'ok' && libs.find((lw) => lw.path === v.path)),
         ),
       );
     }
@@ -79,10 +78,10 @@ export class NuLazyService {
     paths = this.fixPaths(paths);
 
     return Promise.all(
-      (paths as NuLazyResources[]).map(p =>
+      (paths as NuLazyResources[]).map((p) =>
         p.type === 'script' ? this.loadScript(p.path, { callback: p.callback }) : this.loadStyle(p.path),
       ),
-    ).then(res => {
+    ).then((res) => {
       this._notify.next(res);
       return Promise.resolve(res);
     });
@@ -90,7 +89,7 @@ export class NuLazyService {
 
   loadScript(path: string, options?: { innerContent?: string; callback?: string }): Promise<NuLazyResult> {
     const { innerContent } = { ...options };
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (this.list[path] === true) {
         resolve({ ...this.cached[path], status: 'loading' });
         return;
@@ -150,7 +149,7 @@ export class NuLazyService {
 
   loadStyle(path: string, options?: { rel?: string; innerContent?: string }): Promise<NuLazyResult> {
     const { rel, innerContent } = { rel: 'stylesheet', ...options };
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (this.list[path] === true) {
         resolve(this.cached[path]);
         return;

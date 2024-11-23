@@ -2,9 +2,9 @@ import { Component, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NuMonacoEditorDiffComponent } from './monaco-editor-diff.component';
 import { NuMonacoEditorComponent } from './monaco-editor.component';
-import { NuMonacoEditorModule } from './monaco-editor.module';
 import { NuMonacoEditorDiffModel, NuMonacoEditorEvent, NuMonacoEditorModel } from './monaco-editor.types';
 import { FormsModule } from '@angular/forms';
+import { provideNuMonacoEditorConfig } from './monaco-editor.config';
 
 const FIX_LOAD_LIB_TIME = 1000 * 1;
 
@@ -13,13 +13,8 @@ const delay = (ms?: number) => new Promise((res) => setTimeout(res, ms ?? FIX_LO
 describe('ng-util: monaco-editor', () => {
   function create<T>(comp: Type<T>, option: { html?: string } = {}): ComponentFixture<T> {
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        NuMonacoEditorModule.forRoot({
-          baseUrl: `monaco-editor/min`,
-        }),
-      ],
-      declarations: [TestComponent, TestDiffComponent],
+      providers: [provideNuMonacoEditorConfig({ baseUrl: `monaco-editor/min` })],
+      imports: [TestComponent, TestDiffComponent],
     });
     if (option.html != null) TestBed.overrideTemplate(comp, option.html);
     return TestBed.createComponent(comp);
@@ -83,6 +78,7 @@ describe('ng-util: monaco-editor', () => {
       (event)="onChange($event)"
     />
   `,
+  imports: [FormsModule, NuMonacoEditorComponent],
 })
 class TestComponent {
   @ViewChild('comp') comp!: NuMonacoEditorComponent;
@@ -112,6 +108,7 @@ class TestComponent {
       (event)="onChange($event)"
     />
   `,
+  imports: [FormsModule, NuMonacoEditorDiffComponent],
 })
 class TestDiffComponent {
   @ViewChild('comp') comp!: NuMonacoEditorDiffComponent;

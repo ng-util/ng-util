@@ -8,7 +8,6 @@ declare var Vditor: any;
   template: ``,
   exportAs: 'nuMarkdownPreview',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class NuMarkdownPreviewComponent extends NuMarkdownBaseComponent {
   protected init(): void {
