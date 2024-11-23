@@ -16,7 +16,6 @@ declare var Vditor: any;
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class NuMarkdownComponent extends NuMarkdownBaseComponent implements ControlValueAccessor {
   private onChange = (_: string) => {};

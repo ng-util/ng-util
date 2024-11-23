@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 /publish
-/yarn.lock
+# /yarn.lock

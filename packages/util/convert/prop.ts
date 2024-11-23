@@ -31,11 +31,15 @@ function propDecoratorFactory<T, D>(
   return propDecorator;
 }
 
+/**
+ * @deprecated use `booleanAttribute` instead
+ */
 export function toBoolean(value: any, allowUndefined: boolean | null = false): boolean | undefined {
   return allowUndefined && typeof value === 'undefined' ? undefined : value != null && `${value}` !== 'false';
 }
 
 /**
+ * @deprecated use `booleanAttribute` instead
  * Input decorator that handle a prop to do get/set automatically with toBoolean
  *
  * ```ts
@@ -47,6 +51,9 @@ export function InputBoolean(defaultValue: boolean | null = false): any {
   return propDecoratorFactory('InputNumber', toBoolean, defaultValue);
 }
 
+/**
+ * @deprecated use `numberAttribute` instead
+ */
 export function toNumber(value: any): number;
 export function toNumber<D>(value: any, fallback: D): number | D;
 export function toNumber(value: any, fallbackValue: number = 0): number {
@@ -54,6 +61,7 @@ export function toNumber(value: any, fallbackValue: number = 0): number {
 }
 
 /**
+ * @deprecated use `numberAttribute` instead
  * Input decorator that handle a prop to do get/set automatically with toNumber
  *
  * ```ts

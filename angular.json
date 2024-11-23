@@ -4,9 +4,14 @@
   "newProjectRoot": "projects",
   "projects": {
     "site": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -14,10 +19,11 @@
             "outputPath": "dist/site",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
             "polyfills": [
               "zone.js"
             ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "less",
             "assets": [
               {
                 "glob": "**/*",

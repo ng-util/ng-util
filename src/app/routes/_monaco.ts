@@ -23,7 +23,6 @@ import {
     <nu-monaco-editor #c [(ngModel)]="value" [model]="jsonModel" [options]="options" (event)="jsonEvent($event)" [disabled]="disabled" />
     <button (click)="c.editor?.getAction('editor.action.formatDocument')?.run()">Format document</button>
   `,
-  standalone: true,
   imports: [CommonModule, FormsModule, NuMonacoEditorComponent, NuMonacoEditorDiffComponent],
 })
 export class MonacoDemo {
