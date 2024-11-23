@@ -1,3 +1,9 @@
+## 19.0.0 (2024-11-23)
+
+* build: bump to angular 19 (#81) ([7e6412d](https://github.com/ng-util/ng-util/commit/7e6412d)), closes [#81](https://github.com/ng-util/ng-util/issues/81)
+
+
+
 ## 18.1.0 (2024-11-02)
 
 * feat(monaco-editor): add `placeholder` (#79) ([8206f10](https://github.com/ng-util/ng-util/commit/8206f10)), closes [#79](https://github.com/ng-util/ng-util/issues/79)
