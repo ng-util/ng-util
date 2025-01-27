@@ -13,7 +13,7 @@ describe('#toBoolean', () => {
     { value: 'true', ret: true },
     { value: 'pink', ret: true },
     { value: {}, ret: true },
-    { value: [], ret: true },
+    { value: [], ret: true }
   ].forEach(item => {
     const au = typeof item.au !== 'undefined';
     it(`should coerce [${JSON.stringify(item.value)}] to [${JSON.stringify(item.ret)}]${au ? ', because allow undefined' : ''}`, () => {

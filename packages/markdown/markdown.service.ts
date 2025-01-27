@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { NuLazyService } from '@ng-util/lazy';
 import { Observable, Subject } from 'rxjs';
+
+import { NuLazyService } from '@ng-util/lazy';
+
 import { NU_MARKDOWN_CONFIG } from './markdown.config';
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +21,7 @@ export class NuMarkdownService {
   constructor() {
     this.libs = this.config?.libs || [
       `https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js`,
-      `https://cdn.jsdelivr.net/npm/vditor/dist/index.css`,
+      `https://cdn.jsdelivr.net/npm/vditor/dist/index.css`
     ];
   }
 

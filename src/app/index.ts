@@ -11,8 +11,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     <router-outlet></router-outlet>
   `,
   host: {
-    '[style.display]': `'block'`,
+    '[style.display]': `'block'`
   },
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink]
 })
-export class App {}
+export class App {
+  //
+}

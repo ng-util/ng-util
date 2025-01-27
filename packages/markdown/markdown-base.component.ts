@@ -9,9 +9,10 @@ import {
   NgZone,
   numberAttribute,
   OnDestroy,
-  Output,
+  Output
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { NU_MARKDOWN_CONFIG } from './markdown.config';
 import { NuMarkdownService } from './markdown.service';
 

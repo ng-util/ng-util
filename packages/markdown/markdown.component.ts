@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
 import { NuMarkdownBaseComponent } from './markdown-base.component';
 
-declare var Vditor: any;
+declare let Vditor: any;
 
 @Component({
   selector: 'nu-markdown',
@@ -12,20 +13,22 @@ declare var Vditor: any;
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NuMarkdownComponent),
-      multi: true,
-    },
+      multi: true
+    }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMarkdownComponent extends NuMarkdownBaseComponent implements ControlValueAccessor {
-  private onChange = (_: string) => {};
+  private onChange = (_: string) => {
+    //
+  };
 
   protected init(): void {
     this.ngZone.runOutsideAngular(() => {
       const options = {
         value: this._value,
         cache: {
-          enable: false,
+          enable: false
         },
         mode: 'sv',
         minHeight: 350,
@@ -36,7 +39,7 @@ export class NuMarkdownComponent extends NuMarkdownBaseComponent implements Cont
           });
         },
         ...this.config?.defaultOptions,
-        ...this.options,
+        ...this.options
       };
       this._instance = new Vditor(this.el.nativeElement, options);
       this.ngZone.run(() => this.ready.emit(this._instance));
@@ -65,7 +68,9 @@ export class NuMarkdownComponent extends NuMarkdownBaseComponent implements Cont
     this.onChange = fn;
   }
 
-  registerOnTouched(_: () => void): void {}
+  registerOnTouched(_: () => void): void {
+    //
+  }
 
   setDisabledState(_isDisabled: boolean): void {
     this.disabled = _isDisabled;
