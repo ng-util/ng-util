@@ -10,10 +10,11 @@ import {
   NgZone,
   numberAttribute,
   OnDestroy,
-  Output,
+  Output
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
 import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.config';
 import { NuMonacoEditorEvent, NuMonacoEditorEventType } from './monaco-editor.types';
 
@@ -22,9 +23,8 @@ let loadPromise: Promise<void>;
 
 @Component({
   selector: 'nu-monaco-base',
-  template: ``,
+  template: ``
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
 export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   protected el = inject<ElementRef<HTMLElement>>(ElementRef);
   protected config = inject(NU_MONACO_EDITOR_CONFIG, { optional: true });
@@ -60,7 +60,10 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
     this.options = this._config.defaultOptions!;
   }
 
-  protected abstract initMonaco(_options: monaco.editor.IStandaloneEditorConstructionOptions, _initEvent: boolean): void;
+  protected abstract initMonaco(
+    _options: monaco.editor.IStandaloneEditorConstructionOptions,
+    _initEvent: boolean
+  ): void;
 
   protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
     this.ngZone.run(() => this.event.emit({ type, editor: this._editor!, ...other }));
@@ -93,12 +96,12 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
       let baseUrl = `${this._config.baseUrl}/vs`;
       // fix: https://github.com/microsoft/monaco-editor/issues/4778
       if (!/^https?:\/\//g.test(baseUrl)) {
-        baseUrl = window.location.origin + '/' + (baseUrl.startsWith('/') ? baseUrl.substring(1) : baseUrl);
+        baseUrl = `${window.location.origin}/${baseUrl.startsWith('/') ? baseUrl.substring(1) : baseUrl}`;
       }
       const amdLoader = () => {
         win.require.config({
           paths: {
-            vs: baseUrl,
+            vs: baseUrl
           }
         });
         if (typeof this._config.monacoPreLoad === 'function') {
@@ -115,7 +118,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
           },
           () => {
             reject(`Unable to load editor/editor.main module, please check your network environment.`);
-          },
+          }
         );
       };
 
@@ -124,12 +127,13 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
         loaderScript.type = 'text/javascript';
         loaderScript.src = `${baseUrl}/loader.js`;
         loaderScript.onload = amdLoader;
-        loaderScript.onerror = () => reject(`Unable to load ${loaderScript.src}, please check your network environment.`);
+        loaderScript.onerror = () =>
+          reject(`Unable to load ${loaderScript.src}, please check your network environment.`);
         this.doc.getElementsByTagName('head')[0].appendChild(loaderScript);
       } else {
         amdLoader();
       }
-    }).catch((error) => this.notifyEvent('load-error', { error }));
+    }).catch(error => this.notifyEvent('load-error', { error }));
   }
 
   protected cleanResize(): this {

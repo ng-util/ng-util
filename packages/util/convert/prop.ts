@@ -1,7 +1,7 @@
 function propDecoratorFactory<T, D>(
   name: string,
   fallback: (v: T, defaultValue: D) => D,
-  defaultValue: any,
+  defaultValue: any
 ): (target: any, propName: string) => void {
   function propDecorator(target: any, propName: string, originalDescriptor?: TypedPropertyDescriptor<any>): any {
     const privatePropName = `$$__${propName}`;
@@ -12,19 +12,21 @@ function propDecoratorFactory<T, D>(
 
     Object.defineProperty(target, privatePropName, {
       configurable: true,
-      writable: true,
+      writable: true
     });
 
     return {
       get(): string {
-        return originalDescriptor && originalDescriptor.get ? originalDescriptor.get.bind(this)() : this[privatePropName];
+        return originalDescriptor && originalDescriptor.get
+          ? originalDescriptor.get.bind(this)()
+          : this[privatePropName];
       },
       set(value: T): void {
         if (originalDescriptor && originalDescriptor.set) {
           originalDescriptor.set.bind(this)(fallback(value, defaultValue));
         }
         this[privatePropName] = fallback(value, defaultValue);
-      },
+      }
     };
   }
 

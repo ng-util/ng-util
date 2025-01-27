@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
 import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorDiffModel } from './monaco-editor.types';
 
@@ -8,9 +9,9 @@ import { NuMonacoEditorDiffModel } from './monaco-editor.types';
   exportAs: 'nuMonacoDiffEditor',
   host: {
     '[style.display]': `'block'`,
-    '[style.height]': 'height',
+    '[style.height]': 'height'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
   @Input() old?: NuMonacoEditorDiffModel | null;
@@ -32,7 +33,7 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
     options.theme = theme;
     editor.setModel({
       original: monaco.editor.createModel(this.old.code, this.old.language || options.language),
-      modified: monaco.editor.createModel(this.new.code, this.new.language || options.language),
+      modified: monaco.editor.createModel(this.new.code, this.new.language || options.language)
     });
 
     // this.setDisabled();

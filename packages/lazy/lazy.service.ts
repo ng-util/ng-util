@@ -55,8 +55,9 @@ export class NuLazyService {
     if (libs.length > 0) {
       pipes.push(
         filter(
-          (ls: NuLazyResult[]) => ls.length === libs.length && ls.every((v) => v.status === 'ok' && libs.find((lw) => lw.path === v.path)),
-        ),
+          (ls: NuLazyResult[]) =>
+            ls.length === libs.length && ls.every(v => v.status === 'ok' && libs.find(lw => lw.path === v.path))
+        )
       );
     }
 
@@ -78,10 +79,10 @@ export class NuLazyService {
     paths = this.fixPaths(paths);
 
     return Promise.all(
-      (paths as NuLazyResources[]).map((p) =>
-        p.type === 'script' ? this.loadScript(p.path, { callback: p.callback }) : this.loadStyle(p.path),
-      ),
-    ).then((res) => {
+      (paths as NuLazyResources[]).map(p =>
+        p.type === 'script' ? this.loadScript(p.path, { callback: p.callback }) : this.loadStyle(p.path)
+      )
+    ).then(res => {
       this._notify.next(res);
       return Promise.resolve(res);
     });
@@ -89,14 +90,14 @@ export class NuLazyService {
 
   loadScript(path: string, options?: { innerContent?: string; callback?: string }): Promise<NuLazyResult> {
     const { innerContent } = { ...options };
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (this.list[path] === true) {
         resolve({ ...this.cached[path], status: 'loading' });
         return;
       }
 
       this.list[path] = true;
-      const onSuccess = (item: NuLazyResult) => {
+      const onSuccess = (item: NuLazyResult): void => {
         if (item.status === 'ok' && options?.callback) {
           (window as any)[options?.callback] = () => {
             onSuccessTruth(item);
@@ -105,7 +106,7 @@ export class NuLazyService {
           onSuccessTruth(item);
         }
       };
-      const onSuccessTruth = (item: NuLazyResult) => {
+      const onSuccessTruth = (item: NuLazyResult): void => {
         item.type = 'script';
         this.cached[path] = item;
         resolve(item);
@@ -126,7 +127,7 @@ export class NuLazyService {
             node.onreadystatechange = null;
             onSuccess({
               path,
-              status: 'ok',
+              status: 'ok'
             });
           }
         };
@@ -134,14 +135,14 @@ export class NuLazyService {
         node.onload = () =>
           onSuccess({
             path,
-            status: 'ok',
+            status: 'ok'
           });
       }
       node.onerror = (error: {}) =>
         onSuccess({
           path,
           status: 'error',
-          error,
+          error
         });
       this.doc.getElementsByTagName('head')[0].appendChild(node);
     });
@@ -149,7 +150,7 @@ export class NuLazyService {
 
   loadStyle(path: string, options?: { rel?: string; innerContent?: string }): Promise<NuLazyResult> {
     const { rel, innerContent } = { rel: 'stylesheet', ...options };
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (this.list[path] === true) {
         resolve(this.cached[path]);
         return;
@@ -168,7 +169,7 @@ export class NuLazyService {
       const item: NuLazyResult = {
         path,
         status: 'ok',
-        type: 'style',
+        type: 'style'
       };
       this.cached[path] = item;
       resolve(item);

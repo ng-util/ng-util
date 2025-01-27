@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { NuMarkdownBaseComponent } from './markdown-base.component';
 
-declare var Vditor: any;
+declare let Vditor: any;
 
 @Component({
   selector: 'nu-markdown-preview',
   template: ``,
   exportAs: 'nuMarkdownPreview',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMarkdownPreviewComponent extends NuMarkdownBaseComponent {
   protected init(): void {

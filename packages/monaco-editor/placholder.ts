@@ -33,7 +33,7 @@ export class PlaceholderWidget implements monaco.editor.IContentWidget {
   getPosition(): monaco.editor.IContentWidgetPosition | null {
     return {
       position: { lineNumber: 1, column: 1 },
-      preference: [monaco.editor.ContentWidgetPositionPreference.EXACT],
+      preference: [monaco.editor.ContentWidgetPositionPreference.EXACT]
     };
   }
 

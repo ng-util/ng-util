@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./monaco.d.ts" preserve="true" />
 
 export interface NuMonacoEditorModel {

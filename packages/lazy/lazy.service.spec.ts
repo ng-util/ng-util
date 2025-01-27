@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs';
+
 import { NuLazyResources, NuLazyService } from './lazy.service';
 
 let isIE = false;
@@ -21,8 +22,10 @@ class MockDocument {
           }
           node.onerror();
         },
-        remove: () => {},
-      },
+        remove: () => {
+          //
+        }
+      }
     ];
   };
   getElementsByTagName = () => {
@@ -39,14 +42,16 @@ class MockDocument {
             return;
           }
           node.onerror();
-        },
-      },
+        }
+      }
     ];
   };
   createElement = () => {
     const ret: any = {
       testStatus,
-      onload: () => {},
+      onload: () => {
+        //
+      }
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
@@ -60,7 +65,7 @@ describe('ng-util: lazy', () => {
     isIE = false;
     testStatus = 'ok';
     TestBed.configureTestingModule({
-      providers: [{ provide: DOCUMENT, useClass: MockDocument }],
+      providers: [{ provide: DOCUMENT, useClass: MockDocument }]
     });
     srv = TestBed.inject(NuLazyService);
     srv.clear();
@@ -68,12 +73,12 @@ describe('ng-util: lazy', () => {
   });
 
   describe('#IE', () => {
-    it('should be load a js resource', (done) => {
+    it('should be load a js resource', done => {
       isIE = true;
       srv
         .monitor()
         .pipe(take(1))
-        .subscribe((res) => {
+        .subscribe(res => {
           expect(res[0].status).toBe('ok');
           done();
         });
@@ -83,7 +88,7 @@ describe('ng-util: lazy', () => {
       isIE = true;
       const mockGetElementsByTagName = () => {
         const mockObj = new MockDocument().getElementsByTagName();
-        mockObj[0].appendChild = (node) => {
+        mockObj[0].appendChild = node => {
           node.readyState = 'mock-status';
           node.onreadystatechange();
           node.readyState = 'complete';
@@ -95,7 +100,7 @@ describe('ng-util: lazy', () => {
       srv
         .monitor()
         .pipe(take(1))
-        .subscribe((res) => {
+        .subscribe(res => {
           expect(res[0].status).toBe('ok');
           done();
         });
@@ -104,11 +109,11 @@ describe('ng-util: lazy', () => {
   });
 
   describe('Scripts', () => {
-    it('should be load a js resource', (done) => {
+    it('should be load a js resource', done => {
       srv
         .monitor()
         .pipe(take(1))
-        .subscribe((res) => {
+        .subscribe(res => {
           expect(res[0].status).toBe('ok');
           done();
         });
@@ -121,11 +126,11 @@ describe('ng-util: lazy', () => {
       srv.loadScript('/1.js', { innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
-    it('should be callback', (done) => {
+    it('should be callback', done => {
       srv
         .monitor()
         .pipe(take(1))
-        .subscribe((res) => {
+        .subscribe(res => {
           expect(res[0].status).toBe('ok');
           done();
         });
@@ -135,25 +140,27 @@ describe('ng-util: lazy', () => {
   });
 
   describe('Styles', () => {
-    it('should be load a css resource', (done) => {
+    it('should be load a css resource', done => {
       srv
         .monitor()
         .pipe(take(1))
-        .subscribe((res) => {
+        .subscribe(res => {
           expect(res[0].status).toBe('ok');
           done();
         });
       srv.load('/1.css');
     });
-    it('should be load a less resource', (done) => {
-      srv.loadStyle('/1.less', { rel: 'stylesheet/less' }).then((res) => {
+    it('should be load a less resource', done => {
+      srv.loadStyle('/1.less', { rel: 'stylesheet/less' }).then(res => {
         expect(res.status).toBe('ok');
         done();
       });
     });
     it('should be custom content', () => {
       const res: any = {
-        onerror() {},
+        onerror() {
+          //
+        }
       };
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);
@@ -186,21 +193,21 @@ describe('ng-util: lazy', () => {
     expect(count).toBe(1);
   });
 
-  it('should be bad resource', (done) => {
+  it('should be bad resource', done => {
     testStatus = 'bad';
     srv
       .monitor()
       .pipe(take(1))
-      .subscribe((res) => {
+      .subscribe(res => {
         expect(res[0].status).toBe('error');
         done();
       });
     srv.load('/3.js');
   });
 
-  it('should be monitor to some resources', (done) => {
+  it('should be monitor to some resources', done => {
     const libs = ['/1.js', '/2.js'];
-    srv.monitor(libs).subscribe((res) => {
+    srv.monitor(libs).subscribe(res => {
       expect(res.length).toBe(libs.length);
       expect(res[0].status).toBe('ok');
       expect(res[1].status).toBe('ok');
@@ -209,9 +216,9 @@ describe('ng-util: lazy', () => {
     srv.load(libs);
   });
 
-  it('should be NuLazyResources type', (done) => {
+  it('should be NuLazyResources type', done => {
     const data = ['/1.js', { path: '/2.js', type: 'style' }] as any;
-    srv.monitor(data).subscribe((res) => {
+    srv.monitor(data).subscribe(res => {
       expect(res[0].status).toBe('ok');
       expect(res[1].type).toBe('style');
       done();

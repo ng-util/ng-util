@@ -1,9 +1,10 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { take, timer } from 'rxjs';
+
 import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorModel } from './monaco-editor.types';
-import { take, timer } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PlaceholderWidget } from './placholder';
 
 @Component({
@@ -12,16 +13,16 @@ import { PlaceholderWidget } from './placholder';
   exportAs: 'nuMonacoEditor',
   host: {
     '[style.display]': `'block'`,
-    '[style.height]': 'height',
+    '[style.height]': 'height'
   },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NuMonacoEditorComponent),
-      multi: true,
-    },
+      multi: true
+    }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMonacoEditorComponent extends NuMonacoEditorBase implements ControlValueAccessor {
   private _value = '';
@@ -55,8 +56,12 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     }
   }
 
-  private onChange = (_: string) => {};
-  private onTouched = () => {};
+  private onChange = (_: string) => {
+    //
+  };
+  private onTouched = () => {
+    //
+  };
 
   initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     const hasModel = !!this.model;

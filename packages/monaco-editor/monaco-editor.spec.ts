@@ -1,20 +1,21 @@
 import { Component, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+
 import { NuMonacoEditorDiffComponent } from './monaco-editor-diff.component';
 import { NuMonacoEditorComponent } from './monaco-editor.component';
-import { NuMonacoEditorDiffModel, NuMonacoEditorEvent, NuMonacoEditorModel } from './monaco-editor.types';
-import { FormsModule } from '@angular/forms';
 import { provideNuMonacoEditorConfig } from './monaco-editor.config';
+import { NuMonacoEditorDiffModel, NuMonacoEditorEvent, NuMonacoEditorModel } from './monaco-editor.types';
 
 const FIX_LOAD_LIB_TIME = 1000 * 1;
 
-const delay = (ms?: number) => new Promise((res) => setTimeout(res, ms ?? FIX_LOAD_LIB_TIME));
+const delay = (ms?: number) => new Promise(res => setTimeout(res, ms ?? FIX_LOAD_LIB_TIME));
 
 describe('ng-util: monaco-editor', () => {
   function create<T>(comp: Type<T>, option: { html?: string } = {}): ComponentFixture<T> {
     TestBed.configureTestingModule({
       providers: [provideNuMonacoEditorConfig({ baseUrl: `monaco-editor/min` })],
-      imports: [TestComponent, TestDiffComponent],
+      imports: [TestComponent, TestDiffComponent]
     });
     if (option.html != null) TestBed.overrideTemplate(comp, option.html);
     return TestBed.createComponent(comp);
@@ -78,21 +79,23 @@ describe('ng-util: monaco-editor', () => {
       (event)="onChange($event)"
     />
   `,
-  imports: [FormsModule, NuMonacoEditorComponent],
+  imports: [FormsModule, NuMonacoEditorComponent]
 })
 class TestComponent {
   @ViewChild('comp') comp!: NuMonacoEditorComponent;
   options: monaco.editor.IStandaloneEditorConstructionOptions = { theme: 'vs', readOnly: true };
   model: NuMonacoEditorModel = {
     value: '<h1>Title</h1>',
-    language: 'html',
+    language: 'html'
   };
   height = '100px';
   delay = 0;
   disabled = false;
   autoFormat = true;
   value?: string | null = null;
-  onChange(_: NuMonacoEditorEvent): void { }
+  onChange(_: NuMonacoEditorEvent): void {
+    //
+  }
 }
 
 @Component({
@@ -108,21 +111,23 @@ class TestComponent {
       (event)="onChange($event)"
     />
   `,
-  imports: [FormsModule, NuMonacoEditorDiffComponent],
+  imports: [FormsModule, NuMonacoEditorDiffComponent]
 })
 class TestDiffComponent {
   @ViewChild('comp') comp!: NuMonacoEditorDiffComponent;
   options: monaco.editor.IStandaloneEditorConstructionOptions = { theme: 'vs', readOnly: true };
   oldModel: NuMonacoEditorDiffModel = {
     code: 'const a = 1;',
-    language: 'typescript',
+    language: 'typescript'
   };
   newModel?: NuMonacoEditorDiffModel | null = {
     code: 'const a = 2;',
-    language: 'typescript',
+    language: 'typescript'
   };
   height = '100px';
   delay = 0;
   disabled = false;
-  onChange(_: NuMonacoEditorEvent): void { }
+  onChange(_: NuMonacoEditorEvent): void {
+    //
+  }
 }
