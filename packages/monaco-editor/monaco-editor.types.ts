@@ -1,5 +1,4 @@
-// tslint:disable-next-line: no-reference
-/// <reference path="./monaco.d.ts" />
+/// <reference path="./monaco.d.ts" preserve="true" />
 
 export interface NuMonacoEditorModel {
   value?: string;

@@ -40,7 +40,7 @@
     "@angular/router": "^19.0.0",
     "@stackblitz/sdk": "^1.11.0",
     "codesandbox": "^2.2.3",
-    "monaco-editor": "0.50.0",
+    "monaco-editor": "^0.52.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "vditor": "^3.10.7",
