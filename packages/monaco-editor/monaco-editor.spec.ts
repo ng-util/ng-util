@@ -92,7 +92,7 @@ class TestComponent {
   disabled = false;
   autoFormat = true;
   value?: string | null = null;
-  onChange(_: NuMonacoEditorEvent): void {}
+  onChange(_: NuMonacoEditorEvent): void { }
 }
 
 @Component({
@@ -124,5 +124,5 @@ class TestDiffComponent {
   height = '100px';
   delay = 0;
   disabled = false;
-  onChange(_: NuMonacoEditorEvent): void {}
+  onChange(_: NuMonacoEditorEvent): void { }
 }
