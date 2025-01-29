@@ -44,7 +44,7 @@ export default tseslint.config(
       'prettier/prettier': [
         'error',
         {
-          "endOfLine": "auto"
+          // requirePragma: true
         }
       ],
       '@angular-eslint/component-selector': 'off',

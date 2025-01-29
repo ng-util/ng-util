@@ -19,9 +19,7 @@ declare let Vditor: any;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMarkdownComponent extends NuMarkdownBaseComponent implements ControlValueAccessor {
-  private onChange = (_: string) => {
-    //
-  };
+  private onChange = (_: string) => {};
 
   protected init(): void {
     this.ngZone.runOutsideAngular(() => {
@@ -68,9 +66,7 @@ export class NuMarkdownComponent extends NuMarkdownBaseComponent implements Cont
     this.onChange = fn;
   }
 
-  registerOnTouched(_: () => void): void {
-    //
-  }
+  registerOnTouched(_: () => void): void {}
 
   setDisabledState(_isDisabled: boolean): void {
     this.disabled = _isDisabled;
