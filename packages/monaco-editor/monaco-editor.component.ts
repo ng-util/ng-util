@@ -56,12 +56,8 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     }
   }
 
-  private onChange = (_: string) => {
-    //
-  };
-  private onTouched = () => {
-    //
-  };
+  private onChange = (_: string) => {};
+  private onTouched = () => {};
 
   initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     const hasModel = !!this.model;

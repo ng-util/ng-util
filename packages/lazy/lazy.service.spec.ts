@@ -22,9 +22,7 @@ class MockDocument {
           }
           node.onerror();
         },
-        remove: () => {
-          //
-        }
+        remove: () => {}
       }
     ];
   };
@@ -49,9 +47,7 @@ class MockDocument {
   createElement = () => {
     const ret: any = {
       testStatus,
-      onload: () => {
-        //
-      }
+      onload: () => {}
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
@@ -158,9 +154,7 @@ describe('ng-util: lazy', () => {
     });
     it('should be custom content', () => {
       const res: any = {
-        onerror() {
-          //
-        }
+        onerror() {}
       };
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);

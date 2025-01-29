@@ -15,6 +15,4 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   },
   imports: [RouterOutlet, RouterLink]
 })
-export class App {
-  //
-}
+export class App {}
