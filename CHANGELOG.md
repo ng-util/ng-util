@@ -1,3 +1,10 @@
+## 20.0.0 (2025-06-07)
+
+* refactor: using signal (#90) ([d431ce0](https://github.com/ng-util/ng-util/commit/d431ce0)), closes [#90](https://github.com/ng-util/ng-util/issues/90)
+* fix(monaco-editor): fix missing monaco types (#84) ([9c28df0](https://github.com/ng-util/ng-util/commit/9c28df0)), closes [#84](https://github.com/ng-util/ng-util/issues/84)
+
+
+
 ## <small>19.0.1 (2025-01-27)</small>
 
 * fix(monaco-editor): fix missing monaco types (#84) ([9c28df0](https://github.com/ng-util/ng-util/commit/9c28df0)), closes [#84](https://github.com/ng-util/ng-util/issues/84)
