@@ -18,17 +18,17 @@ export interface NuLazyResult {
   path: string;
   status: 'ok' | 'error' | 'loading';
   type?: NuLazyResourcesType;
-  error?: {};
+  error?: Event | string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class NuLazyService {
   private readonly doc = inject(DOCUMENT);
-  private list: { [key: string]: boolean } = {};
-  private cached: { [key: string]: NuLazyResult } = {};
+  private list: Record<string, boolean> = {};
+  private cached: Record<string, NuLazyResult> = {};
   private _notify: BehaviorSubject<NuLazyResult[]> = new BehaviorSubject<NuLazyResult[]>([]);
 
-  private fixPaths(paths?: string | Array<string | NuLazyResources>): NuLazyResources[] {
+  private fixPaths(paths?: string | (string | NuLazyResources)[]): NuLazyResources[] {
     paths = paths || [];
     if (!Array.isArray(paths)) {
       paths = [paths];
@@ -47,7 +47,7 @@ export class NuLazyService {
    *
    * - It's recommended to pass the value in accordance with the `load()` method
    */
-  monitor(paths?: string | Array<string | NuLazyResources>): Observable<NuLazyResult[]> {
+  monitor(paths?: string | (string | NuLazyResources)[]): Observable<NuLazyResult[]> {
     const libs = this.fixPaths(paths);
 
     const pipes = [share(), filter((ls: NuLazyResult[]) => ls.length !== 0)];
@@ -75,7 +75,7 @@ export class NuLazyService {
    * - The returned Promise does not mean that it was successfully loaded
    * - You can monitor load is success via `monitor()`
    */
-  async load(paths: string | Array<string | NuLazyResources>): Promise<NuLazyResult[]> {
+  async load(paths: string | (string | NuLazyResources)[]): Promise<NuLazyResult[]> {
     paths = this.fixPaths(paths);
 
     return Promise.all(
@@ -138,7 +138,7 @@ export class NuLazyService {
             status: 'ok'
           });
       }
-      node.onerror = (error: {}) =>
+      node.onerror = (error: Event | string) =>
         onSuccess({
           path,
           status: 'error',

@@ -58,7 +58,7 @@ export function InputBoolean(defaultValue: boolean | null = false): any {
  */
 export function toNumber(value: any): number;
 export function toNumber<D>(value: any, fallback: D): number | D;
-export function toNumber(value: any, fallbackValue: number = 0): number {
+export function toNumber(value: any, fallbackValue = 0): number {
   return !isNaN(parseFloat(value as any)) && !isNaN(Number(value)) ? Number(value) : fallbackValue;
 }
 
