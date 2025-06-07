@@ -22,7 +22,7 @@ jobs:
         run: yarn run site:build
 
       - name: gen 404.html
-        run: cp ./dist/site/browser/index.html ./dist/site/browser/404.html
+        run: cp ./dist/ng-util/browser/index.html ./dist/ng-util/browser/404.html
 
       - name: deploy-to-surge
         uses: dswistowski/surge-sh-action@v1
@@ -30,4 +30,4 @@ jobs:
           login: ${{ secrets.SURGE_LOGIN }}
           token: ${{ secrets.SURGE_TOKEN }}
           domain: https://ng-util.surge.sh
-          project: ./dist/site/browser
+          project: ./dist/ng-util/browser
