@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +13,9 @@ import {
   selector: 'monaco-demo',
   template: `
     <button (click)="disabled = !disabled">Set {{ disabled ? 'enabled' : 'disabled' }}</button>
-    <button *ngFor="let t of themes" (click)="setTheme(t)">{{ t }} theme</button>
+    @for (t of themes; track $index) {
+      <button (click)="setTheme(t)">{{ t }} theme</button>
+    }
     <button (click)="placeholder = 'new placeholder'">Update placeholder</button>
     <h1>Base</h1>
     <nu-monaco-editor
@@ -33,17 +34,10 @@ import {
       [disabled]="disabled"
     ></nu-monaco-diff-editor>
     <h1>Custom json</h1>
-    <nu-monaco-editor
-      #c
-      [(ngModel)]="value"
-      [model]="jsonModel"
-      [options]="options"
-      (event)="jsonEvent($event)"
-      [disabled]="disabled"
-    />
-    <button (click)="c.editor?.getAction('editor.action.formatDocument')?.run()">Format document</button>
+    <nu-monaco-editor #c [(ngModel)]="value" [model]="jsonModel" (event)="jsonEvent($event)" [disabled]="disabled" />
+    <button (click)="format(c)">Format document</button>
   `,
-  imports: [CommonModule, FormsModule, NuMonacoEditorComponent, NuMonacoEditorDiffComponent]
+  imports: [FormsModule, NuMonacoEditorComponent, NuMonacoEditorDiffComponent]
 })
 export class MonacoDemo {
   disabled = false;
@@ -77,5 +71,9 @@ export class MonacoDemo {
         uri: monaco.Uri.parse('a://b/foo.json')
       };
     }
+  }
+
+  format(editor: NuMonacoEditorComponent) {
+    editor.editor?.getAction('editor.action.formatDocument')?.run();
   }
 }

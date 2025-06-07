@@ -3,15 +3,13 @@ import {
   booleanAttribute,
   Directive,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
-  NgZone,
+  input,
   numberAttribute,
-  OnDestroy,
-  Output
+  OnDestroy
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import type VditorType from 'vditor';
 
 import { NU_MARKDOWN_CONFIG } from './markdown.config';
 import { NuMarkdownService } from './markdown.service';
@@ -21,31 +19,19 @@ export abstract class NuMarkdownBaseComponent implements AfterViewInit, OnDestro
   protected el = inject<ElementRef<HTMLElement>>(ElementRef);
   protected config = inject(NU_MARKDOWN_CONFIG, { optional: true });
   protected srv = inject(NuMarkdownService);
-  protected ngZone = inject(NgZone);
 
   private notify$?: Subscription;
-  protected _instance: any;
+  protected _instance?: VditorType;
 
-  @Input({ transform: numberAttribute }) delay = 0;
-  @Input({ transform: booleanAttribute }) disabled = false;
-  @Input() options: any;
-  @Output() readonly ready = new EventEmitter<string>();
+  delay = input(0, { transform: numberAttribute });
+  disabled = input(false, { transform: booleanAttribute });
 
-  protected _value!: string;
-  @Input()
-  set value(v: string) {
-    this._value = v;
-    if (this.loaded) {
-      this.init();
-    }
-  }
-
-  get instance(): any {
+  get instance(): VditorType | undefined {
     return this._instance;
   }
 
   private initDelay(): void {
-    setTimeout(() => this.init(), this.delay);
+    setTimeout(() => this.init(), this.delay());
   }
 
   protected abstract init(): void;

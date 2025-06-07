@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NuMarkdownComponent } from '@ng-util/markdown';
+import { NuMarkdownComponent, NuMarkdownPreviewComponent } from '@ng-util/markdown';
 
 @Component({
   selector: 'markdown-demo',
-  template: `<nu-markdown [(ngModel)]="value"></nu-markdown>`,
-  imports: [FormsModule, NuMarkdownComponent]
+  template: `
+    <button (click)="value.set('# Update')">Update value</button>
+    <button (click)="disabled.set(!disabled())">Set {{ disabled() ? 'enabled' : 'disabled' }}</button>
+    <h1>Markdown Editor</h1>
+    <nu-markdown [(ngModel)]="value" [disabled]="disabled()"></nu-markdown>
+    <h1>Preview Demo</h1>
+    <nu-markdown-preview [value]="previewValue()" />
+  `,
+  imports: [FormsModule, NuMarkdownComponent, NuMarkdownPreviewComponent]
 })
 export class MarkdownDemo {
-  value = '# Title';
+  value = signal('# Title');
+  previewValue = signal(`- Preview Title
+    - asdf`);
+
+  disabled = signal(false);
 }

@@ -16,7 +16,7 @@ Universal toolset of Angular.
 
 ## API
 
-### convert
+### convert (deprecated)
 
 - `toBoolean`、`@InputBoolean()`
 - `toNumber`、`@InputNumber()`

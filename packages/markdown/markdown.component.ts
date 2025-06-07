@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { NuMarkdownBaseComponent } from './markdown-base.component';
+import type VditorType from 'vditor';
 
 declare let Vditor: any;
 
@@ -19,47 +20,46 @@ declare let Vditor: any;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMarkdownComponent extends NuMarkdownBaseComponent implements ControlValueAccessor {
+  options = input<VditorType['vditor']['options']>();
+  readonly ready = new EventEmitter<VditorType>();
+
+  private value = '';
   private onChange = (_: string) => {};
 
   protected init(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const options = {
-        value: this._value,
-        cache: {
-          enable: false
-        },
-        mode: 'sv',
-        minHeight: 350,
-        input: (value: string) => {
-          this.ngZone.run(() => {
-            this._value = value;
-            this.onChange(value);
-          });
-        },
-        ...this.config?.defaultOptions,
-        ...this.options
-      };
-      this._instance = new Vditor(this.el.nativeElement, options);
-      this.ngZone.run(() => this.ready.emit(this._instance));
-    });
+    const options: VditorType['vditor']['options'] = {
+      value: this.value,
+      cache: {
+        enable: false
+      },
+      mode: 'sv',
+      minHeight: 350,
+      input: (value: string) => {
+        this.onChange(value);
+      },
+      after: () => {
+        this.setDisabled(this.disabled());
+      },
+      ...this.config?.defaultOptions,
+      ...this.options
+    };
+    this._instance = new Vditor(this.el.nativeElement, options);
+    this.ready.emit(this._instance);
   }
 
-  private setDisabled(): void {
-    if (!this.instance) {
-      return;
-    }
-    if (this.disabled) {
-      this.instance.disabled();
+  private setDisabled(v: boolean): void {
+    const i = this._instance;
+    if (i == null) return;
+    if (v) {
+      i.disabled();
     } else {
-      this.instance.enable();
+      i.enable();
     }
   }
 
   writeValue(value: string): void {
-    this._value = value || '';
-    if (this.instance) {
-      this.instance.setValue(this._value);
-    }
+    this.value = value;
+    this.instance?.setValue(value);
   }
 
   registerOnChange(fn: (_: string) => void): void {
@@ -68,8 +68,7 @@ export class NuMarkdownComponent extends NuMarkdownBaseComponent implements Cont
 
   registerOnTouched(_: () => void): void {}
 
-  setDisabledState(_isDisabled: boolean): void {
-    this.disabled = _isDisabled;
-    this.setDisabled();
+  setDisabledState(v: boolean): void {
+    this.setDisabled(v);
   }
 }

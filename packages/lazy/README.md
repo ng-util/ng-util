@@ -25,9 +25,10 @@ import { NuLazyService } from '@ng-util/lazy';
   template: ` <button *ngIf="loaded" type="button" class="btn btn-primary">Primary</button>`,
 })
 export class DemoComponent {
+  private srv = inject(NuLazyService);
   loaded = false;
 
-  constructor(private srv: NuLazyService) {
+  constructor() {
     this.load();
   }
 
