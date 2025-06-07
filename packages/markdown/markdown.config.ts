@@ -1,4 +1,5 @@
 import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
+import type VditorType from 'vditor';
 
 export const NU_MARKDOWN_CONFIG = new InjectionToken<NuMarkdownConfig>('NU_MARKDOWN_CONFIG');
 
@@ -13,7 +14,7 @@ export interface NuMarkdownConfig {
   libs?: string[];
 
   /**
-   * Equar [IOptions](https://github.com/Vanessa219/vditor/blob/master/types/index.d.ts#L432)
+   * Equar [IOptions](https://github.com/Vanessa219/vditor#options)
    */
-  defaultOptions?: any;
+  defaultOptions?: VditorType['vditor']['options'];
 }

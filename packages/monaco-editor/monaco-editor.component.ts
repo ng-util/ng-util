@@ -1,4 +1,12 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  forwardRef,
+  input,
+  untracked
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { take, timer } from 'rxjs';
@@ -13,7 +21,7 @@ import { PlaceholderWidget } from './placholder';
   exportAs: 'nuMonacoEditor',
   host: {
     '[style.display]': `'block'`,
-    '[style.height]': 'height'
+    '[style.height]': 'height()'
   },
   providers: [
     {
@@ -27,22 +35,29 @@ import { PlaceholderWidget } from './placholder';
 export class NuMonacoEditorComponent extends NuMonacoEditorBase implements ControlValueAccessor {
   private _value = '';
   private _placeholderWidget?: PlaceholderWidget;
-  private _placeholder?: string | null;
-
-  @Input()
-  set placeholder(v: string | null | undefined) {
-    this._placeholder = v;
-    this._placeholderWidget?.update(v);
-  }
-  @Input() model?: NuMonacoEditorModel | null;
-  @Input({ transform: booleanAttribute }) autoFormat = true;
+  placeholder = input<string>();
+  model = input<NuMonacoEditorModel>();
+  autoFormat = input(true, { transform: booleanAttribute });
 
   get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
   }
 
+  constructor() {
+    super();
+    effect(() => {
+      const ph = this.placeholder();
+      this._placeholderWidget?.update(ph);
+    });
+    effect(() => {
+      const model = this.model();
+      if (model == null) return;
+      this.updateOptions(untracked(() => this.options()));
+    });
+  }
+
   private togglePlaceholder() {
-    const text = this._placeholder;
+    const text = this.placeholder();
     if (text == null || text.length <= 0 || this.editor == null) return;
 
     if (this._placeholderWidget == null) {
@@ -60,15 +75,16 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   private onTouched = () => {};
 
   initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
-    const hasModel = !!this.model;
+    const hasModel = !!this.model();
+    options = { ...this.config?.defaultOptions, ...options };
 
     if (hasModel) {
-      const model = monaco.editor.getModel(this.model!.uri! || '');
+      const model = monaco.editor.getModel(this.model()!.uri! || '');
       if (model) {
         options.model = model;
         options.model.setValue(this._value);
       } else {
-        const { value, language, uri } = this.model!;
+        const { value, language, uri } = this.model()!;
         options.model = monaco.editor.createModel(value || this._value, language, uri);
       }
     }
@@ -96,7 +112,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     this.registerResize();
 
     const eventName = initEvent ? 'init' : 're-init';
-    if (this.autoFormat) {
+    if (this.autoFormat()) {
       timer(this._config.autoFormatTime!)
         .pipe(takeUntilDestroyed(this.destroy$), take(1))
         .subscribe(() => {
@@ -125,8 +141,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     this.onTouched = fn;
   }
 
-  setDisabledState(_isDisabled: boolean): void {
-    this.disabled = _isDisabled;
-    this.setDisabled();
+  setDisabledState(v: boolean): void {
+    this.setDisabled(v);
   }
 }
