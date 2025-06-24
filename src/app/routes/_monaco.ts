@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -18,10 +18,11 @@ import {
     }
     <button (click)="placeholder = 'new placeholder'">Update placeholder</button>
     <h1>Base</h1>
+    <button (click)="updateModel()">Update model</button>
     <nu-monaco-editor
       #a
       [placeholder]="placeholder"
-      [model]="model"
+      [model]="model()"
       [options]="options"
       [disabled]="disabled"
     ></nu-monaco-editor>
@@ -46,10 +47,10 @@ export class MonacoDemo {
   placeholder =
     'Type something...<a href="https://www.google.com/maps/dir/45.81444,15.97792/@45.81444,15.97792,20z?hl=zh" target="blank" style="color:#f50">Link</a>';
   options = { theme: 'vs' };
-  model: NuMonacoEditorModel = {
+  model = signal<NuMonacoEditorModel>({
     // value: '<h1>Title</h1><p>asdf</p>',
     language: 'html'
-  };
+  });
   oldModel: NuMonacoEditorDiffModel = {
     code: 'const a = 1;',
     language: 'typescript'
@@ -75,5 +76,12 @@ export class MonacoDemo {
 
   format(editor: NuMonacoEditorComponent) {
     editor.editor?.getAction('editor.action.formatDocument')?.run();
+  }
+
+  updateModel() {
+    this.model.set({
+      language: 'html',
+      value: '<h1>Title</h1><p>Updated content</p>'
+    });
   }
 }

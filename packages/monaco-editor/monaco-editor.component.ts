@@ -87,6 +87,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
         const { value, language, uri } = this.model()!;
         options.model = monaco.editor.createModel(value || this._value, language, uri);
       }
+      this._value = options.model.getValue();
     }
 
     if (this._disabled != null) options.readOnly = this._disabled;
@@ -98,9 +99,9 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
     editor.onDidChangeModelContent(() => {
       const value = editor.getValue();
+      this._value = value;
 
       this.ngZone.run(() => {
-        this._value = value;
         this.onChange(value);
       });
 
@@ -116,21 +117,25 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
       timer(this._config.autoFormatTime!)
         .pipe(takeUntilDestroyed(this.destroy$), take(1))
         .subscribe(() => {
-          const action = editor.getAction('editor.action.formatDocument');
-          if (action == null) {
-            this.notifyEvent(eventName);
-            return;
-          }
-          action.run().then(() => this.notifyEvent(eventName));
+          this.format()?.then(() => this.notifyEvent(eventName));
         });
       return;
     }
     this.notifyEvent(eventName);
   }
 
+  format(): Promise<void> | undefined {
+    const action = this.editor?.getAction('editor.action.formatDocument');
+    if (action == null) return;
+    return action.run();
+  }
+
   writeValue(value: string): void {
     this._value = value || '';
     (this._editor as monaco.editor.IStandaloneCodeEditor)?.setValue(this._value);
+    if (this.autoFormat()) {
+      this.format();
+    }
   }
 
   registerOnChange(fn: (_: string) => void): void {
