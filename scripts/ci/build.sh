@@ -93,7 +93,7 @@ fix() {
   perl -p -i -e 's|<reference path="\.\.\/\.\.\/\.\.\/\.\.\/packages\/monaco-editor\/monaco\.d\.ts"|<reference path="./monaco.d.ts"|g' ${DIST}/monaco-editor/index.d.ts < /dev/null 2> /dev/null
 }
 
-# build
+build
 fix
 
 echo 'FINISHED!'
