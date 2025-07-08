@@ -1,3 +1,9 @@
+## <small>20.0.2 (2025-07-08)</small>
+
+* fix(monaco-editor): fix can't auto format when `ngModel` changed (#92) ([b6c0d34](https://github.com/ng-util/ng-util/commit/b6c0d34)), closes [#92](https://github.com/ng-util/ng-util/issues/92)
+
+
+
 ## <small>20.0.1 (2025-06-24)</small>
 
 * fix(monaco-editor): fix can't auto format when `ngModel` changed (#92) ([b6c0d34](https://github.com/ng-util/ng-util/commit/b6c0d34)), closes [#92](https://github.com/ng-util/ng-util/issues/92)
