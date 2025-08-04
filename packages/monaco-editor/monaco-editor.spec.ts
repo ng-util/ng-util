@@ -1,4 +1,4 @@
-import { Component, Type, ViewChild } from '@angular/core';
+import { Component, provideZonelessChangeDetection, signal, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +14,7 @@ const delay = (ms?: number) => new Promise(res => setTimeout(res, ms ?? FIX_LOAD
 describe('ng-util: monaco-editor', () => {
   function create<T>(comp: Type<T>, option: { html?: string } = {}): ComponentFixture<T> {
     TestBed.configureTestingModule({
-      providers: [provideNuMonacoEditorConfig({ baseUrl: `monaco-editor/min` })],
+      providers: [provideZonelessChangeDetection(), provideNuMonacoEditorConfig({ baseUrl: `monaco-editor/min` })],
       imports: [TestComponent, TestDiffComponent]
     });
     if (option.html != null) TestBed.overrideTemplate(comp, option.html);
@@ -26,18 +26,18 @@ describe('ng-util: monaco-editor', () => {
       const fixture = create(TestComponent);
       fixture.componentInstance.options = { readOnly: true };
       const changeSpy = spyOn(fixture.componentInstance, 'onChange');
-      fixture.detectChanges();
+      await fixture.whenStable();
       await delay();
       expect(changeSpy).toHaveBeenCalled();
       expect(changeSpy.calls.first().args[0].type).toBe(`init`);
     });
     it('#disabled', async () => {
       const fixture = create(TestComponent);
-      fixture.detectChanges();
+      await fixture.whenStable();
       await delay();
       const editorSpy = spyOn(fixture.componentInstance.comp.editor!, 'updateOptions');
-      fixture.componentInstance.disabled = true;
-      fixture.detectChanges();
+      fixture.componentInstance.disabled.set(true);
+      await fixture.whenStable();
       expect(editorSpy).toHaveBeenCalled();
     });
   });
@@ -47,7 +47,7 @@ describe('ng-util: monaco-editor', () => {
       const fixture = create(TestDiffComponent);
       fixture.componentInstance.options = { readOnly: true };
       const changeSpy = spyOn(fixture.componentInstance, 'onChange');
-      fixture.detectChanges();
+      await fixture.whenStable();
       await delay();
       expect(changeSpy).toHaveBeenCalled();
       expect(changeSpy.calls.first().args[0].type).toBe(`init`);
@@ -56,7 +56,7 @@ describe('ng-util: monaco-editor', () => {
       const fixture = create(TestDiffComponent);
       fixture.componentInstance.newModel = null;
       const changeSpy = spyOn(fixture.componentInstance, 'onChange');
-      fixture.detectChanges();
+      await fixture.whenStable();
       await delay();
       expect(changeSpy).toHaveBeenCalled();
       expect(changeSpy.calls.first().args[0].type).toBe(`error`);
@@ -74,7 +74,7 @@ describe('ng-util: monaco-editor', () => {
       [options]="options"
       [height]="height"
       [delay]="delay"
-      [disabled]="disabled"
+      [disabled]="disabled()"
       [autoFormat]="autoFormat"
       (event)="onChange($event)"
     />
@@ -90,7 +90,7 @@ class TestComponent {
   };
   height = '100px';
   delay = 0;
-  disabled = false;
+  disabled = signal(false);
   autoFormat = true;
   value?: string | null = null;
   onChange(_: NuMonacoEditorEvent): void {}

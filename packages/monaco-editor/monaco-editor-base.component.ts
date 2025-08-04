@@ -8,7 +8,6 @@ import {
   ElementRef,
   inject,
   input,
-  NgZone,
   numberAttribute,
   OnDestroy,
   output
@@ -30,7 +29,6 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   protected el = inject<ElementRef<HTMLElement>>(ElementRef);
   protected config = inject(NU_MONACO_EDITOR_CONFIG, { optional: true });
   protected doc = inject(DOCUMENT);
-  protected ngZone = inject(NgZone);
   protected destroy$ = inject(DestroyRef);
 
   protected _editor?: monaco.editor.IStandaloneCodeEditor | monaco.editor.IStandaloneDiffEditor;
@@ -63,7 +61,7 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
   ): void;
 
   protected notifyEvent(type: NuMonacoEditorEventType, other?: NuMonacoEditorEvent): void {
-    this.ngZone.run(() => this.event.emit({ type, editor: this._editor!, ...other }));
+    this.event.emit({ type, editor: this._editor!, ...other });
   }
 
   protected setDisabled(v: boolean): this {
@@ -151,14 +149,12 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
 
   updateOptions(v: monaco.editor.IStandaloneEditorConstructionOptions | undefined): void {
     if (!this._editor) return;
-    this.ngZone.runOutsideAngular(() => {
-      this._editor!.dispose();
-      this.initMonaco(v, false);
-    });
+    this._editor!.dispose();
+    this.initMonaco(v, false);
   }
 
   ngAfterViewInit(): void {
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.init(), +this.delay()));
+    setTimeout(() => this.init(), +this.delay());
   }
 
   ngOnDestroy(): void {

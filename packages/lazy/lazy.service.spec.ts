@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs';
 
 import { NuLazyResources, NuLazyService } from './lazy.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 let isIE = false;
 let testStatus = 'ok';
@@ -61,7 +62,7 @@ describe('ng-util: lazy', () => {
     isIE = false;
     testStatus = 'ok';
     TestBed.configureTestingModule({
-      providers: [{ provide: DOCUMENT, useClass: MockDocument }]
+      providers: [provideZonelessChangeDetection(), { provide: DOCUMENT, useClass: MockDocument }]
     });
     srv = TestBed.inject(NuLazyService);
     srv.clear();
