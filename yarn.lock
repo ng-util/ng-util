@@ -7564,7 +7564,6 @@ __metadata:
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.36.0"
     vditor: "npm:^3.10.7"
-    zone.js: "npm:~0.15.0"
   languageName: unknown
   linkType: soft
 
@@ -10496,12 +10495,5 @@ __metadata:
   version: 2.1.2
   resolution: "yoctocolors-cjs@npm:2.1.2"
   checksum: 10c0/a0e36eb88fea2c7981eab22d1ba45e15d8d268626e6c4143305e2c1628fa17ebfaa40cd306161a8ce04c0a60ee0262058eab12567493d5eb1409780853454c6f
-  languageName: node
-  linkType: hard
-
-"zone.js@npm:~0.15.0":
-  version: 0.15.1
-  resolution: "zone.js@npm:0.15.1"
-  checksum: 10c0/4eca000f90dbea1c34f62e88ce56910dace8cdecbe14747b214f2af37aa511264c7bd50faf3e9b00612e95dc4567da156a9690fef1983bfcf74604a630d190ef
   languageName: node
   linkType: hard

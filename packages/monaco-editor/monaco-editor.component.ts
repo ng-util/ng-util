@@ -101,9 +101,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
       const value = editor.getValue();
       this._value = value;
 
-      this.ngZone.run(() => {
-        this.onChange(value);
-      });
+      this.onChange(value);
 
       this.togglePlaceholder();
     });
