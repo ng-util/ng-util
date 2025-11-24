@@ -14,12 +14,21 @@ jobs:
       - name: checkout
         uses: actions/checkout@master
 
-      - uses: borales/actions-yarn@v4
+      - uses: pnpm/action-setup@v4
         with:
-          cmd: install
+          run_install: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: build
-        run: yarn run site:build
+        run: pnpm run site:build
 
       - name: gen 404.html
         run: cp ./dist/ng-util/browser/index.html ./dist/ng-util/browser/404.html

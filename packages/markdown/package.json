@@ -21,7 +21,6 @@
     "angular standalone library"
   ],
   "dependencies": {
-    "@ng-util/util": "^14.0.0",
-    "@ng-util/lazy": "^14.0.0"
+    "@ng-util/lazy": "^20.0.0"
   }
 }

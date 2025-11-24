@@ -9,20 +9,16 @@ import { NU_MARKDOWN_CONFIG } from './markdown.config';
 export class NuMarkdownService {
   private readonly config = inject(NU_MARKDOWN_CONFIG, { optional: true });
   private readonly lazySrv = inject(NuLazyService);
-  private libs: string[];
+  private libs = this.config?.libs || [
+    `https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js`,
+    `https://cdn.jsdelivr.net/npm/vditor/dist/index.css`
+  ];
   private loading = false;
   private loaded = false;
   private notify$ = new Subject<void>();
 
   get notify(): Observable<void> {
     return this.notify$.asObservable();
-  }
-
-  constructor() {
-    this.libs = this.config?.libs || [
-      `https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js`,
-      `https://cdn.jsdelivr.net/npm/vditor/dist/index.css`
-    ];
   }
 
   load(): this {
@@ -34,7 +30,7 @@ export class NuMarkdownService {
     }
     this.loading = true;
 
-    const libs = this.libs!;
+    const libs = this.libs;
     this.lazySrv.monitor(libs).subscribe(() => {
       this.loaded = true;
       this.notify$.next();
