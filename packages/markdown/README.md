@@ -26,8 +26,6 @@ npm install @ng-util/markdown --save
 
 ### Simple
 
-**Standalone**
-
 ```ts
 import { Component } from '@angular/core';
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
@@ -42,22 +40,6 @@ import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 export class MonacoDemo { }
 ```
 
-**Module**
-
-Include `NuMarkdownModule` in Main Module and Feature Modules where you want to use the editor component.(eg: app.module.ts):
-
-```ts
-import { NgModule } from '@angular/core';
-import { NuMarkdownModule } from '@ng-util/markdown';
-
-@NgModule({
-  imports: [
-    NuMarkdownModule // And use `provideNuMarkdownConfig` to modify the global configuration
-  ],
-})
-export class AppModule { }
-```
-
 Create markdown options in component.
 
 ```ts
@@ -65,7 +47,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `<nu-markdown [(ngModel)]="value"></nu-markdown>`,
+  template: `<nu-markdown [(ngModel)]="value" />`,
 })
 export class DemoComponent {
   value = '# Title';
@@ -77,18 +59,17 @@ export class DemoComponent {
 You can use `nu-markdown-preview` component to render a Markdown preview effect (no editing).
 
 ```html
-<nu-markdown-preview value="# Title"></nu-markdown-preview>
+<nu-markdown-preview value="# Title" />
 ```
 
 ### How to change cdn?
 
-- If using standalone use `provideNuMarkdownConfig({ libs: [] })` to adjust.
-- If using module, use `NuMarkdownModule.forRoot({ libs: [] })` to adjust.
+- Using `provideNuMarkdownConfig({ libs: [] })` to adjust.
 
 The libs parameter should contain `index.min.js` and `index.css`, like this:
 
 ```ts
-provideNuMarkdownConfig({ 
+provideNuMarkdownConfig({
   libs: [
     'https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js',
     'https://cdn.jsdelivr.net/npm/vditor/dist/index.css'
@@ -110,7 +91,7 @@ In addition, You can also use local path:
 Then modify the libs path:
 
 ```ts
-provideNuMarkdownConfig({ 
+provideNuMarkdownConfig({
   libs: [
     './assets/vditor/index.min.js',
     './assets/vditor/index.css'

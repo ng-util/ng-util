@@ -16,10 +16,10 @@ Universal toolset of Angular.
 
 ## API
 
-### convert (deprecated)
+<!-- ### convert (deprecated)
 
 - `toBoolean`、`@InputBoolean()`
-- `toNumber`、`@InputNumber()`
+- `toNumber`、`@InputNumber()` -->
 
 ### License
 

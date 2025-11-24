@@ -34,7 +34,7 @@ const nextVersion = readJSONSync(join(root, 'package.json')).version;
 
 // fetchOlderVersions();
 generatingPublishNote();
-// fixDependenciePath();
+fixDependenciePath();
 checkout();
 
 function fetchOlderVersions() {

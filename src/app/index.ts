@@ -8,7 +8,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       <a routerLink="/monaco">Monaco</a>,
       <a routerLink="/markdown">Markdown</a>
     </p>
-    <router-outlet></router-outlet>
+    <router-outlet />
   `,
   host: {
     '[style.display]': `'block'`

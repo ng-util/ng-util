@@ -13,19 +13,35 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "baseUrl": ".",
     "paths": {
       "@ng-util/*": ["./packages/*"]
-    },
-    "rootDir": ".",
-    "esModuleInterop": true
+    }
   },
   "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
     "strictStandalone": true,
     "extendedDiagnostics": {
       "checks": {
         "optionalChainNotNullable": "suppress"
       }
     }
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./packages/tsconfig.lib.json"
+    },
+    {
+      "path": "./packages/tsconfig.lib.prod.json"
+    },
+    {
+      "path": "./packages/tsconfig.spec.json"
+    }
+  ]
 }

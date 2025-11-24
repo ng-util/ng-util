@@ -36,7 +36,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   private _value = '';
   private _placeholderWidget?: PlaceholderWidget;
   placeholder = input<string>();
-  model = input<NuMonacoEditorModel>();
+  model = input<NuMonacoEditorModel | null>();
   autoFormat = input(true, { transform: booleanAttribute });
 
   get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
