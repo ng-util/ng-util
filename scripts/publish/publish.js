@@ -1,8 +1,6 @@
 import { writeFileSync, readFileSync } from 'fs';
-import { readJSONSync } from 'fs-extra/esm';
 import { resolve, join, dirname } from 'path';
 import { question } from 'readline-sync';
-import chalk from 'chalk';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
@@ -14,27 +12,27 @@ const root = resolve(__dirname, `../..`);
 const print = console.log;
 const log = {
   info: msg => {
-    print(chalk.bgBlue.black('INFO'), chalk.blue(msg));
+    print('INFO', msg);
   },
   warn: msg => {
-    print(chalk.bgYellow.black('WARN'), chalk.yellow(msg));
+    print('WARN', msg);
   },
   error: msg => {
-    print(chalk.bgRed.black('ERROR'), chalk.red(msg));
+    print('ERROR', msg);
   },
   success: msg => {
-    print(chalk.bgGreen.black('SUCCESS'), chalk.green(msg));
+    print('SUCCESS', msg);
   },
 };
 
 /* The whole process */
 log.info('Starting publishing process...');
 
-const nextVersion = readJSONSync(join(root, 'package.json')).version;
+const nextVersion = JSON.parse(readFileSync(join(root, 'package.json'), 'utf-8')).version;
 
 // fetchOlderVersions();
 generatingPublishNote();
-fixDependenciePath();
+// fixDependenciePath();
 checkout();
 
 function fetchOlderVersions() {
@@ -53,11 +51,7 @@ function generatingPublishNote() {
   let completeEditing = false;
 
   while (!completeEditing) {
-    const result = question(
-      chalk.bgYellow.black(
-        'Please manually update docs/changelog. Press [Y] if you are done:',
-      ) + '  ',
-    );
+    const result = question('Please manually update docs/changelog. Press [Y] if you are done: ');
     if (result.trim().toLowerCase() === 'y') {
       completeEditing = true;
     }
@@ -68,7 +62,7 @@ function generatingPublishNote() {
 
 function fixDependenciePath() {
   log.info('Fix dependencie paths...');
-  const packageData = readJSONSync(join(root, 'package.json'));
+  const packageData = JSON.parse(readFileSync(join(root, 'package.json'), 'utf-8'));
   const versionData = {
     ...packageData.dependencies,
     ...packageData.devDependencies

@@ -1,3 +1,9 @@
+## 21.0.0 (2025-11-24)
+
+* chore: bump angular to v21 (#102) ([1bd9a48](https://github.com/ng-util/ng-util/commit/1bd9a48)), closes [#102](https://github.com/ng-util/ng-util/issues/102)
+
+
+
 ## 20.1.0 (2025-08-04)
 
 * feat: support zoneless (#98) ([92f1323](https://github.com/ng-util/ng-util/commit/92f1323)), closes [#98](https://github.com/ng-util/ng-util/issues/98)
