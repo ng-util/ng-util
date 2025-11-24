@@ -19,21 +19,9 @@ import {
     <button (click)="placeholder = 'new placeholder'">Update placeholder</button>
     <h1>Base</h1>
     <button (click)="updateModel()">Update model</button>
-    <nu-monaco-editor
-      #a
-      [placeholder]="placeholder"
-      [model]="model()"
-      [options]="options"
-      [disabled]="disabled"
-    ></nu-monaco-editor>
+    <nu-monaco-editor #a [placeholder]="placeholder" [model]="model()" [options]="options" [disabled]="disabled" />
     <h1>Diff</h1>
-    <nu-monaco-diff-editor
-      #b
-      [old]="oldModel"
-      [new]="newModel"
-      [options]="options"
-      [disabled]="disabled"
-    ></nu-monaco-diff-editor>
+    <nu-monaco-diff-editor #b [old]="oldModel" [new]="newModel" [options]="options" [disabled]="disabled" />
     <h1>Custom json</h1>
     <nu-monaco-editor #c [(ngModel)]="value" [model]="jsonModel" (event)="jsonEvent($event)" [disabled]="disabled" />
     <button (click)="format(c)">Format document</button>

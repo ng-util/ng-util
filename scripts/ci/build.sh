@@ -90,7 +90,8 @@ fix() {
   cp node_modules/monaco-editor/monaco.d.ts ${DIST}/monaco-editor
   # 修复 ng-packagr 对三斜线指令的处理
   # /// <reference path="../../../../packages/monaco-editor/monaco.d.ts" />
-  perl -p -i -e 's|<reference path="\.\.\/\.\.\/\.\.\/\.\.\/packages\/monaco-editor\/monaco\.d\.ts"|<reference path="./monaco.d.ts"|g' ${DIST}/monaco-editor/index.d.ts < /dev/null 2> /dev/null
+  perl -p -i -e 's|<reference path="\.\.\/\.\.\/\.\.\/\.\.\/packages\/monaco-editor\/monaco\.d\.ts"|<reference path="../monaco.d.ts"|g' ${DIST}/monaco-editor/types/ng-util-monaco-editor.d.ts < /dev/null 2> /dev/null
+  echo "====== FIXED: monaco-editor"
 }
 
 build

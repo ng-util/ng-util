@@ -26,73 +26,30 @@ Install from npm repository:
 npm install @ng-util/monaco-editor --save
 ```
 
-**Configure monaco-editor library**
-
-Currently this library only supports load monaco-editor with AMD mode. The default is to use cdn (`https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min`) lazy loading。
-
-If you are using local monaco editor library, you could add the following:
-
-```
-"assets": [
-  {
-    "glob": "**/*",
-    "input": "node_modules/monaco-editor/min/vs",
-    "output": "/lib/vs"
-  }
-],
-```
-
-And configure `baseUrl` via `NuMonacoEditorModule.forRoot`.
-
-```ts
-NuMonacoEditorModule.forRoot({
-  baseUrl: `lib`,
-}),
-```
-
 ### Sample
-
-Include `NuMonacoEditorModule` in Main Module and Feature Modules where you want to use the editor component.(eg: app.module.ts):
-
-```ts
-import { NgModule } from '@angular/core';
-import { NuMonacoEditorModule } from '@ng-util/monaco-editor';
-
-@NgModule({
-  imports: [
-    NuMonacoEditorModule  // And use `provideNuMonacoEditorConfig` to modify the global configuration
-  ],
-})
-export class AppModule { }
-```
-
-Create Editor options in component.
 
 ```ts
 import { Component } from '@angular/core';
+import {
+  NuMonacoEditorComponent,
+  NuMonacoEditorDiffComponent,
+  NuMonacoEditorDiffModel,
+  NuMonacoEditorEvent,
+  NuMonacoEditorModel
+} from '@ng-util/monaco-editor';
 
 @Component({
   selector: 'app-root',
-  template: `<nu-monaco-editor [(ngModel)]="value" [options]="editorOptions"></nu-monaco-editor>`,
+  template: `
+    <nu-monaco-editor [(ngModel)]="value" [options]="editorOptions" />
+    <h2>Diff</h2>
+    <nu-monaco-diff-editor [options]="editorOptions" [old]="old" [new]="new" />
+  `,
+  imports: [NuMonacoEditorComponent, NuMonacoEditorDiffComponent]
 })
 export class DemoComponent {
   value: string = 'const a = 1;';
   editorOptions = { theme: 'vs-dark', language: 'typescript' };
-}
-```
-
-Or monaco diff editor:
-
-```ts
-import { Component } from '@angular/core';
-import { NuMonacoEditorDiffModel } from '@ng-util/monaco-editor';
-
-@Component({
-  selector: 'app-root',
-  template: `<nu-monaco-diff-editor [options]="editorOptions" [old]="old" [new]="new"></nu-monaco-diff-editor>`,
-})
-export class DemoComponent {
-  editorOptions = { theme: 'vs-dark', language: 'javascript' };
   old: NuMonacoEditorDiffModel = { code: `<p>1</p>` };
   new: NuMonacoEditorDiffModel = { code: `<p>2</p>` };
 }
@@ -143,7 +100,7 @@ NuMonacoEditorModule.forRoot({
   defaultOptions: { scrollBeyondLastLine: false },
   monacoLoad: () => {
     const uri = monaco.Uri.parse('a://b/foo.json');
-    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    monaco.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
       schemas: [
         {
@@ -179,7 +136,7 @@ NuMonacoEditorModule.forRoot({
 }),
 ```
 
-Now pass `model` config of type `NuMonacoEditorModule` to Editor Component.
+Now pass `model` config of type `NuMonacoEditorModel` to Editor Component.
 
 ```ts
 import { Component } from '@angular/core';
