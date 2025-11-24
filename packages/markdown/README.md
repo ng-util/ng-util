@@ -12,7 +12,6 @@
 ## Demo
 
 - [Stackblitz](https://stackblitz.com/edit/ng-util-markdown?file=src/app/app.component.ts)
-- [Codesandbox](https://codesandbox.io/s/ng-util-markdown-nudj1?file=/src/app/app.component.ts)
 
 ## Usage
 

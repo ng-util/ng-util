@@ -14,7 +14,6 @@ Monaco Code Editor for Angular.
 ## Demo
 
 - [Stackblitz](https://stackblitz.com/edit/ng-util-monaco-editor?file=src/app/app.component.ts)
-- [Codesandbox](https://codesandbox.io/s/ng-util-monaco-editor-0m474?file=/src/app/app.component.ts)
 
 ## Usage
 
@@ -81,10 +80,10 @@ export class DemoComponent {
 
 ### Configurations
 
-`forRoot()` method of `NuMonacoEditorModule` accepts config of type `NuMonacoEditorConfig`.
+`provideNuMonacoEditorConfig` accepts config of type `NuMonacoEditorConfig`.
 
 ```ts
-NuMonacoEditorModule.forRoot({
+provideNuMonacoEditorConfig({
   baseUrl: ``, // The base URL to monaco editor library assets via AMD (RequireJS), Default: `https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min`
   defaultOptions: {}, // Default options when creating editors
   monacoLoad: (m) => {} // The event after the first loading of the monaco editor library is completed, use this function to extend monaco editor functionalities.
@@ -96,7 +95,7 @@ NuMonacoEditorModule.forRoot({
 `monacoLoad` property of `NuMonacoEditorConfig` can be used to configure JSON default.
 
 ```ts
-NuMonacoEditorModule.forRoot({
+provideNuMonacoEditorConfig({
   defaultOptions: { scrollBeyondLastLine: false },
   monacoLoad: () => {
     const uri = monaco.Uri.parse('a://b/foo.json');
@@ -145,7 +144,7 @@ import { NuMonacoEditorEvent, NuMonacoEditorModel } from '@ng-util/monaco-editor
 @Component({
   selector: 'app-demo',
   template: `
-  <nu-monaco-editor #a [(ngModel)]="value" [model]="model" (event)="showEvent($event)"></nu-monaco-editor>
+  <nu-monaco-editor #a [(ngModel)]="value" [model]="model" (event)="showEvent($event)" />
   <button (click)="a.editor.getAction('editor.action.formatDocument').run()">Format document</button>
   `,
 })

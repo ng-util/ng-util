@@ -12,7 +12,6 @@ Universal toolset of Angular.
 ## Demo
 
 - [Stackblitz](https://stackblitz.com/edit/ng-util-util?file=src/app/app.component.ts)
-- [Codesandbox](https://codesandbox.io/s/ng-util-util-6vzyj?file=/src/app/app.component.ts)
 
 ## API
 
