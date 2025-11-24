@@ -9,11 +9,21 @@ jobs:
       - name: checkout
         uses: actions/checkout@master
 
-      - uses: borales/actions-yarn@v4
+      - uses: pnpm/action-setup@v4
         with:
-          cmd: install
+          version: 10
+          run_install: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: build
-        run: yarn run build_artifacts
+        run: pnpm run build_artifacts
         env:
           NG_UTIL_BUILDS_TOKEN: ${{ secrets.NG_UTIL_BUILDS_TOKEN }}
