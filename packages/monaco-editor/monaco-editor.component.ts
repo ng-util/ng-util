@@ -5,6 +5,7 @@ import {
   effect,
   forwardRef,
   input,
+  numberAttribute,
   untracked
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -38,6 +39,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   placeholder = input<string>();
   model = input<NuMonacoEditorModel | null>();
   autoFormat = input(true, { transform: booleanAttribute });
+  maxHeight = input(1000, { transform: numberAttribute });
 
   get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
@@ -77,6 +79,11 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
   initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     const hasModel = !!this.model();
     options = { ...this.config?.defaultOptions, ...options };
+    const heightAuto = this.height() === 'auto';
+    if (heightAuto) {
+      options.scrollBeyondLastLine = false;
+      options.overviewRulerLanes = 0;
+    }
 
     if (hasModel) {
       const model = monaco.editor.getModel(this.model()!.uri! || '');
@@ -109,6 +116,10 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
     this.togglePlaceholder();
     this.registerResize();
+    if (heightAuto) {
+      editor.onDidContentSizeChange(() => this.updateHeight());
+      this.updateHeight();
+    }
 
     const eventName = initEvent ? 'init' : 're-init';
     if (this.autoFormat()) {
@@ -120,6 +131,14 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
       return;
     }
     this.notifyEvent(eventName);
+  }
+
+  private updateHeight() {
+    const editor = this.editor;
+    if (editor == null) return;
+
+    const contentHeight = Math.min(this.maxHeight(), editor.getContentHeight());
+    editor.layout({ width: editor.getLayoutInfo().width, height: contentHeight });
   }
 
   format(): Promise<void> | undefined {

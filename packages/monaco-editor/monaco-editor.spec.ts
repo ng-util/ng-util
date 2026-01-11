@@ -40,6 +40,23 @@ describe('ng-util: monaco-editor', () => {
       await fixture.whenStable();
       expect(editorSpy).toHaveBeenCalled();
     });
+    it('#auto height', async () => {
+      const fixture = create(TestComponent);
+      fixture.componentInstance.height = 'auto';
+      await fixture.whenStable();
+      await delay();
+      const editor = fixture.componentInstance.comp.editor;
+      const lastHeight = editor?.getLayoutInfo().height ?? 0;
+      expect(lastHeight).toBeGreaterThan(0);
+      editor!.setValue(
+        Array(100)
+          .fill(0)
+          .map((_, i) => `Line ${i + 1}`)
+          .join('\n')
+      );
+      await delay();
+      expect(editor?.getLayoutInfo().height ?? 0).toBeGreaterThan(lastHeight);
+    });
   });
 
   describe('diff', () => {

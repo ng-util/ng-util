@@ -171,7 +171,8 @@ export class DemoComponent {
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[placeholder]` | Placeholder of monaco editor, Can change the style via defining the `.monaco-editor-placeholder` CSS. | `string` | - |
-| `[height]` | Height of monaco editor | `string` | `200px` |
+| `[height]` | Height of monaco editor, can be set `auto` | `string` | `200px` |
+| `[maxHeight]` | Max-height of monaco editor, when `height` set `auto` | `string` | `1000px` |
 | `[disabled]` | Disabled of monaco editor | `boolean` | `false` |
 | `[autoFormat]` | Whether to automatically format the document | `boolean` | `true` |
 | `[options]` | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | - |

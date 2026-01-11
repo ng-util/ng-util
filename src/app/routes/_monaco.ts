@@ -17,9 +17,19 @@ import {
       <button (click)="setTheme(t)">{{ t }} theme</button>
     }
     <button (click)="placeholder = 'new placeholder'">Update placeholder</button>
+    <button (click)="height.set('auto')">Auto height</button>
+    <button (click)="height.set('200px')">200px height</button>
     <h1>Base</h1>
     <button (click)="updateModel()">Update model</button>
-    <nu-monaco-editor #a [placeholder]="placeholder" [model]="model()" [options]="options" [disabled]="disabled" />
+    <nu-monaco-editor
+      #a
+      [placeholder]="placeholder"
+      [model]="model()"
+      [options]="options"
+      [disabled]="disabled"
+      [height]="height()"
+      style="border: 1px solid #f50;"
+    />
     <h1>Diff</h1>
     <nu-monaco-diff-editor #b [old]="oldModel" [new]="newModel" [options]="options" [disabled]="disabled" />
     <h1>Custom json</h1>
@@ -48,6 +58,7 @@ export class MonacoDemo {
     language: 'typescript'
   };
   jsonModel: NuMonacoEditorModel | null = null;
+  height = signal('100px');
 
   setTheme(theme: string): void {
     this.options = { theme };
