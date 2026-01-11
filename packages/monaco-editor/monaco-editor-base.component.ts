@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
-  AfterViewInit,
+  afterNextRender,
   booleanAttribute,
   Component,
   DestroyRef,
@@ -12,11 +12,12 @@ import {
   OnDestroy,
   output
 } from '@angular/core';
-import { fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subscription, timer } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.config';
 import { NuMonacoEditorEvent, NuMonacoEditorEventType } from './monaco-editor.types';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
@@ -25,7 +26,7 @@ let loadPromise: Promise<void>;
   selector: 'nu-monaco-base',
   template: ``
 })
-export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
+export abstract class NuMonacoEditorBase implements OnDestroy {
   protected el = inject<ElementRef<HTMLElement>>(ElementRef);
   protected config = inject(NU_MONACO_EDITOR_CONFIG, { optional: true });
   protected doc = inject(DOCUMENT);
@@ -51,7 +52,14 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
 
     effect(() => {
       const options = this.options();
+      const _ = this.height();
       this.updateOptions(options);
+    });
+
+    afterNextRender(() => {
+      timer(this.delay())
+        .pipe(takeUntilDestroyed(this.destroy$))
+        .subscribe(() => this.init());
     });
   }
 
@@ -151,10 +159,6 @@ export abstract class NuMonacoEditorBase implements AfterViewInit, OnDestroy {
     if (!this._editor) return;
     this._editor!.dispose();
     this.initMonaco(v, false);
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => this.init(), +this.delay());
   }
 
   ngOnDestroy(): void {
