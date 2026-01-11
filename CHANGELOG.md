@@ -1,3 +1,8 @@
+## 21.1.0 (2026-01-11)
+
+* feat(monaco-editor): support auto height (#108) ([2c4868a](https://github.com/ng-util/ng-util/commit/2c4868a)), closes [#108](https://github.com/ng-util/ng-util/issues/108)
+
+
 ## 21.0.0 (2025-11-24)
 
 * chore: bump angular to v21 (#102) ([1bd9a48](https://github.com/ng-util/ng-util/commit/1bd9a48)), closes [#102](https://github.com/ng-util/ng-util/issues/102)
