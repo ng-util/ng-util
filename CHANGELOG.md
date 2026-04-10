@@ -1,12 +1,6 @@
 ## 21.2.0 (2026-04-10)
 
 * feat(monaco-editor): add `minHeight` property (#113) ([55c0a34](https://github.com/ng-util/ng-util/commit/55c0a34)), closes [#113](https://github.com/ng-util/ng-util/issues/113)
-* feat(monaco-editor): support auto height (#108) ([2c4868a](https://github.com/ng-util/ng-util/commit/2c4868a)), closes [#108](https://github.com/ng-util/ng-util/issues/108)
-* release(21.0.0): release 21.0.0 (#103) ([f2e5b70](https://github.com/ng-util/ng-util/commit/f2e5b70)), closes [#103](https://github.com/ng-util/ng-util/issues/103)
-* release(21.1.0): release 21.1.0 (#109) ([d1a2f83](https://github.com/ng-util/ng-util/commit/d1a2f83)), closes [#109](https://github.com/ng-util/ng-util/issues/109)
-* docs: update readme ([72ffde7](https://github.com/ng-util/ng-util/commit/72ffde7))
-* chore: bump angular to v21 (#102) ([1bd9a48](https://github.com/ng-util/ng-util/commit/1bd9a48)), closes [#102](https://github.com/ng-util/ng-util/issues/102)
-* chore: fix monaco types ([bc86601](https://github.com/ng-util/ng-util/commit/bc86601))
 
 
 
