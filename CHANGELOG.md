@@ -1,3 +1,9 @@
+## 21.2.0 (2026-04-10)
+
+* feat(monaco-editor): add `minHeight` property (#113) ([55c0a34](https://github.com/ng-util/ng-util/commit/55c0a34)), closes [#113](https://github.com/ng-util/ng-util/issues/113)
+
+
+
 ## 21.1.0 (2026-01-11)
 
 * feat(monaco-editor): support auto height (#108) ([2c4868a](https://github.com/ng-util/ng-util/commit/2c4868a)), closes [#108](https://github.com/ng-util/ng-util/issues/108)
