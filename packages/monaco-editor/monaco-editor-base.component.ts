@@ -19,8 +19,7 @@ import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.c
 import { NuMonacoEditorEvent, NuMonacoEditorEventType } from './monaco-editor.types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-let loadedMonaco = false;
-let loadPromise: Promise<void>;
+let monacoLoadPromise: Promise<void> | null = null;
 
 @Component({
   selector: 'nu-monaco-base',
@@ -36,11 +35,12 @@ export abstract class NuMonacoEditorBase implements OnDestroy {
   protected _resize$: Subscription | null = null;
   protected _config: NuMonacoEditorConfig;
   protected _disabled?: boolean;
+  protected readonly _disposables: monaco.IDisposable[] = [];
 
-  height = input(`200px`);
-  delay = input(0, { transform: numberAttribute });
-  disabled = input(false, { transform: booleanAttribute });
-  options = input<monaco.editor.IStandaloneEditorConstructionOptions>();
+  readonly height = input(`200px`);
+  readonly delay = input(0, { transform: numberAttribute });
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly options = input<monaco.editor.IStandaloneEditorConstructionOptions>();
   readonly event = output<NuMonacoEditorEvent>();
 
   constructor() {
@@ -52,7 +52,7 @@ export abstract class NuMonacoEditorBase implements OnDestroy {
 
     effect(() => {
       const options = this.options();
-      const _ = this.height();
+      this.height();
       this.updateOptions(options);
     });
 
@@ -78,65 +78,65 @@ export abstract class NuMonacoEditorBase implements OnDestroy {
   }
 
   private init(): void {
-    if (loadedMonaco) {
-      loadPromise.then(() => this.initMonaco(this.options(), true));
-      return;
+    if (typeof window === 'undefined') return;
+
+    if (!monacoLoadPromise) {
+      monacoLoadPromise = new Promise<void>((resolve: () => void, reject: (err: string) => void) => {
+        const windowRef = window as any;
+        if (windowRef.monaco) {
+          resolve();
+          return;
+        }
+
+        let baseUrl = `${this._config.baseUrl}/vs`;
+        // fix: https://github.com/microsoft/monaco-editor/issues/4778
+        if (!/^https?:\/\//.test(baseUrl)) {
+          baseUrl = `${window.location.origin}/${baseUrl.startsWith('/') ? baseUrl.substring(1) : baseUrl}`;
+        }
+        const amdLoader = () => {
+          windowRef.require.config({
+            paths: {
+              vs: baseUrl
+            }
+          });
+          if (typeof this._config.monacoPreLoad === 'function') {
+            this._config.monacoPreLoad();
+          }
+          windowRef.require(
+            ['vs/editor/editor.main'],
+            () => {
+              if (typeof this._config.monacoLoad === 'function') {
+                this._config.monacoLoad(windowRef.monaco);
+              }
+              resolve();
+            },
+            () => {
+              reject(`Unable to load editor/editor.main module, please check your network environment.`);
+            }
+          );
+        };
+
+        if (!windowRef.require) {
+          const loaderScript = this.doc.createElement('script') as HTMLScriptElement;
+          loaderScript.type = 'text/javascript';
+          loaderScript.src = `${baseUrl}/loader.js`;
+          loaderScript.onload = amdLoader;
+          loaderScript.onerror = () => {
+            reject(`Unable to load ${loaderScript.src}, please check your network environment.`);
+          };
+          this.doc.getElementsByTagName('head')[0].appendChild(loaderScript);
+        } else {
+          amdLoader();
+        }
+      }).catch(error => {
+        monacoLoadPromise = null;
+        throw error;
+      });
     }
 
-    loadedMonaco = true;
-    loadPromise = new Promise<void>((resolve: () => void, reject: (err: string) => void) => {
-      const win: any = window;
-      if (win == null) {
-        resolve();
-        return;
-      }
-
-      if (win.monaco) {
-        resolve();
-        return;
-      }
-
-      let baseUrl = `${this._config.baseUrl}/vs`;
-      // fix: https://github.com/microsoft/monaco-editor/issues/4778
-      if (!/^https?:\/\//g.test(baseUrl)) {
-        baseUrl = `${window.location.origin}/${baseUrl.startsWith('/') ? baseUrl.substring(1) : baseUrl}`;
-      }
-      const amdLoader = () => {
-        win.require.config({
-          paths: {
-            vs: baseUrl
-          }
-        });
-        if (typeof this._config.monacoPreLoad === 'function') {
-          this._config.monacoPreLoad();
-        }
-        win.require(
-          ['vs/editor/editor.main'],
-          () => {
-            if (typeof this._config.monacoLoad === 'function') {
-              this._config.monacoLoad(win.monaco);
-            }
-            this.initMonaco(this.options(), true);
-            resolve();
-          },
-          () => {
-            reject(`Unable to load editor/editor.main module, please check your network environment.`);
-          }
-        );
-      };
-
-      if (!win.require) {
-        const loaderScript = this.doc.createElement('script') as HTMLScriptElement;
-        loaderScript.type = 'text/javascript';
-        loaderScript.src = `${baseUrl}/loader.js`;
-        loaderScript.onload = amdLoader;
-        loaderScript.onerror = () =>
-          reject(`Unable to load ${loaderScript.src}, please check your network environment.`);
-        this.doc.getElementsByTagName('head')[0].appendChild(loaderScript);
-      } else {
-        amdLoader();
-      }
-    }).catch(error => this.notifyEvent('load-error', { error }));
+    monacoLoadPromise
+      .then(() => this.initMonaco(this.options(), true))
+      .catch(error => this.notifyEvent('load-error', { error }));
   }
 
   protected cleanResize(): this {
@@ -149,20 +149,29 @@ export abstract class NuMonacoEditorBase implements OnDestroy {
     this._resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(100))
       .subscribe(() => {
-        this._editor!.layout();
+        this._editor?.layout();
         this.notifyEvent('resize');
       });
     return this;
   }
 
+  protected disposeEditor(): this {
+    this._disposables.forEach(d => d.dispose());
+    this._disposables.length = 0;
+    this._editor?.dispose();
+    this._editor = undefined;
+    return this;
+  }
+
   updateOptions(v: monaco.editor.IStandaloneEditorConstructionOptions | undefined): void {
     if (!this._editor) return;
-    this._editor!.dispose();
+
+    this.disposeEditor();
     this.initMonaco(v, false);
   }
 
   ngOnDestroy(): void {
     this.cleanResize();
-    this._editor?.dispose();
+    this.disposeEditor();
   }
 }
