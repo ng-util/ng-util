@@ -17,8 +17,12 @@ import {
       <button (click)="setTheme(t)">{{ t }} theme</button>
     }
     <button (click)="placeholder = 'new placeholder'">Update placeholder</button>
-    <button (click)="height.set('auto')">Auto height</button>
-    <button (click)="height.set('200px')">200px height</button>
+    <button (click)="height.set('auto'); minHeight.set(undefined); maxHeight.set(undefined)">Auto height</button>
+    <button (click)="height.set('auto'); minHeight.set(100); maxHeight.set(undefined)">100px min-height</button>
+    <button (click)="height.set('auto'); minHeight.set(undefined); maxHeight.set(200)">200px max-height</button>
+    <button (click)="height.set('auto'); minHeight.set(50); maxHeight.set(150)"
+      >50px min-height, 150px max-height</button
+    >
     <h1>Base</h1>
     <button (click)="updateModel()">Update model</button>
     <nu-monaco-editor
@@ -28,6 +32,8 @@ import {
       [options]="options"
       [disabled]="disabled"
       [height]="height()"
+      [minHeight]="minHeight()"
+      [maxHeight]="maxHeight()"
       style="border: 1px solid #f50;"
     />
     <h1>Diff</h1>
@@ -59,6 +65,8 @@ export class MonacoDemo {
   };
   jsonModel: NuMonacoEditorModel | null = null;
   height = signal('100px');
+  minHeight = signal<number | undefined>(undefined);
+  maxHeight = signal<number | undefined>(undefined);
 
   setTheme(theme: string): void {
     this.options = { theme };

@@ -14,8 +14,8 @@ import { NuMonacoEditorDiffModel } from './monaco-editor.types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
-  old = input<NuMonacoEditorDiffModel>();
-  new = input<NuMonacoEditorDiffModel>();
+  readonly old = input<NuMonacoEditorDiffModel>();
+  readonly new = input<NuMonacoEditorDiffModel>();
 
   get editor(): monaco.editor.IStandaloneDiffEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneDiffEditor;
@@ -39,8 +39,11 @@ export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
       modified: monaco.editor.createModel(newModel.code, newModel.language || options.language)
     });
 
-    // this.setDisabled();
-    editor.onDidUpdateDiff(() => this.notifyEvent('update-diff', { diffValue: editor.getModifiedEditor().getValue() }));
+    this._disposables.push(
+      editor.onDidUpdateDiff(() =>
+        this.notifyEvent('update-diff', { diffValue: editor.getModifiedEditor().getValue() })
+      )
+    );
 
     this.registerResize();
     if (initEvent) this.notifyEvent('init');

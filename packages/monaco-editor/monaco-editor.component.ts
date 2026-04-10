@@ -14,7 +14,7 @@ import { take, timer } from 'rxjs';
 
 import { NuMonacoEditorBase } from './monaco-editor-base.component';
 import { NuMonacoEditorModel } from './monaco-editor.types';
-import { PlaceholderWidget } from './placholder';
+import { PlaceholderWidget } from './placeholder';
 
 @Component({
   selector: 'nu-monaco-editor',
@@ -36,10 +36,11 @@ import { PlaceholderWidget } from './placholder';
 export class NuMonacoEditorComponent extends NuMonacoEditorBase implements ControlValueAccessor {
   private _value = '';
   private _placeholderWidget?: PlaceholderWidget;
-  placeholder = input<string>();
-  model = input<NuMonacoEditorModel | null>();
-  autoFormat = input(true, { transform: booleanAttribute });
-  maxHeight = input(1000, { transform: numberAttribute });
+  readonly placeholder = input<string>();
+  readonly model = input<NuMonacoEditorModel | null>();
+  readonly autoFormat = input(true, { transform: booleanAttribute });
+  readonly maxHeight = input(undefined, { transform: numberAttribute });
+  readonly minHeight = input(undefined, { transform: numberAttribute });
 
   get editor(): monaco.editor.IStandaloneCodeEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneCodeEditor;
@@ -60,16 +61,17 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
 
   private togglePlaceholder() {
     const text = this.placeholder();
-    if (text == null || text.length <= 0 || this.editor == null) return;
+    if (typeof text !== 'string' || text.length <= 0 || this.editor == null) return;
 
-    if (this._placeholderWidget == null) {
-      this._placeholderWidget = new PlaceholderWidget(this.editor, text);
+    let widget = this._placeholderWidget;
+    if (widget == null) {
+      this._placeholderWidget = widget = new PlaceholderWidget(this.editor, text);
     }
 
     if (this._value.length > 0) {
-      this.editor.removeContentWidget(this._placeholderWidget);
+      this.editor.removeContentWidget(widget);
     } else {
-      this.editor.addContentWidget(this._placeholderWidget);
+      this.editor.addContentWidget(widget);
     }
   }
 
@@ -104,20 +106,22 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
       editor.setValue(this._value);
     }
 
-    editor.onDidChangeModelContent(() => {
-      const value = editor.getValue();
-      this._value = value;
+    this._disposables.push(
+      editor.onDidChangeModelContent(() => {
+        const value = editor.getValue();
+        this._value = value;
 
-      this.onChange(value);
+        this.onChange(value);
 
-      this.togglePlaceholder();
-    });
-    editor.onDidBlurEditorWidget(() => this.onTouched());
+        this.togglePlaceholder();
+      })
+    );
+    this._disposables.push(editor.onDidBlurEditorWidget(() => this.onTouched()));
 
     this.togglePlaceholder();
     this.registerResize();
     if (heightAuto) {
-      editor.onDidContentSizeChange(() => this.updateHeight());
+      this._disposables.push(editor.onDidContentSizeChange(() => this.updateHeight()));
       this.updateHeight();
     }
 
@@ -137,8 +141,18 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     const editor = this.editor;
     if (editor == null) return;
 
-    const contentHeight = Math.min(this.maxHeight(), editor.getContentHeight());
-    editor.layout({ width: editor.getLayoutInfo().width, height: contentHeight });
+    const isFiniteNumber = (value?: number): value is number => value != null && Number.isFinite(value);
+    const contentHeight = editor.getContentHeight();
+    const minHeightLimit = this.minHeight();
+    const maxHeightInput = this.maxHeight();
+    const maxHeightLimit = isFiniteNumber(maxHeightInput) ? maxHeightInput : 1000;
+
+    let targetHeight = Math.min(contentHeight, maxHeightLimit);
+    if (isFiniteNumber(minHeightLimit)) {
+      targetHeight = Math.max(targetHeight, minHeightLimit);
+    }
+
+    editor.layout({ width: editor.getLayoutInfo().width, height: targetHeight });
   }
 
   format(): Promise<void> | undefined {
@@ -159,7 +173,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

@@ -57,6 +57,32 @@ describe('ng-util: monaco-editor', () => {
       await delay();
       expect(editor?.getLayoutInfo().height ?? 0).toBeGreaterThan(lastHeight);
     });
+    it('#min-height', async () => {
+      const fixture = create(TestComponent);
+      const minHeight = 118;
+      fixture.componentInstance.height = 'auto';
+      fixture.componentInstance.minHeight = minHeight;
+      await fixture.whenStable();
+      await delay();
+      expect(fixture.componentInstance.comp.editor?.getLayoutInfo().height ?? 0).toBe(minHeight);
+    });
+    it('#max-height', async () => {
+      const fixture = create(TestComponent);
+      const maxHeight = 100;
+      fixture.componentInstance.height = 'auto';
+      fixture.componentInstance.maxHeight = maxHeight;
+      await fixture.whenStable();
+      await delay();
+      const editor = fixture.componentInstance.comp.editor;
+      editor!.setValue(
+        Array(100)
+          .fill(0)
+          .map((_, i) => `Line ${i + 1}`)
+          .join('\n')
+      );
+      await delay();
+      expect(editor?.getLayoutInfo().height ?? 0).toBe(maxHeight);
+    });
   });
 
   describe('diff', () => {
@@ -90,6 +116,8 @@ describe('ng-util: monaco-editor', () => {
       [model]="model"
       [options]="options"
       [height]="height"
+      [minHeight]="minHeight"
+      [maxHeight]="maxHeight"
       [delay]="delay"
       [disabled]="disabled()"
       [autoFormat]="autoFormat"
@@ -106,6 +134,8 @@ class TestComponent {
     language: 'html'
   };
   height = '100px';
+  minHeight?: number;
+  maxHeight?: number;
   delay = 0;
   disabled = signal(false);
   autoFormat = true;
