@@ -1,4 +1,5 @@
 import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
+
 import type VditorType from 'vditor';
 
 export const NU_MARKDOWN_CONFIG = new InjectionToken<NuMarkdownConfig>('NU_MARKDOWN_CONFIG');

@@ -14,7 +14,9 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@ng-util/*": ["./packages/*"]
+      "@ng-util/*": [
+        "./packages/*"
+      ]
     }
   },
   "angularCompilerOptions": {
@@ -33,6 +35,9 @@
   "references": [
     {
       "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./packages/tsconfig.json"
     },
     {
       "path": "./packages/tsconfig.lib.json"

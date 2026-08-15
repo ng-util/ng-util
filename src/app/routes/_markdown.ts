@@ -9,7 +9,7 @@ import { NuMarkdownComponent, NuMarkdownPreviewComponent } from '@ng-util/markdo
     <button (click)="value.set('# Update')">Update value</button>
     <button (click)="disabled.set(!disabled())">Set {{ disabled() ? 'enabled' : 'disabled' }}</button>
     <h1>Markdown Editor</h1>
-    <nu-markdown [(ngModel)]="value" [disabled]="disabled()"></nu-markdown>
+    <nu-markdown [(ngModel)]="value" [disabled]="disabled()" />
     <h1>Preview Demo</h1>
     <nu-markdown-preview [value]="previewValue()" />
   `,

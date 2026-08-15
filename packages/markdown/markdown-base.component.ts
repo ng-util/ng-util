@@ -7,10 +7,12 @@ import {
   input,
   numberAttribute
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import type VditorType from 'vditor';
+
 import { NU_MARKDOWN_CONFIG } from './markdown.config';
 import { NuMarkdownService } from './markdown.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 export abstract class NuMarkdownBaseComponent {
