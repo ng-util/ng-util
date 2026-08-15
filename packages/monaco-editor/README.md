@@ -64,7 +64,11 @@ import { NuMonacoEditorEvent } from '@ng-util/monaco-editor';
 
 @Component({
   selector: 'app-root',
-  template: `<nu-monaco-editor [(ngModel)]="value" [options]="editorOptions" (event)="showEvent($event)"></nu-monaco-editor>`,
+  template: `<nu-monaco-editor
+    [(ngModel)]="value"
+    [options]="editorOptions"
+    (event)="showEvent($event)"
+  ></nu-monaco-editor>`
 })
 export class DemoComponent {
   value: string = 'const a = 1;';
@@ -144,9 +148,9 @@ import { NuMonacoEditorEvent, NuMonacoEditorModel } from '@ng-util/monaco-editor
 @Component({
   selector: 'app-demo',
   template: `
-  <nu-monaco-editor #a [(ngModel)]="value" [model]="model" (event)="showEvent($event)" />
-  <button (click)="a.editor.getAction('editor.action.formatDocument').run()">Format document</button>
-  `,
+    <nu-monaco-editor #a [(ngModel)]="value" [model]="model" (event)="showEvent($event)" />
+    <button (click)="a.editor.getAction('editor.action.formatDocument').run()">Format document</button>
+  `
 })
 export class DemoComponent {
   value = '{"p1":"a"}';
@@ -156,44 +160,42 @@ export class DemoComponent {
     if (e.type === 'init') {
       this.model = {
         language: 'json',
-        uri: monaco.Uri.parse('a://b/foo.json'),
+        uri: monaco.Uri.parse('a://b/foo.json')
       };
     }
   }
 }
 ```
 
-
 ## API
 
 ### nu-monaco-editor
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[placeholder]` | Placeholder of monaco editor, Can change the style via defining the `.monaco-editor-placeholder` CSS. | `string` | - |
-| `[height]` | Height of monaco editor, can be set `auto` | `string` | `200px` |
-| `[minHeight]` | Min-height of monaco editor, when `height` set `auto` | `number` | - |
-| `[maxHeight]` | Max-height of monaco editor, when `height` set `auto` | `number` | `1000` |
-| `[disabled]` | Disabled of monaco editor | `boolean` | `false` |
-| `[autoFormat]` | Whether to automatically format the document | `boolean` | `true` |
-| `[options]` | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | - |
-| `[model]` | Model of monaco editor | `NuMonacoEditorModel` | - |
-| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
-| `(event)` | Event callback | `EventEmitter<NuMonacoEditorEvent>` | - |
+| Property        | Description                                                                                           | Type                                                 | Default |
+| --------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------- |
+| `[placeholder]` | Placeholder of monaco editor, Can change the style via defining the `.monaco-editor-placeholder` CSS. | `string`                                             | -       |
+| `[height]`      | Height of monaco editor, can be set `auto`                                                            | `string`                                             | `200px` |
+| `[minHeight]`   | Min-height of monaco editor, when `height` set `auto`                                                 | `number`                                             | -       |
+| `[maxHeight]`   | Max-height of monaco editor, when `height` set `auto`                                                 | `number`                                             | `1000`  |
+| `[disabled]`    | Disabled of monaco editor                                                                             | `boolean`                                            | `false` |
+| `[autoFormat]`  | Whether to automatically format the document                                                          | `boolean`                                            | `true`  |
+| `[options]`     | Default options when creating editors                                                                 | `monaco.editor.IStandaloneEditorConstructionOptions` | -       |
+| `[model]`       | Model of monaco editor                                                                                | `NuMonacoEditorModel`                                | -       |
+| `[delay]`       | Delay init monaco editor, unit: ms                                                                    | `number`                                             | `0`     |
+| `(event)`       | Event callback                                                                                        | `EventEmitter<NuMonacoEditorEvent>`                  | -       |
 
 ### nu-monaco-diff-editor
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[height]` | Height of monaco editor | `string` | `200px` |
-| `[disabled]` | Disabled of monaco editor | `boolean` | `false` |
-| `[options]` | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | - |
-| `[old]` | Old model of monaco editor | `NuMonacoEditorDiffModel` | - |
-| `[new]` | New model of monaco editor | `NuMonacoEditorDiffModel` | - |
-| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
-| `(event)` | Event callback | `EventEmitter<NuMonacoEditorEvent>` | - |
+| Property     | Description                           | Type                                                 | Default |
+| ------------ | ------------------------------------- | ---------------------------------------------------- | ------- |
+| `[height]`   | Height of monaco editor               | `string`                                             | `200px` |
+| `[disabled]` | Disabled of monaco editor             | `boolean`                                            | `false` |
+| `[options]`  | Default options when creating editors | `monaco.editor.IStandaloneEditorConstructionOptions` | -       |
+| `[old]`      | Old model of monaco editor            | `NuMonacoEditorDiffModel`                            | -       |
+| `[new]`      | New model of monaco editor            | `NuMonacoEditorDiffModel`                            | -       |
+| `[delay]`    | Delay init monaco editor, unit: ms    | `number`                                             | `0`     |
+| `(event)`    | Event callback                        | `EventEmitter<NuMonacoEditorEvent>`                  | -       |
 
 ### License
 
 The MIT License (see the [LICENSE](https://github.com/ng-util/ng-util/blob/master/LICENSE) file for the full text)
-

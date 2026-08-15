@@ -51,8 +51,6 @@ typings
 CONTRIBUTING.md
 gulpfile.ts
 favicon.ico
-karma-shim.js
-karma.conf.js
 make.js
 protractor.conf.js
 test-main.js

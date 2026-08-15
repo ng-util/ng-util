@@ -7,29 +7,14 @@
     "**/dist/*/**": true,
     "**/coverage/*/**": true
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll.stylelint": "explicit"
   },
-  "[typescript]": {
+  "[json][jsonc][yaml][javascript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-  },
-  "[markdown]": {
-    "editor.formatOnSave": false
-  },
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "[json]": {
-    "editor.formatOnSave": false
-  },
-  "[jsonc]": {
-    "editor.formatOnSave": false
-  },
-  "[html]": {
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.associations": {
     "package.json": "json",

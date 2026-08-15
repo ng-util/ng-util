@@ -15,7 +15,7 @@ export class NuMarkdownPreviewComponent extends NuMarkdownBaseComponent {
   value = input<string>('');
   readonly ready = new EventEmitter<string>();
 
-  protected async init() {
+  protected async init(): Promise<void> {
     await Vditor.preview(this.el.nativeElement, this.value(), {
       cdn: 'https://cdn.jsdelivr.net/npm/vditor',
       ...this.options()

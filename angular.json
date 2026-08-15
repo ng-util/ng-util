@@ -37,7 +37,9 @@
                 "output": "/assets/vditor/"
               }
             ],
-            "styles": ["src/styles.less"]
+            "styles": [
+              "src/styles.less"
+            ]
           },
           "configurations": {
             "production": {
@@ -76,24 +78,17 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "packages/tsconfig.spec.json",
-            "karmaConfig": "packages/karma.conf.js",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/monaco-editor/min",
-                "output": "/monaco-editor/min"
-              }
+            "setupFiles": [
+              "packages/test-setup.ts"
             ],
-            "codeCoverageExclude": [
-              "src/**",
-              "scripts/**"
-            ],
-            "include": [
-              // "**/monaco-editor.spec.ts"
-              "**/*.spec.ts"
+            "isolate": true,
+            "coverageReporters": [
+              "text",
+              "cobertura",
+              "html"
             ]
           }
         },
@@ -106,7 +101,8 @@
               "src/**/*.html",
               "packages/**/*.ts",
               "packages/**/*.html"
-            ]
+            ],
+            "eslintConfig": "eslint.config.mjs"
           }
         }
       }

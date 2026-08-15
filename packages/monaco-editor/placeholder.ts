@@ -9,7 +9,7 @@ export class PlaceholderWidget implements monaco.editor.IContentWidget {
     this.editor = editor;
   }
 
-  update(text?: string | null | undefined) {
+  update(text?: string | null | undefined): void {
     if (this.node == null) return;
 
     this.node.innerHTML = text ?? this.placeholder ?? '';
@@ -37,7 +37,7 @@ export class PlaceholderWidget implements monaco.editor.IContentWidget {
     };
   }
 
-  dispose() {
+  dispose(): void {
     this.editor.removeContentWidget(this);
   }
 }

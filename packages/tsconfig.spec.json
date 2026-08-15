@@ -1,20 +1,21 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "rootDir": "./",
     "types": [
-      "jasmine",
-      "node"
+      "vitest/globals"
     ],
     "paths": {
-      "@ng-util/*": ["./*"]
+      "@ng-util/*": [
+        "./*"
+      ]
     },
     "esModuleInterop": true,
     "noImplicitThis": false
   },
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "test-setup.ts"
   ]
 }

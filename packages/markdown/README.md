@@ -31,12 +31,10 @@ import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 
 @Component({
   selector: 'demo',
-  template: `
-    <nu-monaco-editor />
-  `,
-  imports: [NuMonacoEditorComponent],
+  template: ` <nu-monaco-editor /> `,
+  imports: [NuMonacoEditorComponent]
 })
-export class MonacoDemo { }
+export class MonacoDemo {}
 ```
 
 Create markdown options in component.
@@ -46,7 +44,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `<nu-markdown [(ngModel)]="value" />`,
+  template: `<nu-markdown [(ngModel)]="value" />`
 })
 export class DemoComponent {
   value = '# Title';
@@ -69,11 +67,8 @@ The libs parameter should contain `index.min.js` and `index.css`, like this:
 
 ```ts
 provideNuMarkdownConfig({
-  libs: [
-    'https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js',
-    'https://cdn.jsdelivr.net/npm/vditor/dist/index.css'
-  ]
-})
+  libs: ['https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js', 'https://cdn.jsdelivr.net/npm/vditor/dist/index.css']
+});
 ```
 
 In addition, You can also use local path:
@@ -91,33 +86,29 @@ Then modify the libs path:
 
 ```ts
 provideNuMarkdownConfig({
-  libs: [
-    './assets/vditor/index.min.js',
-    './assets/vditor/index.css'
-  ]
-})
+  libs: ['./assets/vditor/index.min.js', './assets/vditor/index.css']
+});
 ```
 
 ## API
 
 ### nu-markdown
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[options]` | Equar [IOptions](https://ld246.com/article/1549638745630#options) | `any` | - |
-| `[disabled]` | Disabled of markdown editor | `boolean` | `false` |
-| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
-| `(ready)` | Ready event | `EventEmitter<any>` | - |
+| Property     | Description                                                       | Type                | Default |
+| ------------ | ----------------------------------------------------------------- | ------------------- | ------- |
+| `[options]`  | Equar [IOptions](https://ld246.com/article/1549638745630#options) | `any`               | -       |
+| `[disabled]` | Disabled of markdown editor                                       | `boolean`           | `false` |
+| `[delay]`    | Delay init monaco editor, unit: ms                                | `number`            | `0`     |
+| `(ready)`    | Ready event                                                       | `EventEmitter<any>` | -       |
 
 ### nu-markdown-preview
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[options]` | Equar [IOptions](https://ld246.com/article/1549638745630#options-preview) | `any` | - |
-| `[delay]` | Delay init monaco editor, unit: ms | `number` | `0` |
-| `(ready)` | Ready event | `EventEmitter<string>` | - |
+| Property    | Description                                                               | Type                   | Default |
+| ----------- | ------------------------------------------------------------------------- | ---------------------- | ------- |
+| `[options]` | Equar [IOptions](https://ld246.com/article/1549638745630#options-preview) | `any`                  | -       |
+| `[delay]`   | Delay init monaco editor, unit: ms                                        | `number`               | `0`     |
+| `(ready)`   | Ready event                                                               | `EventEmitter<string>` | -       |
 
 ### License
 
 The MIT License (see the [LICENSE](https://github.com/ng-util/ng-util/blob/master/LICENSE) file for the full text)
-

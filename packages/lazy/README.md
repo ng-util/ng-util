@@ -21,7 +21,7 @@ import { NuLazyService } from '@ng-util/lazy';
 
 @Component({
   selector: 'app-demo',
-  template: ` <button *ngIf="loaded" type="button" class="btn btn-primary">Primary</button>`,
+  template: ` <button *ngIf="loaded" type="button" class="btn btn-primary">Primary</button>`
 })
 export class DemoComponent {
   private srv = inject(NuLazyService);
@@ -34,7 +34,7 @@ export class DemoComponent {
   async load() {
     await this.srv.load([
       `https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css`,
-      `https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js`,
+      `https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js`
     ]);
     this.loaded = true;
   }
@@ -43,13 +43,13 @@ export class DemoComponent {
 
 ## API
 
-| name | type | description |
-| ---- | -- | ----------- |
-| `monitor(paths: string ｜ Array<string ｜ NuLazyResources>)` | `Observable<NuLazyResult[]>` | Monitor for the finished of `paths` |
-| `clear()` | `void` | Clean all cached items |
-| `load(paths: string ｜ Array<string ｜ NuLazyResources>)` | `Promise<NuLazyResult[]>` | Load the specified resources, includes `.js`, `.css` |
-| `loadScript(path: string, options?: { innerContent?: string })` | `Promise<NuLazyResult>` | Load a script resources |
-| `loadStyle(path: string, options?: { ref?: string, innerContent?: string })` | `Promise<NuLazyResult>` | Load a style resources |
+| name                                                                         | type                         | description                                          |
+| ---------------------------------------------------------------------------- | ---------------------------- | ---------------------------------------------------- |
+| `monitor(paths: string ｜ Array<string ｜ NuLazyResources>)`                 | `Observable<NuLazyResult[]>` | Monitor for the finished of `paths`                  |
+| `clear()`                                                                    | `void`                       | Clean all cached items                               |
+| `load(paths: string ｜ Array<string ｜ NuLazyResources>)`                    | `Promise<NuLazyResult[]>`    | Load the specified resources, includes `.js`, `.css` |
+| `loadScript(path: string, options?: { innerContent?: string })`              | `Promise<NuLazyResult>`      | Load a script resources                              |
+| `loadStyle(path: string, options?: { ref?: string, innerContent?: string })` | `Promise<NuLazyResult>`      | Load a style resources                               |
 
 ### License
 

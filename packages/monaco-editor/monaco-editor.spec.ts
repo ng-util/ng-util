@@ -9,9 +9,87 @@ import { NuMonacoEditorDiffModel, NuMonacoEditorEvent, NuMonacoEditorModel } fro
 
 const FIX_LOAD_LIB_TIME = 1000 * 1;
 
-const delay = (ms?: number) => new Promise(res => setTimeout(res, ms ?? FIX_LOAD_LIB_TIME));
+const delay = (ms?: number): Promise<void> => new Promise(res => setTimeout(res, ms ?? FIX_LOAD_LIB_TIME));
+
+/**
+ * jsdom 环境无法真实加载 monaco-editor（AMD/CDN 资源），
+ * 因此在测试前注入一个最小可用的 monaco mock，让组件走完整的初始化逻辑。
+ */
+function createMockModel(value = '', language = 'plaintext'): any {
+  let current = String(value ?? '');
+  const listeners: Array<() => void> = [];
+  return {
+    getValue: () => current,
+    setValue: (v: string) => {
+      current = String(v ?? '');
+      listeners.forEach(cb => cb());
+    },
+    getLanguageId: () => language,
+    onDidChangeContent: (cb: () => void) => {
+      listeners.push(cb);
+      return { dispose: () => {} };
+    }
+  };
+}
+
+function createMockEditor(opts: { model?: any } = {}): any {
+  const initialValue = opts.model?.getValue ? opts.model.getValue() : '';
+  const state = {
+    value: initialValue,
+    contentHeight: Math.max(initialValue.split('\n').length * 20, 20),
+    height: 0
+  };
+  const listeners: Record<string, Array<(...args: any[]) => void>> = {};
+  const on = (name: string) => (cb: (...args: any[]) => void) => {
+    (listeners[name] ??= []).push(cb);
+    return { dispose: () => {} };
+  };
+  return {
+    state,
+    setValue: (v: string) => {
+      state.value = String(v ?? '');
+      state.contentHeight = Math.max(state.value.split('\n').length * 20, 20);
+      listeners['onDidChangeModelContent']?.forEach(cb => cb());
+      listeners['onDidContentSizeChange']?.forEach(cb => cb());
+    },
+    getValue: () => state.value,
+    getContentHeight: () => state.contentHeight,
+    getLayoutInfo: () => ({ width: 800, height: state.height }),
+    layout: (dims?: { width?: number; height?: number }) => {
+      if (dims?.height != null) state.height = dims.height;
+    },
+    getAction: () => ({ run: () => Promise.resolve() }),
+    getModel: () => null,
+    setModel: () => {},
+    onDidChangeModelContent: on('onDidChangeModelContent'),
+    onDidContentSizeChange: on('onDidContentSizeChange'),
+    onDidBlurEditorWidget: on('onDidBlurEditorWidget'),
+    onDidUpdateDiff: on('onDidUpdateDiff'),
+    addContentWidget: () => {},
+    removeContentWidget: () => {},
+    applyFontInfo: () => {},
+    updateOptions: () => {},
+    dispose: () => {},
+    getModifiedEditor: () => null
+  };
+}
+
+const mockMonaco = {
+  editor: {
+    create: (el: HTMLElement, options: any) => createMockEditor({ model: options?.model }),
+    createDiffEditor: () => createMockEditor(),
+    createModel: (value: string, language?: string) => createMockModel(value, language),
+    getModel: () => null,
+    setTheme: () => {},
+    ContentWidgetPositionPreference: { EXACT: 0 }
+  }
+} as any;
 
 describe('ng-util: monaco-editor', () => {
+  beforeEach(() => {
+    (window as any).monaco = mockMonaco;
+  });
+
   function create<T>(comp: Type<T>, option: { html?: string } = {}): ComponentFixture<T> {
     TestBed.configureTestingModule({
       providers: [provideZonelessChangeDetection(), provideNuMonacoEditorConfig({ baseUrl: `monaco-editor/min` })],
@@ -25,17 +103,17 @@ describe('ng-util: monaco-editor', () => {
     it('should be working', async () => {
       const fixture = create(TestComponent);
       fixture.componentInstance.options = { readOnly: true };
-      const changeSpy = spyOn(fixture.componentInstance, 'onChange');
+      const changeSpy = vi.spyOn(fixture.componentInstance, 'onChange');
       await fixture.whenStable();
       await delay();
       expect(changeSpy).toHaveBeenCalled();
-      expect(changeSpy.calls.first().args[0].type).toBe(`init`);
+      expect(changeSpy.mock.calls[0][0].type).toBe(`init`);
     });
     it('#disabled', async () => {
       const fixture = create(TestComponent);
       await fixture.whenStable();
       await delay();
-      const editorSpy = spyOn(fixture.componentInstance.comp.editor!, 'updateOptions');
+      const editorSpy = vi.spyOn(fixture.componentInstance.comp.editor!, 'updateOptions');
       fixture.componentInstance.disabled.set(true);
       await fixture.whenStable();
       expect(editorSpy).toHaveBeenCalled();
@@ -89,20 +167,20 @@ describe('ng-util: monaco-editor', () => {
     it('should be working', async () => {
       const fixture = create(TestDiffComponent);
       fixture.componentInstance.options = { readOnly: true };
-      const changeSpy = spyOn(fixture.componentInstance, 'onChange');
+      const changeSpy = vi.spyOn(fixture.componentInstance, 'onChange');
       await fixture.whenStable();
       await delay();
       expect(changeSpy).toHaveBeenCalled();
-      expect(changeSpy.calls.first().args[0].type).toBe(`init`);
+      expect(changeSpy.mock.calls[0][0].type).toBe(`init`);
     });
     it('should be throw error when new is null', async () => {
       const fixture = create(TestDiffComponent);
       fixture.componentInstance.newModel = null;
-      const changeSpy = spyOn(fixture.componentInstance, 'onChange');
+      const changeSpy = vi.spyOn(fixture.componentInstance, 'onChange');
       await fixture.whenStable();
       await delay();
       expect(changeSpy).toHaveBeenCalled();
-      expect(changeSpy.calls.first().args[0].type).toBe(`error`);
+      expect(changeSpy.mock.calls[0][0].type).toBe(`error`);
       expect(fixture.componentInstance.comp.editor == null).toBe(true);
     });
   });

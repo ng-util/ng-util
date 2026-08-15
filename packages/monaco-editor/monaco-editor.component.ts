@@ -59,7 +59,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     });
   }
 
-  private togglePlaceholder() {
+  private togglePlaceholder(): void {
     const text = this.placeholder();
     if (typeof text !== 'string' || text.length <= 0 || this.editor == null) return;
 
@@ -75,8 +75,8 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     }
   }
 
-  private onChange = (_: string) => {};
-  private onTouched = () => {};
+  private onChange = (_: string): void => {};
+  private onTouched = (): void => {};
 
   initMonaco(options: monaco.editor.IStandaloneEditorConstructionOptions, initEvent: boolean): void {
     const hasModel = !!this.model();
@@ -137,7 +137,7 @@ export class NuMonacoEditorComponent extends NuMonacoEditorBase implements Contr
     this.notifyEvent(eventName);
   }
 
-  private updateHeight() {
+  private updateHeight(): void {
     const editor = this.editor;
     if (editor == null) return;
 

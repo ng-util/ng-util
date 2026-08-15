@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { NuMarkdownBaseComponent } from './markdown-base.component';
 import type VditorType from 'vditor';
+
+import { NuMarkdownBaseComponent } from './markdown-base.component';
 
 declare let Vditor: any;
 
@@ -24,7 +25,7 @@ export class NuMarkdownComponent extends NuMarkdownBaseComponent implements Cont
   readonly ready = new EventEmitter<VditorType>();
 
   private value = '';
-  private onChange = (_: string) => {};
+  private onChange = (_: string): void => {};
 
   protected init(): void {
     const options: VditorType['vditor']['options'] = {

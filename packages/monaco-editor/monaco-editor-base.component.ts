@@ -12,12 +12,13 @@ import {
   OnDestroy,
   output
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, Subscription, timer } from 'rxjs';
+
 import { debounceTime } from 'rxjs/operators';
 
 import { NuMonacoEditorConfig, NU_MONACO_EDITOR_CONFIG } from './monaco-editor.config';
 import { NuMonacoEditorEvent, NuMonacoEditorEventType } from './monaco-editor.types';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 let monacoLoadPromise: Promise<void> | null = null;
 
@@ -93,7 +94,7 @@ export abstract class NuMonacoEditorBase implements OnDestroy {
         if (!/^https?:\/\//.test(baseUrl)) {
           baseUrl = `${window.location.origin}/${baseUrl.startsWith('/') ? baseUrl.substring(1) : baseUrl}`;
         }
-        const amdLoader = () => {
+        const amdLoader = (): void => {
           windowRef.require.config({
             paths: {
               vs: baseUrl

@@ -72,7 +72,7 @@ export class MonacoDemo {
     this.options = { theme };
   }
 
-  jsonEvent(e: NuMonacoEditorEvent) {
+  jsonEvent(e: NuMonacoEditorEvent): void {
     if (e.type === 'init') {
       this.jsonModel = {
         language: 'json',
@@ -81,11 +81,11 @@ export class MonacoDemo {
     }
   }
 
-  format(editor: NuMonacoEditorComponent) {
+  format(editor: NuMonacoEditorComponent): void {
     editor.editor?.getAction('editor.action.formatDocument')?.run();
   }
 
-  updateModel() {
+  updateModel(): void {
     this.model.set({
       language: 'html',
       value: '<h1>Title</h1><p>Updated content</p>'

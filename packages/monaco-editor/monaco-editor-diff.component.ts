@@ -15,7 +15,7 @@ import { NuMonacoEditorDiffModel } from './monaco-editor.types';
 })
 export class NuMonacoEditorDiffComponent extends NuMonacoEditorBase {
   readonly old = input<NuMonacoEditorDiffModel>();
-  readonly new = input<NuMonacoEditorDiffModel>();
+  readonly new = input<NuMonacoEditorDiffModel | null>();
 
   get editor(): monaco.editor.IStandaloneDiffEditor | null | undefined {
     return this._editor as monaco.editor.IStandaloneDiffEditor;
